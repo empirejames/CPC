@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Looper;
 import android.provider.Settings;
@@ -18,14 +19,33 @@ import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -34,9 +54,13 @@ public class MainActivity extends AppCompatActivity {
     private String TAG = MainActivity.class.getSimpleName();
     private String distanceFin;
     private LocationManager lms;
+    private String data_url = "http://vipmember.tmtd.cpc.com.tw/CPCSTN/STNWebService.asmx/QueryStation";
+
     final private int REQUEST_CODE_ASK_ALL = 122;
     protected ProgressDialog dialogSMS;
+    RequestQueue mQueue ;
     Double longitude, latitude;
+
     ArrayList<gasStationItem> myDataset = new ArrayList<gasStationItem>();
     TextView countryName, curStation, curtel;
 
@@ -46,11 +70,66 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
+        Context mContext = getApplicationContext();
+        mQueue = Volley.newRequestQueue(mContext);
         checkPermission();
         if(checkPermission() ==true){
             //CSVRead();
-            CSVReadAir();
+            getStation();
+            //CSVReadAir();
         }
+    }
+    public void getStation(){
+        StringRequest postRequest = new StringRequest(Request.Method.POST, data_url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e(TAG, response.length() + "");
+                        try{
+                            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+                            DocumentBuilder db = dbf.newDocumentBuilder();
+                            InputSource is = new InputSource();
+                            is.setCharacterStream(new StringReader(response));
+
+                            Document doc = db.parse(is);
+                            NodeList labTestList = doc.getElementsByTagName("xs:element");
+                            Log.e(TAG, labTestList.getLength() + "");
+                            for (int i = 0; i < labTestList.getLength(); ++i) {
+                                Element labTest = (Element) labTestList.item(i);
+                            }
+                        }catch(Exception e){
+                            Log.e(TAG, "Exception : " + e);
+                        }
+
+                       // startDialog();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(TAG, "Error String: " + error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
+                return params;
+            }
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("City", "新北市");
+                params.put("Village", "");
+                params.put("Types", "");
+                params.put("open24", "");
+                params.put("queryitems", "");
+                return params;
+            }
+        };
+        mQueue.add(postRequest);
     }
 
     public void setupView(String a,String b,String c) {
