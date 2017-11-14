@@ -27,8 +27,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.jsoup.Jsoup;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
@@ -54,15 +59,19 @@ public class MainActivity extends AppCompatActivity {
     private String TAG = MainActivity.class.getSimpleName();
     private String distanceFin;
     private LocationManager lms;
+    private String getCity, getSelfStation, getStationName, getDistance;
     private String data_url = "http://vipmember.tmtd.cpc.com.tw/CPCSTN/STNWebService.asmx/QueryStation";
+    private String air_url = "http://opendata2.epa.gov.tw/AQI.json";
+    private ArrayList<AirLoacationItem> mGridData;
 
     final private int REQUEST_CODE_ASK_ALL = 122;
     protected ProgressDialog dialogSMS;
-    RequestQueue mQueue ;
+    RequestQueue mQueue;
     Double longitude, latitude;
 
     ArrayList<gasStationItem> myDataset = new ArrayList<gasStationItem>();
     TextView countryName, curStation, curtel;
+    TextView curStates, curPM, curAQI, curPublishTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,36 +81,113 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Context mContext = getApplicationContext();
         mQueue = Volley.newRequestQueue(mContext);
-        checkPermission();
-        if(checkPermission() ==true){
-            //CSVRead();
-            getStation();
+        mGridData = new ArrayList<>();
+        if (checkPermission() == true) {
+            startDialog();
+            new AsyncHttpTask().execute();
+            CSVRead();
+            //getStation();
             //CSVReadAir();
         }
     }
-    public void getStation(){
+
+    public class AsyncHttpTask extends AsyncTask<String, Void, Integer> {
+
+        @Override
+        protected Integer doInBackground(String... strings) {
+            getData(air_url);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            super.onPostExecute(result);
+            for (int i = 0; i < mGridData.size(); i++) {
+                if (mGridData.get(i).getCounty().equals(getCity)) {
+                    if(getStationName.contains(mGridData.get(i).getSiteName())){
+                        setupView(getCity, getSelfStation +  getStationName, getDistance
+                                ,"距離 : " +mGridData.get(i).getStatus()
+                                ,"PM 2.5 : " + mGridData.get(i).getPM25_AVG()
+                                ,"空氣品質 AQI : " +mGridData.get(i).getAQI()
+                                ,"更新時間 : " +mGridData.get(i).getPublishTime());
+                    }else{
+                        setupView(getCity, getSelfStation +  getStationName
+                                ,"距離 : " + getDistance
+                                ,mGridData.get(i).getStatus()
+                                ,"PM 2.5 : " + mGridData.get(i).getPM25_AVG()
+                                ,"空氣品質 AQI : " +mGridData.get(i).getAQI()
+                                ,"更新時間 : " +mGridData.get(i).getPublishTime());
+                    }
+
+                }
+            }
+
+            dialogSMS.dismiss();
+        }
+    }
+
+    public void getData(String url) {
+        try {
+            String json = Jsoup.connect(url).ignoreContentType(true).execute().body();
+            if (json.indexOf("{") != -1) {
+                String output = json.substring(json.indexOf("{"), json.lastIndexOf("}") + 1);
+                JSONArray array = new JSONArray(json);
+
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject jsonObject = array.getJSONObject(i);
+                    String AQI = jsonObject.getString("AQI");
+                    String CO = jsonObject.getString("CO");
+                    String CO_8hr = jsonObject.getString("CO_8hr");
+                    String County = jsonObject.getString("County");
+                    String NO = jsonObject.getString("NO");
+                    String NO2 = jsonObject.getString("NO2");
+                    String NOx = jsonObject.getString("NOx");
+                    String O3 = jsonObject.getString("O3");
+                    String O3_8hr = jsonObject.getString("O3_8hr");
+                    String PM10 = jsonObject.getString("PM10");
+                    String PM10_AVG = jsonObject.getString("PM10_AVG");
+                    String PM25 = jsonObject.getString("PM2.5");
+                    String PM25_AVG = jsonObject.getString("PM2.5_AVG");
+                    String PublishTime = jsonObject.getString("PublishTime");
+                    String SiteName = jsonObject.getString("SiteName");
+                    String SO2 = jsonObject.getString("SO2");
+                    String Status = jsonObject.getString("Status");
+                    String WindDirec = jsonObject.getString("WindDirec");
+                    String WindSpeed = jsonObject.getString("WindSpeed");
+                    mGridData.add(new AirLoacationItem(AQI, CO, CO_8hr, County, NO, NO2
+                            , NOx, O3, O3_8hr, PM10, PM10_AVG, PM25, PM25_AVG, PublishTime, SiteName
+                            , SO2, Status, WindDirec, WindSpeed
+                    ));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getStation() {
         StringRequest postRequest = new StringRequest(Request.Method.POST, data_url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Log.e(TAG, response.length() + "");
-                        try{
+                        try {
                             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+                            dbf.setNamespaceAware(true);
                             DocumentBuilder db = dbf.newDocumentBuilder();
                             InputSource is = new InputSource();
                             is.setCharacterStream(new StringReader(response));
-
                             Document doc = db.parse(is);
-                            NodeList labTestList = doc.getElementsByTagName("xs:element");
-                            Log.e(TAG, labTestList.getLength() + "");
-                            for (int i = 0; i < labTestList.getLength(); ++i) {
-                                Element labTest = (Element) labTestList.item(i);
-                            }
-                        }catch(Exception e){
+                            Element root = doc.getDocumentElement();
+                            NodeList books = root.getChildNodes();
+                            Log.e(TAG, books.getLength() + "");
+                        } catch (Exception e) {
                             Log.e(TAG, "Exception : " + e);
                         }
 
-                       // startDialog();
+                        // startDialog();
                     }
                 },
                 new Response.ErrorListener() {
@@ -113,14 +199,14 @@ public class MainActivity extends AppCompatActivity {
         ) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
                 return params;
             }
+
             @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String>  params = new HashMap<String, String>();
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
                 params.put("City", "新北市");
                 params.put("Village", "");
                 params.put("Types", "");
@@ -132,23 +218,31 @@ public class MainActivity extends AppCompatActivity {
         mQueue.add(postRequest);
     }
 
-    public void setupView(String a,String b,String c) {
+    public void setupView(String a, String b, String c, String d, String e,String f,String g) {
         countryName = (TextView) findViewById(R.id.countryName);
         curStation = (TextView) findViewById(R.id.curStation);
         curtel = (TextView) findViewById(R.id.curtel);
+        curStates = (TextView) findViewById(R.id.curStates);
+        curPM = (TextView) findViewById(R.id.curPM);
+        curAQI = (TextView) findViewById(R.id.curAQI);
+        curPublishTime = (TextView) findViewById(R.id.curPublishTime);
+
         countryName.setText(a);
         curStation.setText(b);
         curtel.setText(c);
-
+        curStates.setText(d);
+        curPM.setText(e);
+        curAQI.setText(f);
+        curPublishTime.setText(g);
     }
+
     public void CSVReadAir() {
         CSVReader reader = null;
         try {
             reader = new CSVReader(new BufferedReader(new InputStreamReader(getAssets().open("airdata.csv"), "UTF-8")));
             while ((line = reader.readNext()) != null) {
-                    Log.e(TAG, line[0] + " - " + line[1]+ " - " + line[3]);
+                Log.e(TAG, line[0] + " - " + line[1] + " - " + line[3]);
             }
-            //setupView(myDataset.get(0).getCountryName(),myDataset.get(0).getSelfStation()+" "+myDataset.get(0).getStationName(),myDataset.get(0).getPhone());
             //dialogSMS.dismiss();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -178,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     String[] distanceKil = distanceFin.split("公");
                     myDataset.add(new gasStationItem(
-                            line[1], line[2], line[4], line[6]
+                            line[1], line[2], line[3], line[6]
                             , line[10], line[11], line[12], line[13]
                             , line[15], line[16], line[17], line[19]
                             , line[20], line[21], line[22], line[23], line[24]
@@ -192,8 +286,10 @@ public class MainActivity extends AppCompatActivity {
             }
             DistanceSort(myDataset);
             Log.e(TAG, myDataset.get(0).getDistance() + myDataset.get(0).getDistanceM() + " " + myDataset.get(0).getStationName() + myDataset.get(0).getCountryName());
-            setupView(myDataset.get(0).getCountryName(),myDataset.get(0).getSelfStation()+" "+myDataset.get(0).getStationName(),myDataset.get(0).getPhone());
-            //dialogSMS.dismiss();
+            getCity = myDataset.get(0).getCountryName();
+            getSelfStation = myDataset.get(0).getSelfStation() + " ";
+            getStationName = myDataset.get(0).getStationName();
+            getDistance = myDataset.get(0).getDistance() + "公" + myDataset.get(0).getDistanceM();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
