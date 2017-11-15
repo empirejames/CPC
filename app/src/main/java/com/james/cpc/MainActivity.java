@@ -33,7 +33,6 @@ import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_detail);
         Context mContext = getApplicationContext();
         mQueue = Volley.newRequestQueue(mContext);
         mGridData = new ArrayList<>();
