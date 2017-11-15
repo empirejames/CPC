@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -15,10 +16,12 @@ public class LastActivity extends Activity {
     public String TAG = LastActivity.class.getSimpleName();
     TextView countryName, curStation, curtel;
     TextView curStates, curPM, curAQI, curPublishTime;
+    LinearLayout bgElement ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        bgElement = (LinearLayout) findViewById(R.id.DefaultLinearLayout);
         getData();
     }
 
@@ -36,13 +39,13 @@ public class LastActivity extends Activity {
         setupView(countryNameS,curStationS,curte1S,curStatesS,curPMS,curAQIS,curPublishTimeS);
     }
     public void setupView(String a, String b, String c, String d, String e, String f, String g) {
-        countryName = (TextView) findViewById(R.id.countryName);
-        curStation = (TextView) findViewById(R.id.curStation);
-        curtel = (TextView) findViewById(R.id.curtel);
-        curStates = (TextView) findViewById(R.id.curStates);
-        curPM = (TextView) findViewById(R.id.curPM);
-        curAQI = (TextView) findViewById(R.id.curAQI);
-        curPublishTime = (TextView) findViewById(R.id.curPublishTime);
+        countryName = findViewById(R.id.countryName);
+        curStation =  findViewById(R.id.curStation);
+        curtel = findViewById(R.id.curtel);
+        curStates =  findViewById(R.id.curStates);
+        curPM = findViewById(R.id.curPM);
+        curAQI =  findViewById(R.id.curAQI);
+        curPublishTime = findViewById(R.id.curPublishTime);
 
         countryName.setText(a);
         curStation.setText(b);
@@ -51,6 +54,13 @@ public class LastActivity extends Activity {
         curPM.setText(e);
         curAQI.setText(f);
         curPublishTime.setText(g);
+        if(d.equals("良好")){
+            bgElement.setBackgroundResource(R.drawable.bgd_great);
+        }else if(d.equals("普通")){
+            bgElement.setBackgroundResource(R.drawable.bgd);
+        }else{
+            bgElement.setBackgroundResource(R.drawable.bgd_danger);
+        }
     }
     @Override
     public void onResume(){

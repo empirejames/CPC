@@ -175,7 +175,6 @@ public class ViewPageController extends AppCompatActivity {
             reader = new CSVReader(new BufferedReader(new InputStreamReader(getAssets().open("location.csv"), "UTF-8")));
             while ((line = reader.readNext()) != null) {
                 if (!line[1].equals("類別")) {
-                    Log.e(TAG, line[23] + " - " + line[24]);
                     if (!line[23].equals("NULL") || !line[24].equals("NULL")) {
                         distanceFin = DistanceText(Distance(Double.parseDouble(line[23]), Double.parseDouble(line[24]), longitude, latitude));
                     } else {
@@ -188,11 +187,11 @@ public class ViewPageController extends AppCompatActivity {
                             , line[15], line[16], line[17], line[19]
                             , line[20], line[21], line[22], line[23], line[24]
                             , line[25], line[26], line[27], line[28], distanceKil[0], distanceKil[1]));
-//                    Log.e(TAG, line[1] + " " + line[2] + " " + line[4] + " " + line[6]
-//                            + " " + line[10] + " " + line[11] + " " + line[12] + " " + line[13]
-//                            + " " + line[15] + " " + line[16] + " " + line[17] + " " + line[19]
-//                            + " " + line[20] + " " + line[21] + " " + line[22] + " " + line[23] + " " + line[24]
-//                            + " " + line[25] + " " + line[26] + " " + line[27] + " " + line[28] + " " + distanceKil[0] + " " + distanceKil[1]);
+                    Log.e(TAG, line[1] + " " + line[2] + " " + line[4] + " " + line[6]
+                            + " " + line[10] + " " + line[11] + " " + line[12] + " " + line[13]
+                            + " " + line[15] + " " + line[16] + " " + line[17] + " " + line[19]
+                            + " " + line[20] + " " + line[21] + " " + line[22] + " " + line[23] + " " + line[24]
+                            + " " + line[25] + " " + line[26] + " " + line[27] + " " + line[28] + " " + distanceKil[0] + " " + distanceKil[1]);
                 }
             }
             DistanceSort(myDataset);
@@ -211,11 +210,6 @@ public class ViewPageController extends AppCompatActivity {
                     ,"PM2.5指數 : "+mGridData.get(1).getPM25_AVG()
                     ,"空氣AQI指數 : "+mGridData.get(1).getAQI()
                     ,"更新時間 : "+mGridData.get(1).getPublishTime());
-
-            Log.e(TAG,myDataset.get(1).getSelfStation() +" " +myDataset.get(1).getStationName() +" "
-                    +myDataset.get(1).getDistance() + "公" + myDataset.get(1).getDistanceM() );
-            Log.e(TAG,myDataset.get(2).getSelfStation() +" " +myDataset.get(2).getStationName() +" "
-                    +myDataset.get(2).getDistance() + "公" + myDataset.get(2).getDistanceM() );
             setDataToLast(myDataset.get(2).getCountryName()
                     ,myDataset.get(2).getSelfStation() +" " +myDataset.get(2).getStationName()
                     ,myDataset.get(2).getDistance() + "公" + myDataset.get(2).getDistanceM()

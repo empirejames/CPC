@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,13 +60,14 @@ public class MainActivity extends AppCompatActivity {
     RequestQueue mQueue;
     TextView countryName, curStation, curtel;
     TextView curStates, curPM, curAQI, curPublishTime;
-
+    LinearLayout bgElement;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_detail);
+        bgElement = (LinearLayout) findViewById(R.id.DefaultLinearLayout);
         getData();
     }
 
@@ -112,5 +114,13 @@ public class MainActivity extends AppCompatActivity {
         curPM.setText(e);
         curAQI.setText(f);
         curPublishTime.setText(g);
+        Log.e(TAG,"curStates : " + d);
+        if(d.equals("良好")){
+            bgElement.setBackgroundResource(R.drawable.bgd_great);
+        }else if(d.equals("普通")){
+            bgElement.setBackgroundResource(R.drawable.bgd);
+        }else{
+            bgElement.setBackgroundResource(R.drawable.bgd_danger);
+        }
     }
 }
