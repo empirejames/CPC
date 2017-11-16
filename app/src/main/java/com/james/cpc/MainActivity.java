@@ -178,7 +178,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
 
         countryName.setText(a);
-
         stationName.setText(b);
         curStation.setText(location);
         curtel.setText(c);

@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 public class LastActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener{
     public String TAG = LastActivity.class.getSimpleName();
-    TextView countryName, curStation, curtel;
+    TextView countryName, curStation, curtel, stationName;
     TextView curStates, curPM, curAQI, curPublishTime;
     TextView oil_supply_92,oil_supply_95,oil_supply_98,oil_supply_disol,oil_supply_Alloc,ecard,yoyocard,happycash, members, creditself, washCar, activityTime;
     private SwipeRefreshLayout laySwipe;
@@ -95,6 +95,7 @@ public class LastActivity extends Activity implements SwipeRefreshLayout.OnRefre
             , String i, String j, String k, String l, String m, String n, String o, String p, String q, String r, String s) {
         countryName = (TextView) findViewById(R.id.countryName);
         curStation = (TextView) findViewById(R.id.curStation);
+        stationName = (TextView)findViewById(R.id.stationName);
         curtel = (TextView) findViewById(R.id.curtel);
         curStates = (TextView) findViewById(R.id.curStates);
         curPM = (TextView) findViewById(R.id.curPM);
@@ -159,6 +160,7 @@ public class LastActivity extends Activity implements SwipeRefreshLayout.OnRefre
 
 
         countryName.setText(a);
+        stationName.setText(b);
         curStation.setText(location);
         curtel.setText(c);
         curStates.setText(d);
