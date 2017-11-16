@@ -1,21 +1,17 @@
 package com.james.cpc;
-
-import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener {
     private String TAG = MainActivity.class.getSimpleName();
     TextView countryName, curStation, curtel, stationName;
     TextView curStates, curPM, curAQI, curPublishTime;
@@ -27,9 +23,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
         setContentView(R.layout.activity_detail);
         bgElement = (LinearLayout) findViewById(R.id.DefaultLinearLayout);
         laySwipe = (SwipeRefreshLayout) findViewById(R.id.laySwipe);
