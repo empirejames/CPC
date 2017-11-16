@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     TextView curStates, curPM, curAQI, curPublishTime;
     TextView oil_supply_92, oil_supply_95, oil_supply_98, oil_supply_disol, oil_supply_Alloc, ecard, yoyocard, happycash, members, creditself, washCar, activityTime;
     LinearLayout bgElement;
+    String countryNameS, curStationS, curte1S, curStatesS, curPMS, curAQIS, curPublishTimeS;
+    String location, curgas92, curgas95, curgas98, curgasAlcool, curdisol, curmember, curcreditshelf, curWashcar, curyoyocard, curecard, curhappycash, curactivitytime;
     private SwipeRefreshLayout laySwipe;
 
     @Override
@@ -32,6 +35,27 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         laySwipe = (SwipeRefreshLayout) findViewById(R.id.laySwipe);
         laySwipe.setOnRefreshListener(this);
         getData();
+        LinearLayout dot_map = (LinearLayout )findViewById(R.id.locationLayout);
+        dot_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToMap(countryNameS+location);
+            }
+        });
+        LinearLayout mear_map = (LinearLayout )findViewById(R.id.locationpath);
+        mear_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToMap(countryNameS+location);
+            }
+        });
+
+    }
+    public void goToMap(String getGpsLocation){
+        String vDirectionUrl = "https://maps.google.com/maps?q=" + getGpsLocation;
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(vDirectionUrl));
+        intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+        startActivity(intent);
     }
 
     @Override
@@ -59,8 +83,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     public void getData() {
         Log.e(TAG, "getData 0 ....");
-        String countryNameS, curStationS, curte1S, curStatesS, curPMS, curAQIS, curPublishTimeS;
-        String location, curgas92, curgas95, curgas98, curgasAlcool, curdisol, curmember, curcreditshelf, curWashcar, curyoyocard, curecard, curhappycash, curactivitytime;
         SharedPreferences prefs = getApplication().getSharedPreferences("DATA0", Context.MODE_PRIVATE);
         location = prefs.getString("curlocation0", null);
         countryNameS = prefs.getString("countryName0", null);
