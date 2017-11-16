@@ -7,6 +7,7 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpage"
+        android:background="@drawable/bgd_great"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

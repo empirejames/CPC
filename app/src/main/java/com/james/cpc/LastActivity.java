@@ -2,8 +2,10 @@ package com.james.cpc;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,19 +15,28 @@ import android.widget.TextView;
  * Created by 101716 on 2017/11/15.
  */
 
-public class LastActivity extends Activity {
+public class LastActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener{
     public String TAG = LastActivity.class.getSimpleName();
     TextView countryName, curStation, curtel;
     TextView curStates, curPM, curAQI, curPublishTime;
     TextView oil_supply_92,oil_supply_95,oil_supply_98,oil_supply_disol,oil_supply_Alloc,ecard,yoyocard,happycash, members, creditself, washCar, activityTime;
-
+    private SwipeRefreshLayout laySwipe;
     LinearLayout bgElement ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         bgElement = (LinearLayout) findViewById(R.id.DefaultLinearLayout);
+        laySwipe = (SwipeRefreshLayout) findViewById(R.id.laySwipe);
+        laySwipe.setOnRefreshListener(this);
         getData();
+    }
+    @Override
+    public void onRefresh() {
+        Intent i = new Intent(LastActivity.this, ViewPageController.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(i);
+        laySwipe.setRefreshing(false);
     }
 
     public void getData() {
