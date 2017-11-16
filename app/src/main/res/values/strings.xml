@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">CPC</string>
+    <string name="app_name">加油便利站</string>
+    <string name="gas92">92</string>
+    <string name="gas95">95</string>
+    <string name="gas98">98</string>
+    <string name="gasAlcooh">酒汽</string>
+    <string name="disal">超柴</string>
+    <string name="has_member">有</string>
+    <string name="has_credit">有</string>
+    <string name="ePay">一卡通</string>
+    <string name="yoyocard">悠遊卡</string>
+    <string name="happycash">H-Cash</string>
+    <string name="washCar">精緻洗車</string>
+    <string name="washCarperson">精緻手工</string>
+    <string name="washCarshelf">自助投幣式</string>
+
 </resources>

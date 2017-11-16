@@ -187,36 +187,78 @@ public class ViewPageController extends AppCompatActivity {
                             , line[15], line[16], line[17], line[19]
                             , line[20], line[21], line[22], line[23], line[24]
                             , line[25], line[26], line[27], line[28], distanceKil[0], distanceKil[1]));
-                    Log.e(TAG, line[1] + " " + line[2] + " " + line[4] + " " + line[6]
-                            + " " + line[10] + " " + line[11] + " " + line[12] + " " + line[13]
-                            + " " + line[15] + " " + line[16] + " " + line[17] + " " + line[19]
-                            + " " + line[20] + " " + line[21] + " " + line[22] + " " + line[23] + " " + line[24]
-                            + " " + line[25] + " " + line[26] + " " + line[27] + " " + line[28] + " " + distanceKil[0] + " " + distanceKil[1]);
+//                    Log.e(TAG,  " 1 :" +line[1] + " 2 : " + line[2] + " 4 : " + line[4] + " 6 : " + line[6]
+//                            + " 10: " + line[10] + " 11: " + line[11] + " 12: " + line[12] + " 13: " + line[13]
+//                            + " 15: " + line[15] + " 16: " + line[16] + " 17: " + line[17] + " 19: " + line[19]
+//                            + " 20: " + line[20] + " 21: " + line[21] + " 22: " + line[22] + " 23: " + line[23] + " 24: " + line[24]
+//                            + " 25: " + line[25] + " 26: " + line[26] + " 27: " + line[27] + " 28: " + line[28] + " " + distanceKil[0] + " " + distanceKil[1]);
                 }
             }
             DistanceSort(myDataset);
-            //Log.e(TAG, myDataset.get(0).getDistance() + myDataset.get(0).getDistanceM() + " " + myDataset.get(0).getStationName() + myDataset.get(0).getCountryName());
+//            Log.e(TAG, myDataset.get(0).getDistance() + myDataset.get(0).getDistanceM() + " " + myDataset.get(0).getStationName() + myDataset.get(0).getCountryName()
+//                    +" :: "+ myDataset.get(0).getActiveTime());
+//            Log.e(TAG, myDataset.get(1).getDistance() + myDataset.get(1).getDistanceM() + " " + myDataset.get(1).getStationName() + myDataset.get(1).getCountryName()
+//                    +" :: "+ myDataset.get(1).getActiveTime());
+//            Log.e(TAG, myDataset.get(2).getDistance() + myDataset.get(2).getDistanceM() + " " + myDataset.get(2).getStationName() + myDataset.get(2).getCountryName()
+//                    +" :: "+ myDataset.get(2).getWashCar());
             setDataToMain(myDataset.get(0).getCountryName()
                     ,myDataset.get(0).getSelfStation() +" " +myDataset.get(0).getStationName()
                     ,myDataset.get(0).getDistance() + "公" + myDataset.get(0).getDistanceM()
                     ,mGridData.get(0).getStatus()
                     ,"PM2.5指數 : "+mGridData.get(0).getPM25_AVG()
                     ,"空氣AQI指數 : "+mGridData.get(0).getAQI()
-                    ,"更新時間 : "+mGridData.get(0).getPublishTime());
+                    ,"更新時間 : "+mGridData.get(0).getPublishTime()
+                    ,myDataset.get(0).getGas92()
+                    ,myDataset.get(0).getGas95()
+                    ,myDataset.get(0).getGas98()
+                    ,myDataset.get(0).getAlcohol()
+                    ,myDataset.get(0).getSuperDiesel()
+                    ,myDataset.get(0).getMembership()
+                    ,myDataset.get(0).getMakeSelf()
+                    ,myDataset.get(0).getWashCar()
+                    ,myDataset.get(0).getYoyocard()
+                    ,myDataset.get(0).getECard()
+                    ,myDataset.get(0).getHappyCash()
+                    ,myDataset.get(0).getActiveTime()
+            );
             setDataToMiddle(myDataset.get(1).getCountryName()
                     ,myDataset.get(1).getSelfStation() +" " +myDataset.get(1).getStationName()
                     ,myDataset.get(1).getDistance() + "公" + myDataset.get(1).getDistanceM()
                     ,mGridData.get(1).getStatus()
                     ,"PM2.5指數 : "+mGridData.get(1).getPM25_AVG()
                     ,"空氣AQI指數 : "+mGridData.get(1).getAQI()
-                    ,"更新時間 : "+mGridData.get(1).getPublishTime());
+                    ,"更新時間 : "+mGridData.get(1).getPublishTime()
+                    ,myDataset.get(1).getGas92()
+                    ,myDataset.get(1).getGas95()
+                    ,myDataset.get(1).getGas98()
+                    ,myDataset.get(1).getAlcohol()
+                    ,myDataset.get(1).getSuperDiesel()
+                    ,myDataset.get(1).getMembership()
+                    ,myDataset.get(1).getMakeSelf()
+                    ,myDataset.get(1).getWashCar()
+                    ,myDataset.get(1).getYoyocard()
+                    ,myDataset.get(1).getECard()
+                    ,myDataset.get(1).getHappyCash()
+                    ,myDataset.get(1).getActiveTime());
             setDataToLast(myDataset.get(2).getCountryName()
                     ,myDataset.get(2).getSelfStation() +" " +myDataset.get(2).getStationName()
                     ,myDataset.get(2).getDistance() + "公" + myDataset.get(2).getDistanceM()
                     ,mGridData.get(2).getStatus()
                     ,"PM2.5指數 : "+mGridData.get(1).getPM25_AVG()
                     ,"空氣AQI指數 : "+mGridData.get(1).getAQI()
-                    ,"更新時間 : "+mGridData.get(1).getPublishTime());
+                    ,"更新時間 : "+mGridData.get(1).getPublishTime()
+                    ,myDataset.get(2).getGas92()
+                    ,myDataset.get(2).getGas95()
+                    ,myDataset.get(2).getGas98()
+                    ,myDataset.get(2).getAlcohol()
+                    ,myDataset.get(2).getSuperDiesel()
+                    ,myDataset.get(2).getMembership()
+                    ,myDataset.get(2).getMakeSelf()
+                    ,myDataset.get(2).getWashCar()
+                    ,myDataset.get(2).getYoyocard()
+                    ,myDataset.get(2).getECard()
+                    ,myDataset.get(2).getHappyCash()
+                    ,myDataset.get(2).getActiveTime());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -230,7 +272,8 @@ public class ViewPageController extends AppCompatActivity {
             }
         }
     }
-    public void setDataToMain(String a, String b, String c, String d, String e,String f,String g ){
+    public void setDataToMain(String a, String b, String c, String d, String e,String f,String g,String h
+    ,String i,String j,String k,String l,String m,String n,String o,String p,String q,String r,String s){
 
         SharedPreferences prefs = getApplication().getSharedPreferences("DATA",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -242,10 +285,23 @@ public class ViewPageController extends AppCompatActivity {
         editor.putString("curPM", e);
         editor.putString("curAQI", f);
         editor.putString("curPublishTime", g);
+        editor.putString("curgas92", h);
+        editor.putString("curgas95", i);
+        editor.putString("curgas98", j);
+        editor.putString("curgasAlcool", k);
+        editor.putString("curdisol", l);
+        editor.putString("curmember", m);
+        editor.putString("curcreditshelf", n);
+        editor.putString("curWashcar", o);
+        editor.putString("curyoyocard", p);
+        editor.putString("curecard", q);
+        editor.putString("curhappycash", r);
+        editor.putString("curactivitytime", s);
         editor.commit();
 
     }
-    public void setDataToMiddle(String a, String b, String c, String d, String e,String f,String g ){
+    public void setDataToMiddle(String a, String b, String c, String d, String e,String f,String g, String h
+            ,String i,String j,String k,String l,String m,String n,String o,String p,String q,String r,String s){
         SharedPreferences prefs = getApplication().getSharedPreferences("DATA1",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.clear();
@@ -256,9 +312,22 @@ public class ViewPageController extends AppCompatActivity {
         editor.putString("curPM1", e);
         editor.putString("curAQI1", f);
         editor.putString("curPublishTime1", g);
+        editor.putString("curgas921", h);
+        editor.putString("curgas951", i);
+        editor.putString("curgas981", j);
+        editor.putString("curgasAlcool1", k);
+        editor.putString("curdisol1", l);
+        editor.putString("curmember1", m);
+        editor.putString("curcreditshelf1", n);
+        editor.putString("curWashcar1", o);
+        editor.putString("curyoyocard1", p);
+        editor.putString("curecard1", q);
+        editor.putString("curhappycash1", r);
+        editor.putString("curactivitytime1", s);
         editor.commit();
     }
-    public void setDataToLast(String a, String b, String c, String d, String e,String f,String g ){
+    public void setDataToLast(String a, String b, String c, String d, String e,String f,String g,String h
+            ,String i,String j,String k,String l,String m,String n,String o,String p,String q,String r,String s ){
         SharedPreferences prefs = getApplication().getSharedPreferences("DATA2",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.clear();
@@ -269,6 +338,18 @@ public class ViewPageController extends AppCompatActivity {
         editor.putString("curPM2", e);
         editor.putString("curAQI2", f);
         editor.putString("curPublishTime2", g);
+        editor.putString("curgas922", h);
+        editor.putString("curgas952", i);
+        editor.putString("curgas982", j);
+        editor.putString("curgasAlcool2", k);
+        editor.putString("curdisol2", l);
+        editor.putString("curmember2", m);
+        editor.putString("curcreditshelf2", n);
+        editor.putString("curWashcar2", o);
+        editor.putString("curyoyocard2", p);
+        editor.putString("curecard2", q);
+        editor.putString("curhappycash2", r);
+        editor.putString("curactivitytime2", s);
         editor.commit();
     }
     public void getData(String url) {

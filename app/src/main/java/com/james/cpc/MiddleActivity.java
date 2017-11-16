@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,6 +17,8 @@ public class MiddleActivity extends Activity {
     public String TAG = MiddleActivity.class.getSimpleName();
     TextView countryName, curStation, curtel;
     TextView curStates, curPM, curAQI, curPublishTime;
+    TextView oil_supply_92,oil_supply_95,oil_supply_98,oil_supply_disol,oil_supply_Alloc,ecard,yoyocard,happycash, members, creditself, washCar, activityTime;
+
     LinearLayout bgElement ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +28,11 @@ public class MiddleActivity extends Activity {
         getData();
     }
     public void getData() {
-        Log.e(TAG,"getData 1....");
+        Log.e(TAG,"getData 1 ....");
         String countryNameS, curStationS, curte1S, curStatesS, curPMS, curAQIS, curPublishTimeS;
-        SharedPreferences prefs = getApplication().getSharedPreferences("DATA1", Context.MODE_PRIVATE);
+        String curgas92, curgas95, curgas98, curgasAlcool, curdisol, curmember, curcreditshelf
+                ,curWashcar,curyoyocard,curecard,curhappycash,curactivitytime;
+        SharedPreferences prefs = getApplication().getSharedPreferences("DATA1",Context.MODE_PRIVATE);
         countryNameS = prefs.getString("countryName1", null);
         curStationS = prefs.getString("curStation1", null);
         curte1S = prefs.getString("curDistance1", null);
@@ -35,17 +40,79 @@ public class MiddleActivity extends Activity {
         curPMS = prefs.getString("curPM1", null);
         curAQIS = prefs.getString("curAQI1", null);
         curPublishTimeS = prefs.getString("curPublishTime1", null);
-        Log.e(TAG,"Middle curte1S "  + curte1S);
-        setupView(countryNameS,curStationS,curte1S,curStatesS,curPMS,curAQIS,curPublishTimeS);
+        curgas92 = prefs.getString("curgas921", null);
+        curgas95= prefs.getString("curgas951", null);
+        curgas98= prefs.getString("curgas981", null);
+        curgasAlcool= prefs.getString("curgasAlcool1", null);
+        curdisol= prefs.getString("curdisol1", null);
+        curmember= prefs.getString("curmember1", null);
+        curcreditshelf= prefs.getString("curcreditshelf1", null);
+        curWashcar= prefs.getString("curWashcar1", null);
+        curyoyocard= prefs.getString("curyoyocard1", null);
+        curecard= prefs.getString("curecard1", null);
+        curhappycash= prefs.getString("curhappycash1", null);
+        curactivitytime= prefs.getString("curactivitytime1", null);
+        setupView(countryNameS,curStationS,curte1S,curStatesS,curPMS,curAQIS,curPublishTimeS,curgas92
+                ,curgas95,curgas98,curgasAlcool,curdisol,curmember,curcreditshelf,curWashcar,curyoyocard,curecard
+                ,curhappycash,curactivitytime);
     }
-    public void setupView(String a, String b, String c, String d, String e, String f, String g) {
-        countryName =  findViewById(R.id.countryName);
-        curStation =  findViewById(R.id.curStation);
-        curtel =  findViewById(R.id.curtel);
-        curStates =  findViewById(R.id.curStates);
-        curPM = findViewById(R.id.curPM);
-        curAQI =  findViewById(R.id.curAQI);
-        curPublishTime = findViewById(R.id.curPublishTime);
+    public void setupView(String a, String b, String c, String d, String e, String f, String g,String h
+            ,String i,String j,String k,String l,String m,String n,String o,String p,String q,String r,String s) {
+        countryName = (TextView) findViewById(R.id.countryName);
+        curStation = (TextView) findViewById(R.id.curStation);
+        curtel = (TextView) findViewById(R.id.curtel);
+        curStates = (TextView) findViewById(R.id.curStates);
+        curPM = (TextView) findViewById(R.id.curPM);
+        curAQI = (TextView) findViewById(R.id.curAQI);
+        curPublishTime = (TextView) findViewById(R.id.curPublishTime);
+        oil_supply_92 = (TextView) findViewById(R.id.oil_supply_92);
+        oil_supply_95 = (TextView) findViewById(R.id.oil_supply_95);
+        oil_supply_98 = (TextView) findViewById(R.id.oil_supply_98);
+        oil_supply_disol = (TextView) findViewById(R.id.oil_supply_disol);
+        oil_supply_Alloc = (TextView) findViewById(R.id.oil_supply_Alloc);
+        members = (TextView) findViewById(R.id.members);
+        creditself = (TextView) findViewById(R.id.creditself);
+        ecard = (TextView) findViewById(R.id.ecard);
+        yoyocard = (TextView) findViewById(R.id.yoyocard);
+        happycash = (TextView) findViewById(R.id.happycash);
+        washCar = (TextView) findViewById(R.id.washCar);
+        activityTime = (TextView) findViewById(R.id.activityTime);
+        Log.e(TAG,h+" i "+i+" j "+j+" k "+k+" l "+l+" m "+m+" n "+n+" o "+o+" p "+p+" q "+q+" r "+r+" s "+s);
+        if(h.equals("1")){
+            oil_supply_92.setVisibility(View.VISIBLE);
+        }
+        if(i.equals("1")){
+            oil_supply_95.setVisibility(View.VISIBLE);
+        }
+        if(j.equals("1")){
+            oil_supply_98.setVisibility(View.VISIBLE);
+        }
+        if(k.equals("1")){
+            oil_supply_Alloc.setVisibility(View.VISIBLE);
+        }
+        if(l.equals("1")){
+            oil_supply_disol.setVisibility(View.VISIBLE);
+        }
+        if(m.equals("1")){
+            members.setVisibility(View.VISIBLE);
+        }
+        if(n.equals("1")){
+            creditself.setVisibility(View.VISIBLE);
+        }
+        washCar.setVisibility(View.VISIBLE);
+        washCar.setText(o);
+        if(p.equals("1")){
+            yoyocard.setVisibility(View.VISIBLE);
+        }
+        if(q.equals("1")){
+            ecard.setVisibility(View.VISIBLE);
+        }
+        if(r.equals("1")){
+            happycash.setVisibility(View.VISIBLE);
+        }
+        activityTime.setVisibility(View.VISIBLE);
+        activityTime.setText(s);
+
 
         countryName.setText(a);
         curStation.setText(b);
@@ -54,6 +121,10 @@ public class MiddleActivity extends Activity {
         curPM.setText(e);
         curAQI.setText(f);
         curPublishTime.setText(g);
+
+
+
+
         if(d.equals("良好")){
             bgElement.setBackgroundResource(R.drawable.bgd_great);
         }else if(d.equals("普通")){

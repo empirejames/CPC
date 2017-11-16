@@ -9,15 +9,16 @@ import android.content.Context;
 public class gasStationItem {
     String TAG = gasStationItem.class.getSimpleName();
     private String selfStation, stationName, countryName, phone, gas92, gas95, gas98
-            , alcohol, superDiesel, membership, makeSelf, Dieselself, invoice, easyCard, eCard
-            , happyCash, longitude, latitude, activeTime, washCar, etagTopup, distance, distanceM;
+            , alcohol, superDiesel, membership, makeSelf, Dieselself, invoice, yoyocard, eCard
+            , happyCash, longitude, latitude, activeTime, washCar, etagTopup,maintain, distance, distanceM;
     Context context;
     private int _id;
 
     public gasStationItem(String selfStation, String stationName, String countryName, String phone
-            , String gas92, String gas95, String gas98, String alcohol, String superDiesel, String membership
-            ,String makeSelf, String Dieselself, String invoice, String easyCard, String eCard, String happyCash
-    ,String longitude, String latitude, String activeTime, String washCar, String etagTopup,String distance,String distanceM) {
+            , String gas92, String gas95, String gas98, String alcohol
+            , String superDiesel, String membership,String makeSelf,String Dieselself
+            , String yoyocard, String eCard, String happyCash, String longitude,String latitude
+            , String activeTime, String washCar, String etagTopup, String maintain,String distance,String distanceM) {
         this.selfStation = selfStation; //自營 直營
         this.stationName = stationName; //站名
         this.countryName = countryName; //鄉鎮名
@@ -31,7 +32,7 @@ public class gasStationItem {
         this.makeSelf = makeSelf; //刷卡自助
         this.Dieselself = Dieselself; //自助柴油
         this.invoice = invoice; //電子發票
-        this.easyCard = easyCard; //悠游卡
+        this.yoyocard = yoyocard; //悠游卡
         this.eCard = eCard; //一卡通
         this.happyCash = happyCash; //HappyCash
         this.longitude = longitude; //經度
@@ -62,6 +63,9 @@ public class gasStationItem {
     public String getPhone() {
         return phone;
     }
+    public String getYoyocard() {
+        return yoyocard;
+    }
 
     public String getGas92() {
         return gas92;
@@ -91,9 +95,6 @@ public class gasStationItem {
     }
     public String getInvoice() {
         return invoice;
-    }
-    public String getEasyCard() {
-        return easyCard;
     }
     public String getHappyCash() {
         return happyCash;
