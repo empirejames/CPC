@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
     String countryNameS, curStationS, curte1S, curStatesS, curPMS, curAQIS, curPublishTimeS;
     String location, curgas92, curgas95, curgas98, curgasAlcool, curdisol, curmember, curcreditshelf, curWashcar, curyoyocard, curecard, curhappycash, curactivitytime;
     private SwipeRefreshLayout laySwipe;
+    private ImageView img_right, img_left;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +107,9 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
 
     public void setupView(String location,String a, String b, String c, String d, String e, String f, String g, String h
             , String i, String j, String k, String l, String m, String n, String o, String p, String q, String r, String s) {
+        img_right = (ImageView) findViewById(R.id.img_right);
+        img_left= (ImageView) findViewById(R.id.img_left);
+        img_left.setVisibility(View.GONE);
         stationName = (TextView)findViewById(R.id.stationName);
         countryName = (TextView) findViewById(R.id.countryName);
         curStation = (TextView) findViewById(R.id.curStation);
