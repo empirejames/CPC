@@ -8,13 +8,13 @@ import android.content.Context;
 
 public class gasStationItem {
     String TAG = gasStationItem.class.getSimpleName();
-    private String selfStation, stationName, countryName, phone, gas92, gas95, gas98
+    private String selfStation, stationName, countryName, location, gas92, gas95, gas98
             , alcohol, superDiesel, membership, makeSelf, Dieselself, invoice, yoyocard, eCard
             , happyCash, longitude, latitude, activeTime, washCar, etagTopup,maintain, distance, distanceM;
     Context context;
     private int _id;
 
-    public gasStationItem(String selfStation, String stationName, String countryName, String phone
+    public gasStationItem(String selfStation, String stationName, String countryName, String location
             , String gas92, String gas95, String gas98, String alcohol
             , String superDiesel, String membership,String makeSelf,String Dieselself
             , String yoyocard, String eCard, String happyCash, String longitude,String latitude
@@ -22,7 +22,7 @@ public class gasStationItem {
         this.selfStation = selfStation; //自營 直營
         this.stationName = stationName; //站名
         this.countryName = countryName; //鄉鎮名
-        this.phone = phone; //電話
+        this.location = location; //地址
         this.gas92 = gas92; //92油
         this.gas95 = gas95; //95油
         this.gas98 = gas98; //98油
@@ -60,8 +60,8 @@ public class gasStationItem {
     public String getCountryName() {
         return countryName;
     }
-    public String getPhone() {
-        return phone;
+    public String getLocation() {
+        return location;
     }
     public String getYoyocard() {
         return yoyocard;

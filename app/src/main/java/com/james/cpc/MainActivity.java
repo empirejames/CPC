@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     private String TAG = MainActivity.class.getSimpleName();
-    TextView countryName, curStation, curtel;
+    TextView countryName, curStation, curtel, stationName;
     TextView curStates, curPM, curAQI, curPublishTime;
     TextView oil_supply_92, oil_supply_95, oil_supply_98, oil_supply_disol, oil_supply_Alloc, ecard, yoyocard, happycash, members, creditself, washCar, activityTime;
     LinearLayout bgElement;
@@ -60,8 +60,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     public void getData() {
         Log.e(TAG, "getData 0 ....");
         String countryNameS, curStationS, curte1S, curStatesS, curPMS, curAQIS, curPublishTimeS;
-        String curgas92, curgas95, curgas98, curgasAlcool, curdisol, curmember, curcreditshelf, curWashcar, curyoyocard, curecard, curhappycash, curactivitytime;
+        String location, curgas92, curgas95, curgas98, curgasAlcool, curdisol, curmember, curcreditshelf, curWashcar, curyoyocard, curecard, curhappycash, curactivitytime;
         SharedPreferences prefs = getApplication().getSharedPreferences("DATA0", Context.MODE_PRIVATE);
+        location = prefs.getString("curlocation0", null);
         countryNameS = prefs.getString("countryName0", null);
         curStationS = prefs.getString("curStation0", null);
         curte1S = prefs.getString("curDistance0", null);
@@ -81,13 +82,14 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         curecard = prefs.getString("curecard0", null);
         curhappycash = prefs.getString("curhappycash0", null);
         curactivitytime = prefs.getString("curactivitytime0", null);
-        setupView(countryNameS, curStationS, curte1S, curStatesS, curPMS, curAQIS, curPublishTimeS, curgas92
+        setupView(location,countryNameS, curStationS, curte1S, curStatesS, curPMS, curAQIS, curPublishTimeS, curgas92
                 , curgas95, curgas98, curgasAlcool, curdisol, curmember, curcreditshelf, curWashcar, curyoyocard, curecard
                 , curhappycash, curactivitytime);
     }
 
-    public void setupView(String a, String b, String c, String d, String e, String f, String g, String h
+    public void setupView(String location,String a, String b, String c, String d, String e, String f, String g, String h
             , String i, String j, String k, String l, String m, String n, String o, String p, String q, String r, String s) {
+        stationName = (TextView)findViewById(R.id.stationName);
         countryName = (TextView) findViewById(R.id.countryName);
         curStation = (TextView) findViewById(R.id.curStation);
         curtel = (TextView) findViewById(R.id.curtel);
@@ -123,34 +125,40 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         if (l.equals("1")) {
             oil_supply_disol.setVisibility(View.VISIBLE);
         }
-        if (m.equals("1")) {
-            members.setVisibility(View.VISIBLE);
+        members.setVisibility(View.VISIBLE);
+        if (m.equals("0")) {
+            members.setText("無");
         }
-        if (n.equals("1")) {
-            creditself.setVisibility(View.VISIBLE);
+        creditself.setVisibility(View.VISIBLE);
+        if (n.equals("0")) {
+            creditself.setText("無");
         }
         washCar.setVisibility(View.VISIBLE);
         if (o.length() == 0) {
-            washCar.setText("無洗車");
+            washCar.setText("無");
         } else {
             washCar.setText(o);
         }
-
-        if (p.equals("1")) {
-            yoyocard.setVisibility(View.VISIBLE);
+        yoyocard.setVisibility(View.VISIBLE);
+        if (p.equals("0")) {
+            yoyocard.setText("無");
         }
-        if (q.equals("1")) {
-            ecard.setVisibility(View.VISIBLE);
+        ecard.setVisibility(View.VISIBLE);
+        if (q.equals("0")) {
+            ecard.setText("");
         }
-        if (r.equals("1")) {
-            happycash.setVisibility(View.VISIBLE);
+        happycash.setVisibility(View.VISIBLE);
+        if (r.equals("0")) {
+            happycash.setText("");
         }
         activityTime.setVisibility(View.VISIBLE);
         activityTime.setText(s);
 
 
         countryName.setText(a);
-        curStation.setText(b);
+
+        stationName.setText(b);
+        curStation.setText(location);
         curtel.setText(c);
         curStates.setText(d);
         curPM.setText(e);

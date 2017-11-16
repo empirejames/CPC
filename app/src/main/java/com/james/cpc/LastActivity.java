@@ -42,9 +42,10 @@ public class LastActivity extends Activity implements SwipeRefreshLayout.OnRefre
     public void getData() {
         Log.e(TAG,"getData 2 ....");
         String countryNameS, curStationS, curte1S, curStatesS, curPMS, curAQIS, curPublishTimeS;
-        String curgas92, curgas95, curgas98, curgasAlcool, curdisol, curmember, curcreditshelf
+        String location,curgas92, curgas95, curgas98, curgasAlcool, curdisol, curmember, curcreditshelf
                 ,curWashcar,curyoyocard,curecard,curhappycash,curactivitytime;
         SharedPreferences prefs = getApplication().getSharedPreferences("DATA2",Context.MODE_PRIVATE);
+        location = prefs.getString("curlocation2", null);
         countryNameS = prefs.getString("countryName2", null);
         curStationS = prefs.getString("curStation2", null);
         curte1S = prefs.getString("curDistance2", null);
@@ -64,12 +65,12 @@ public class LastActivity extends Activity implements SwipeRefreshLayout.OnRefre
         curecard= prefs.getString("curecard2", null);
         curhappycash= prefs.getString("curhappycash2", null);
         curactivitytime= prefs.getString("curactivitytime2", null);
-        setupView(countryNameS,curStationS,curte1S,curStatesS,curPMS,curAQIS,curPublishTimeS,curgas92
+        setupView(location,countryNameS,curStationS,curte1S,curStatesS,curPMS,curAQIS,curPublishTimeS,curgas92
                 ,curgas95,curgas98,curgasAlcool,curdisol,curmember,curcreditshelf,curWashcar,curyoyocard,curecard
                 ,curhappycash,curactivitytime);
     }
-    public void setupView(String a, String b, String c, String d, String e, String f, String g,String h
-            ,String i,String j,String k,String l,String m,String n,String o,String p,String q,String r,String s) {
+    public void setupView(String location, String a, String b, String c, String d, String e, String f, String g, String h
+            , String i, String j, String k, String l, String m, String n, String o, String p, String q, String r, String s) {
         countryName = (TextView) findViewById(R.id.countryName);
         curStation = (TextView) findViewById(R.id.curStation);
         curtel = (TextView) findViewById(R.id.curtel);
@@ -89,59 +90,64 @@ public class LastActivity extends Activity implements SwipeRefreshLayout.OnRefre
         happycash = (TextView) findViewById(R.id.happycash);
         washCar = (TextView) findViewById(R.id.washCar);
         activityTime = (TextView) findViewById(R.id.activityTime);
-        Log.e(TAG,h+" i "+i+" j "+j+" k "+k+" l "+l+" m "+m+" n "+n+" o "+o+" p "+p+" q "+q+" r "+r+" s "+s);
-        if(h.equals("1")){
+        Log.e(TAG, h + " i " + i + " j " + j + " k " + k + " l " + l + " m " + m + " n " + n + " o " + o + " p " + p + " q " + q + " r " + r + " s " + s);
+        if (h.equals("1")) {
             oil_supply_92.setVisibility(View.VISIBLE);
         }
-        if(i.equals("1")){
+        if (i.equals("1")) {
             oil_supply_95.setVisibility(View.VISIBLE);
         }
-        if(j.equals("1")){
+        if (j.equals("1")) {
             oil_supply_98.setVisibility(View.VISIBLE);
         }
-        if(k.equals("1")){
+        if (k.equals("1")) {
             oil_supply_Alloc.setVisibility(View.VISIBLE);
         }
-        if(l.equals("1")){
+        if (l.equals("1")) {
             oil_supply_disol.setVisibility(View.VISIBLE);
         }
-        if(m.equals("1")){
-            members.setVisibility(View.VISIBLE);
+        members.setVisibility(View.VISIBLE);
+        if (m.equals("0")) {
+            members.setText("無");
         }
-        if(n.equals("1")){
-            creditself.setVisibility(View.VISIBLE);
+        creditself.setVisibility(View.VISIBLE);
+        if (n.equals("0")) {
+            creditself.setText("無");
         }
         washCar.setVisibility(View.VISIBLE);
-        washCar.setText(o);
-        if(p.equals("1")){
-            yoyocard.setVisibility(View.VISIBLE);
+        if (o.length() == 0) {
+            washCar.setText("無");
+        } else {
+            washCar.setText(o);
         }
-        if(q.equals("1")){
-            ecard.setVisibility(View.VISIBLE);
+        yoyocard.setVisibility(View.VISIBLE);
+        if (p.equals("0")) {
+            yoyocard.setText("無");
         }
-        if(r.equals("1")){
-            happycash.setVisibility(View.VISIBLE);
+        ecard.setVisibility(View.VISIBLE);
+        if (q.equals("0")) {
+            ecard.setText("");
+        }
+        happycash.setVisibility(View.VISIBLE);
+        if (r.equals("0")) {
+            happycash.setText("");
         }
         activityTime.setVisibility(View.VISIBLE);
         activityTime.setText(s);
 
 
         countryName.setText(a);
-        curStation.setText(b);
+        curStation.setText(location);
         curtel.setText(c);
         curStates.setText(d);
         curPM.setText(e);
         curAQI.setText(f);
         curPublishTime.setText(g);
-
-
-
-
-        if(d.equals("良好")){
+        if (d.equals("良好")) {
             bgElement.setBackgroundResource(R.drawable.bgd_great);
-        }else if(d.equals("普通")){
+        } else if (d.equals("普通")) {
             bgElement.setBackgroundResource(R.drawable.bgd);
-        }else{
+        } else {
             bgElement.setBackgroundResource(R.drawable.bgd_danger);
         }
     }

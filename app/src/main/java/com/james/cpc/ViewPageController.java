@@ -22,15 +22,11 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
-import android.widget.TabHost;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -39,7 +35,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-
 import au.com.bytecode.opencsv.CSVReader;
 
 /**
@@ -102,7 +97,7 @@ public class ViewPageController extends AppCompatActivity {
                         android.Manifest.permission.ACCESS_FINE_LOCATION,
                         android.Manifest.permission.ACCESS_COARSE_LOCATION,
                 }, REQUEST_CODE_ASK_ALL);
-
+                locationServiceInitial();
                 //finish();
             } else {
                 Location location = lms.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -139,13 +134,12 @@ public class ViewPageController extends AppCompatActivity {
         }
     }
     private void DistanceSort(ArrayList<gasStationItem> gasSation) {
-        //Log.e(TAG, "Sort");
+        Log.e(TAG, "Sort"   + gasSation);
         Collections.sort(gasSation, new Comparator<gasStationItem>() {
             @Override
             public int compare(gasStationItem gasS1, gasStationItem gasS2) {
                 double a = Double.parseDouble(gasS1.getDistance());
                 double b = Double.parseDouble(gasS2.getDistance());
-                //Log.e(TAG,a + " V.S " + b);
                 return a < b ? -1 : 1;
             }
         });
@@ -172,11 +166,12 @@ public class ViewPageController extends AppCompatActivity {
                     if (!line[23].equals("NULL") || !line[24].equals("NULL")) {
                         distanceFin = DistanceText(Distance(Double.parseDouble(line[23]), Double.parseDouble(line[24]), longitude, latitude));
                     } else {
-                        distanceFin = "610.12 公里";
+                        int num1= (int)(Math.random()*99)+1;
+                        distanceFin = "610."+num1 +" 公里";
                     }
                     String[] distanceKil = distanceFin.split("公");
                     myDataset.add(new gasStationItem(
-                            line[1], line[2], line[3], line[6]
+                            line[1], line[2], line[3], line[5]
                             , line[10], line[11], line[12], line[13]
                             , line[15], line[16], line[17], line[19]
                             , line[20], line[21], line[22], line[23], line[24]
@@ -197,8 +192,9 @@ public class ViewPageController extends AppCompatActivity {
 //                    +" :: "+ myDataset.get(2).getWashCar());
 
             for(int i=0;i<=2;i++){
-                setDataToMain(i+"",
-                        myDataset.get(i).getCountryName()
+                setDataToMain(i+""
+                        ,myDataset.get(i).getLocation()
+                        ,myDataset.get(i).getCountryName()
                         ,myDataset.get(i).getSelfStation() +" " +myDataset.get(i).getStationName()
                         ,myDataset.get(i).getDistance() + "公" + myDataset.get(i).getDistanceM()
                         ,mGridData.get(i).getStatus()
@@ -234,12 +230,13 @@ public class ViewPageController extends AppCompatActivity {
             }
         }
     }
-    public void setDataToMain(String pageNm,String a, String b, String c, String d, String e,String f,String g,String h
+    public void setDataToMain(String pageNm,String location, String a, String b, String c, String d, String e,String f,String g,String h
     ,String i,String j,String k,String l,String m,String n,String o,String p,String q,String r,String s) {
 
         SharedPreferences prefs = getApplication().getSharedPreferences("DATA" + pageNm, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.clear();
+        editor.putString("curlocation" + pageNm, location);
         editor.putString("countryName" + pageNm, a);
         editor.putString("curStation" + pageNm, b);
         editor.putString("curDistance" + pageNm, c);
