@@ -6,11 +6,8 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,7 +20,6 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
     String countryNameS, curStationS, curte1S, curStatesS, curPMS, curAQIS, curPublishTimeS;
     String location, curgas92, curgas95, curgas98, curgasAlcool, curdisol, curmember, curcreditshelf, curWashcar, curyoyocard, curecard, curhappycash, curactivitytime;
     private SwipeRefreshLayout laySwipe;
-    private ImageView img_right, img_left;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

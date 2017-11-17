@@ -17,24 +17,37 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
+import android.support.annotation.BoolRes;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -43,6 +56,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
 import au.com.bytecode.opencsv.CSVReader;
 
 /**
@@ -58,55 +72,81 @@ public class ViewPageController extends AppCompatActivity {
     private String getCity, getSelfStation, getStationName, getDistance;
     private ArrayList<AirLoacationItem> mGridData;
     private LocationManager lms;
+    final ArrayList<View> list = new ArrayList<View>();
     final private int REQUEST_CODE_ASK_ALL = 122;
     Double longitude, latitude;
     private String distanceFin;
     ArrayList<gasStationItem> myDataset = new ArrayList<gasStationItem>();
-
-
-
+    Button btnDiglog;
+    RatingBar ratingbarStart;
+    Boolean isWashCar ;
+    Boolean isGasSelf ;
+    SwitchCompat swWash;
+    SwitchCompat swSelf;
     protected ProgressDialog dialogSMS;
     private String TAG = ViewPageController.class.getSimpleName();
     private int offset = 0;// 动画图片偏移量
     private int currIndex = 0;// 当前页卡编号
     private int bmpW;// 动画图片宽度
     private ImageView cursor;// 动画图片
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        isWashCar = false;
+        isGasSelf = false;
         InitImageView();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
         context = ViewPageController.this;
-        manager = new LocalActivityManager(this , true);
+        manager = new LocalActivityManager(this, true);
         manager.dispatchCreate(savedInstanceState);
         mGridData = new ArrayList<>();
         startDialog();
         checkPermission();
-            //getStation();
-            //CSVReadAir();
+        //getStation();
+        //CSVReadAir();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            Log.e(TAG,"SETTING");
+            Log.e(TAG, "SETTING");
             return true;
         } else if (id == R.id.action_filter) {
-            Log.e(TAG,"FILTER");
+            Log.e(TAG, "Show FILTER");
+            showDialog();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void writeDb(boolean a, boolean b) {
+        SharedPreferences prefs = getApplication().getSharedPreferences("Button", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("a", a);
+        editor.putBoolean("b", b);
+        editor.commit();
+    }
+
+    public void readDB() {
+        SharedPreferences prefs = getApplication().getSharedPreferences("Button", Context.MODE_PRIVATE);
+        isWashCar = prefs.getBoolean("a", false);
+        isGasSelf = prefs.getBoolean("b", false);
+        Log.e(TAG,"isWashCar : " + isWashCar + " isGasSelf : " + isGasSelf);
+    }
+
     private void InitImageView() {
         cursor = (ImageView) findViewById(R.id.cursor);
         bmpW = BitmapFactory.decodeResource(getResources(), R.drawable.roller)
@@ -119,6 +159,7 @@ public class ViewPageController extends AppCompatActivity {
         matrix.postTranslate(offset, 0);
         cursor.setImageMatrix(matrix);// 设置动画初始位置
     }
+
     public void checkPermission() {
         lms = (LocationManager) (this.getSystemService(Context.LOCATION_SERVICE));
         if (lms.isProviderEnabled(LocationManager.GPS_PROVIDER) || lms.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
@@ -131,6 +172,7 @@ public class ViewPageController extends AppCompatActivity {
 
         }
     }
+
     private void locationServiceInitial() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if ((checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
@@ -157,6 +199,7 @@ public class ViewPageController extends AppCompatActivity {
             getLocation(location);
         }
     }
+
     private void getLocation(Location location) {    //將定位資訊顯示在畫面中
         if (location != null) {
             longitude = location.getLongitude();    //取得經度
@@ -167,6 +210,7 @@ public class ViewPageController extends AppCompatActivity {
             Toast.makeText(this, "無法定位座標", Toast.LENGTH_LONG).show();
         }
     }
+
     private String DistanceText(double distance) {
         if (distance < 1000) {
             //Log.e(TAG, String.valueOf((int) distance) + "公尺");
@@ -176,8 +220,9 @@ public class ViewPageController extends AppCompatActivity {
             return new DecimalFormat("#.00").format(distance / 1000) + " 公里";
         }
     }
+
     private void DistanceSort(ArrayList<gasStationItem> gasSation) {
-        Log.e(TAG, "Sort"   + gasSation);
+        //Log.e(TAG, "Sort" + gasSation);
         Collections.sort(gasSation, new Comparator<gasStationItem>() {
             @Override
             public int compare(gasStationItem gasS1, gasStationItem gasS2) {
@@ -187,6 +232,7 @@ public class ViewPageController extends AppCompatActivity {
             }
         });
     }
+
     public double Distance(double longitude1, double latitude1, double longitude2, double latitude2) {
         //Log.e(TAG, longitude1 + "." + latitude1 + " V.S. " + longitude2 + "." + latitude2);
         double radLatitude1 = latitude1 * Math.PI / 180;
@@ -200,7 +246,33 @@ public class ViewPageController extends AppCompatActivity {
         distance = Math.round(distance * 10000) / 10000;
         return distance;
     }
+
+    public ArrayList<gasStationItem> hasWashCar(ArrayList<gasStationItem> gasSation) {
+        ArrayList<gasStationItem> temp = new ArrayList<gasStationItem>();
+
+        for (int i = 0; i < gasSation.size(); i++) {
+            if (gasSation.get(i).getWashCar().length()<2) {
+            }else{
+                temp.add(gasSation.get(i));
+            }
+        }
+        return temp;
+    }
+    public ArrayList<gasStationItem> hasGasSelf(ArrayList<gasStationItem> gasSation) {
+        ArrayList<gasStationItem> temp = new ArrayList<gasStationItem>();
+        for (int i = 0; i < gasSation.size(); i++) {
+            if (gasSation.get(i).getMakeSelf().equals("0")) {
+            }else{
+                temp.add(gasSation.get(i));
+            }
+        }
+        return temp;
+    }
+
     public void CSVRead() {
+        Log.e(TAG, "CSV Reading ....");
+        readDB();
+        myDataset.clear();
         CSVReader reader = null;
         try {
             reader = new CSVReader(new BufferedReader(new InputStreamReader(getAssets().open("location.csv"), "UTF-8")));
@@ -209,8 +281,8 @@ public class ViewPageController extends AppCompatActivity {
                     if (!line[23].equals("NULL") || !line[24].equals("NULL")) {
                         distanceFin = DistanceText(Distance(Double.parseDouble(line[23]), Double.parseDouble(line[24]), longitude, latitude));
                     } else {
-                        int num1= (int)(Math.random()*99)+1;
-                        distanceFin = "610."+num1 +" 公里";
+                        int num1 = (int) (Math.random() * 99) + 1;
+                        distanceFin = "610." + num1 + " 公里";
                     }
                     String[] distanceKil = distanceFin.split("公");
                     myDataset.add(new gasStationItem(
@@ -227,6 +299,14 @@ public class ViewPageController extends AppCompatActivity {
                 }
             }
             DistanceSort(myDataset);
+            if (isWashCar) {
+                //Log.e(TAG, "IS wash card");
+                myDataset = hasWashCar(myDataset);
+                //Log.e(TAG, "IS wash card : " + myDataset.get(0).getStationName());
+            }
+            if (isGasSelf) {
+                myDataset = hasGasSelf(myDataset);
+            }
 //            Log.e(TAG, myDataset.get(0).getDistance() + myDataset.get(0).getDistanceM() + " " + myDataset.get(0).getStationName() + myDataset.get(0).getCountryName()
 //                    +" :: "+ myDataset.get(0).getActiveTime());
 //            Log.e(TAG, myDataset.get(1).getDistance() + myDataset.get(1).getDistanceM() + " " + myDataset.get(1).getStationName() + myDataset.get(1).getCountryName()
@@ -234,28 +314,28 @@ public class ViewPageController extends AppCompatActivity {
 //            Log.e(TAG, myDataset.get(2).getDistance() + myDataset.get(2).getDistanceM() + " " + myDataset.get(2).getStationName() + myDataset.get(2).getCountryName()
 //                    +" :: "+ myDataset.get(2).getWashCar());
 
-            for(int i=0;i<=2;i++){
-                setDataToMain(i+""
-                        ,myDataset.get(i).getLocation()
-                        ,myDataset.get(i).getCountryName()
-                        ,myDataset.get(i).getSelfStation() +" " +myDataset.get(i).getStationName()
-                        ,myDataset.get(i).getDistance() + "公" + myDataset.get(i).getDistanceM()
-                        ,mGridData.get(i).getStatus()
-                        ,"PM2.5指數 : "+mGridData.get(i).getPM25_AVG()
-                        ,"空氣AQI指數 : "+mGridData.get(i).getAQI()
-                        ,"更新時間 : "+mGridData.get(i).getPublishTime()
-                        ,myDataset.get(i).getGas92()
-                        ,myDataset.get(i).getGas95()
-                        ,myDataset.get(i).getGas98()
-                        ,myDataset.get(i).getAlcohol()
-                        ,myDataset.get(i).getSuperDiesel()
-                        ,myDataset.get(i).getMembership()
-                        ,myDataset.get(i).getMakeSelf()
-                        ,myDataset.get(i).getWashCar()
-                        ,myDataset.get(i).getYoyocard()
-                        ,myDataset.get(i).getECard()
-                        ,myDataset.get(i).getHappyCash()
-                        ,myDataset.get(i).getActiveTime()
+            for (int i = 0; i <= 2; i++) {
+                setDataToMain(i + ""
+                        , myDataset.get(i).getLocation()
+                        , myDataset.get(i).getCountryName()
+                        , myDataset.get(i).getSelfStation() + " " + myDataset.get(i).getStationName()
+                        , myDataset.get(i).getDistance() + "公" + myDataset.get(i).getDistanceM()
+                        , mGridData.get(i).getStatus()
+                        , "PM2.5指數 : " + mGridData.get(i).getPM25_AVG()
+                        , "空氣AQI指數 : " + mGridData.get(i).getAQI()
+                        , "更新時間 : " + mGridData.get(i).getPublishTime()
+                        , myDataset.get(i).getGas92()
+                        , myDataset.get(i).getGas95()
+                        , myDataset.get(i).getGas98()
+                        , myDataset.get(i).getAlcohol()
+                        , myDataset.get(i).getSuperDiesel()
+                        , myDataset.get(i).getMembership()
+                        , myDataset.get(i).getMakeSelf()
+                        , myDataset.get(i).getWashCar()
+                        , myDataset.get(i).getYoyocard()
+                        , myDataset.get(i).getECard()
+                        , myDataset.get(i).getHappyCash()
+                        , myDataset.get(i).getActiveTime()
                 );
             }
 
@@ -273,8 +353,9 @@ public class ViewPageController extends AppCompatActivity {
             }
         }
     }
-    public void setDataToMain(String pageNm,String location, String a, String b, String c, String d, String e,String f,String g,String h
-    ,String i,String j,String k,String l,String m,String n,String o,String p,String q,String r,String s) {
+
+    public void setDataToMain(String pageNm, String location, String a, String b, String c, String d, String e, String f, String g, String h
+            , String i, String j, String k, String l, String m, String n, String o, String p, String q, String r, String s) {
 
         SharedPreferences prefs = getApplication().getSharedPreferences("DATA" + pageNm, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -301,6 +382,7 @@ public class ViewPageController extends AppCompatActivity {
         editor.putString("curactivitytime" + pageNm, s);
         editor.commit();
     }
+
     public void getData(String url) {
         try {
             String json = Jsoup.connect(url).ignoreContentType(true).execute().body();
@@ -342,6 +424,71 @@ public class ViewPageController extends AppCompatActivity {
         }
     }
 
+    public void showDialog() {
+        AlertDialog.Builder optionDialog = new AlertDialog.Builder(this);
+        FrameLayout frameLayout = new FrameLayout(optionDialog.getContext());
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        optionDialog.setView(frameLayout);
+        final AlertDialog alert = optionDialog.create();
+        View myView = inflater.inflate(R.layout.my_dialog, frameLayout);
+        btnDiglog = (Button) myView.findViewById(R.id.dialog_btn);
+        ratingbarStart = (RatingBar) myView.findViewById(R.id.ratingBarSelect);
+        ratingbarStart.setRating(4);
+        ratingbarStart.setEnabled(true);
+        ratingbarStart.setClickable(true);
+        //countNumAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_spinner_dropdown_item, countList);
+        //avgNumAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_spinner_dropdown_item, avgList);
+        //epsNumberAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_spinner_dropdown_item, avgEPSList);
+        //countNumber.setAdapter(countNumAdapter);
+        //avgNumber.setAdapter(avgNumAdapter);
+        //epsNumber.setAdapter(epsNumberAdapter);
+
+        ratingbarStart.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                //percentTaixi = rating / 5;
+            }
+        });
+        swWash = (SwitchCompat) myView.findViewById(R.id.switchWashBtn);
+        swSelf = (SwitchCompat) myView.findViewById(R.id.switchSelfBtn);
+        if(isWashCar){
+            swWash.setChecked(true);
+        }
+        if(isGasSelf){
+            swSelf.setChecked(true);
+        }
+        swWash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    isWashCar = true;
+                } else {
+                    isWashCar = false;
+                }
+            }
+        });
+        swSelf.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    isGasSelf = true;
+                } else {
+                    isGasSelf = false;
+                }
+            }
+        });
+        btnDiglog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e(TAG, "Send result " + isWashCar + " : " + isGasSelf);
+                writeDb(isWashCar, isGasSelf);
+                recreate();
+                alert.dismiss();
+            }
+        });
+        alert.show();
+    }
+
     public class AsyncHttpTask extends AsyncTask<String, Void, Integer> {
 
         @Override
@@ -375,9 +522,9 @@ public class ViewPageController extends AppCompatActivity {
             }
         }).start();
     }
+
     private void initPagerViewer() {
         pager = (ViewPager) findViewById(R.id.viewpage);
-        final ArrayList<View> list = new ArrayList<View>();
         Intent intent = new Intent(context, MainActivity.class);
         list.add(getView("MainActivity", intent));
         Intent intent2 = new Intent(context, MiddleActivity.class);
@@ -388,6 +535,7 @@ public class ViewPageController extends AppCompatActivity {
         pager.setCurrentItem(0);
         pager.setOnPageChangeListener(new MyOnPageChangeListener());
     }
+
     private View getView(String id, Intent intent) {
         return manager.startActivity(id, intent).getDecorView();
     }
@@ -399,7 +547,6 @@ public class ViewPageController extends AppCompatActivity {
 
         @Override
         public void onPageSelected(int arg0) {
-            Log.e(TAG,".........." + arg0);
             Animation animation = null;
             switch (arg0) {
                 case 0:
