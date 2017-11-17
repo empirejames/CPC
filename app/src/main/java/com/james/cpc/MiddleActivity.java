@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.james.cpc.dataBase.TinyDB;
+
 /**
  * Created by 101716 on 2017/11/15.
  */
@@ -23,12 +25,15 @@ public class MiddleActivity extends Activity implements SwipeRefreshLayout.OnRef
     TextView countryName, curStation, curtel, stationName;
     TextView curStates, curPM, curAQI, curPublishTime;
     TextView oil_supply_92,oil_supply_95,oil_supply_98,oil_supply_disol,oil_supply_Alloc,ecard,yoyocard,happycash, members, creditself, washCar, activityTime;
+    TextView oil_supply_92_price, oil_supply_95_price, oil_supply_98_price, oil_supply_disol_price, oil_supply_Alloc_price;
     String countryNameS, curStationS, curte1S, curStatesS, curPMS, curAQIS, curPublishTimeS;
     String location, curgas92, curgas95, curgas98, curgasAlcool, curdisol, curmember, curcreditshelf
             ,curWashcar,curyoyocard,curecard,curhappycash,curactivitytime;
+    String gas92, gas95, gas98, disol, alocal;
     private SwipeRefreshLayout laySwipe;
     private ImageView img_right, img_left;
     LinearLayout bgElement ;
+    TinyDB tinydb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +41,7 @@ public class MiddleActivity extends Activity implements SwipeRefreshLayout.OnRef
         bgElement = (LinearLayout) findViewById(R.id.DefaultLinearLayout);
         laySwipe = (SwipeRefreshLayout) findViewById(R.id.laySwipe);
         laySwipe.setOnRefreshListener(this);
+        tinydb = new TinyDB(this);
         getData();
         LinearLayout dot_map = (LinearLayout )findViewById(R.id.locationLayout);
         dot_map.setOnClickListener(new View.OnClickListener() {
@@ -88,12 +94,18 @@ public class MiddleActivity extends Activity implements SwipeRefreshLayout.OnRef
         curecard= prefs.getString("curecard1", null);
         curhappycash= prefs.getString("curhappycash1", null);
         curactivitytime= prefs.getString("curactivitytime1", null);
+        gas92 = tinydb.getString("92");
+        gas95 = tinydb.getString("95");
+        gas98 = tinydb.getString("98");
+        disol = tinydb.getString("disol");
+        alocal = tinydb.getString("alloc");
         setupView(location,countryNameS,curStationS,curte1S,curStatesS,curPMS,curAQIS,curPublishTimeS,curgas92
                 ,curgas95,curgas98,curgasAlcool,curdisol,curmember,curcreditshelf,curWashcar,curyoyocard,curecard
-                ,curhappycash,curactivitytime);
+                ,curhappycash,curactivitytime,gas92,gas95,gas98,alocal,disol);
     }
     public void setupView(String location,String a, String b, String c, String d, String e, String f, String g, String h
-            , String i, String j, String k, String l, String m, String n, String o, String p, String q, String r, String s) {
+            , String i, String j, String k, String l, String m, String n, String o, String p, String q, String r, String s
+            ,String t,String u,String v, String w, String x) {
         countryName = (TextView) findViewById(R.id.countryName);
         curStation = (TextView) findViewById(R.id.curStation);
         stationName = (TextView)findViewById(R.id.stationName);
@@ -107,6 +119,11 @@ public class MiddleActivity extends Activity implements SwipeRefreshLayout.OnRef
         oil_supply_98 = (TextView) findViewById(R.id.oil_supply_98);
         oil_supply_disol = (TextView) findViewById(R.id.oil_supply_disol);
         oil_supply_Alloc = (TextView) findViewById(R.id.oil_supply_Alloc);
+        oil_supply_92_price = (TextView) findViewById(R.id.oil_supply_92_price);
+        oil_supply_95_price = (TextView) findViewById(R.id.oil_supply_95_price);
+        oil_supply_98_price = (TextView) findViewById(R.id.oil_supply_98_price);
+        oil_supply_disol_price = (TextView) findViewById(R.id.oil_supply_disol_price);
+        oil_supply_Alloc_price = (TextView) findViewById(R.id.oil_supply_Alloc_price);
         members = (TextView) findViewById(R.id.members);
         creditself = (TextView) findViewById(R.id.creditself);
         ecard = (TextView) findViewById(R.id.ecard);
@@ -117,18 +134,28 @@ public class MiddleActivity extends Activity implements SwipeRefreshLayout.OnRef
         Log.e(TAG, h + " i " + i + " j " + j + " k " + k + " l " + l + " m " + m + " n " + n + " o " + o + " p " + p + " q " + q + " r " + r + " s " + s);
         if (h.equals("1")) {
             oil_supply_92.setVisibility(View.VISIBLE);
+            oil_supply_92_price.setVisibility(View.VISIBLE);
+            oil_supply_92_price.setText(t);
         }
         if (i.equals("1")) {
             oil_supply_95.setVisibility(View.VISIBLE);
+            oil_supply_95_price.setVisibility(View.VISIBLE);
+            oil_supply_95_price.setText(u);
         }
         if (j.equals("1")) {
             oil_supply_98.setVisibility(View.VISIBLE);
+            oil_supply_98_price.setVisibility(View.VISIBLE);
+            oil_supply_98_price.setText(v);
         }
         if (k.equals("1")) {
             oil_supply_Alloc.setVisibility(View.VISIBLE);
+            oil_supply_Alloc_price.setVisibility(View.VISIBLE);
+            oil_supply_Alloc_price.setText(w);
         }
         if (l.equals("1")) {
             oil_supply_disol.setVisibility(View.VISIBLE);
+            oil_supply_disol_price.setVisibility(View.VISIBLE);
+            oil_supply_disol_price.setText(x);
         }
         members.setVisibility(View.VISIBLE);
         if (m.equals("0")) {

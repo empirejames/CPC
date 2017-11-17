@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scrollView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical">
@@ -206,6 +207,15 @@
                                 android:textSize="18sp" />
 
                             <TextView
+                                android:id="@+id/textView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center|bottom"
+                                android:text=""
+                                android:textColor="#FFFFFF"
+                                android:textSize="18sp" />
+
+                            <TextView
                                 android:id="@+id/nd2TempC3"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
@@ -328,6 +338,67 @@
                                     android:gravity="center|bottom"
                                     android:text="@string/gasAlcooh"
                                     android:textColor="#FFFFFF"
+                                    android:textSize="18sp"
+                                    android:visibility="gone" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/oil_supply_92_price"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center|bottom"
+                                    android:text="XX"
+                                    android:textColor="@color/colorYello"
+                                    android:textSize="18sp"
+                                    android:visibility="gone" />
+
+                                <TextView
+                                    android:id="@+id/oil_supply_95_price"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center|bottom"
+                                    android:text="XX"
+                                    android:textColor="@color/colorYello"
+                                    android:textSize="18sp"
+                                    android:visibility="gone" />
+
+                                <TextView
+                                    android:id="@+id/oil_supply_98_price"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center|bottom"
+                                    android:text="XX"
+                                    android:textColor="@color/colorYello"
+                                    android:textSize="18sp"
+                                    android:visibility="gone" />
+
+                                <TextView
+                                    android:id="@+id/oil_supply_disol_price"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center|bottom"
+                                    android:text="XX"
+                                    android:textColor="@color/colorYello"
+                                    android:textSize="18sp"
+                                    android:visibility="gone" />
+
+                                <TextView
+                                    android:id="@+id/oil_supply_Alloc_price"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center|bottom"
+                                    android:text="XX"
+                                    android:textColor="@color/colorYello"
                                     android:textSize="18sp"
                                     android:visibility="gone" />
                             </LinearLayout>

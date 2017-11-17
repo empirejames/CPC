@@ -107,6 +107,8 @@ public class ViewPageController extends AppCompatActivity {
         mGridData = new ArrayList<>();
         startDialog();
         checkPermission();
+        GasInfoParser gs = new GasInfoParser(getApplicationContext());
+        gs.start();
         //getStation();
         //CSVReadAir();
     }
