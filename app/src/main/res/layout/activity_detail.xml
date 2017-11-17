@@ -98,24 +98,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <ImageView
-                        android:id="@+id/img_right"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_keyboard_arrow_right_white_48dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
-
-                    <ImageView
-                        android:id="@+id/img_left"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_keyboard_arrow_left_white_48dp" />
-
                     <TextView
                         android:id="@+id/curPM"
                         android:layout_width="wrap_content"
@@ -127,28 +109,29 @@
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/curAQI"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/curPM"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="AOI"
+                        android:textColor="#ffffff"
+                        android:textSize="15sp" />
+
+                    <TextView
                         android:id="@+id/curPublishTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:layout_below="@+id/curPM"
+                        android:layout_below="@+id/curAQI"
                         android:gravity="center"
                         android:text="PublishTime"
                         android:textColor="#ffffff"
                         android:textSize="15sp" />
 
-                    <TextView
-                        android:id="@+id/curAQI"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:layout_below="@+id/curPublishTime"
-                        android:text="AOI"
-                        android:textColor="#ffffff"
-                        android:textSize="15sp" />
                 </RelativeLayout>
 
             </LinearLayout>

@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
@@ -17,6 +19,7 @@ import android.os.Looper;
 import android.provider.Settings;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -44,7 +47,7 @@ import au.com.bytecode.opencsv.CSVReader;
 public class ViewPageController extends AppCompatActivity {
     Context context = null;
     LocalActivityManager manager = null;
-    ViewPager pager = null;
+    public ViewPager pager = null;
     private String[] line;
     private String air_url = "http://opendata2.epa.gov.tw/AQI.json";
     private String getCity, getSelfStation, getStationName, getDistance;
@@ -67,6 +70,7 @@ public class ViewPageController extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        InitImageView();
         context = ViewPageController.this;
         manager = new LocalActivityManager(this , true);
         manager.dispatchCreate(savedInstanceState);
@@ -75,6 +79,18 @@ public class ViewPageController extends AppCompatActivity {
         checkPermission();
             //getStation();
             //CSVReadAir();
+    }
+    private void InitImageView() {
+        cursor = (ImageView) findViewById(R.id.cursor);
+        bmpW = BitmapFactory.decodeResource(getResources(), R.drawable.roller)
+                .getWidth();// 获取图片宽度
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int screenW = dm.widthPixels;// 获取分辨率宽度
+        offset = (screenW / 3 - bmpW) / 2;// 计算偏移量
+        Matrix matrix = new Matrix();
+        matrix.postTranslate(offset, 0);
+        cursor.setImageMatrix(matrix);// 设置动画初始位置
     }
     public void checkPermission() {
         lms = (LocationManager) (this.getSystemService(Context.LOCATION_SERVICE));
@@ -348,6 +364,7 @@ public class ViewPageController extends AppCompatActivity {
     private View getView(String id, Intent intent) {
         return manager.startActivity(id, intent).getDecorView();
     }
+
     public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
 
         int one = offset * 2 + bmpW;// 页卡1 -> 页卡2 偏移量
@@ -355,6 +372,7 @@ public class ViewPageController extends AppCompatActivity {
 
         @Override
         public void onPageSelected(int arg0) {
+            Log.e(TAG,".........." + arg0);
             Animation animation = null;
             switch (arg0) {
                 case 0:
@@ -396,7 +414,7 @@ public class ViewPageController extends AppCompatActivity {
             currIndex = arg0;
             animation.setFillAfter(true);// True:图片停在动画结束位置
             animation.setDuration(300);
-            //cursor.startAnimation(animation);
+            cursor.startAnimation(animation);
         }
 
         @Override

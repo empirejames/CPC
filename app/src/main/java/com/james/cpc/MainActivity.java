@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -104,12 +105,8 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
                 , curgas95, curgas98, curgasAlcool, curdisol, curmember, curcreditshelf, curWashcar, curyoyocard, curecard
                 , curhappycash, curactivitytime);
     }
-
     public void setupView(String location,String a, String b, String c, String d, String e, String f, String g, String h
             , String i, String j, String k, String l, String m, String n, String o, String p, String q, String r, String s) {
-        img_right = (ImageView) findViewById(R.id.img_right);
-        img_left= (ImageView) findViewById(R.id.img_left);
-        img_left.setVisibility(View.GONE);
         stationName = (TextView)findViewById(R.id.stationName);
         countryName = (TextView) findViewById(R.id.countryName);
         curStation = (TextView) findViewById(R.id.curStation);
