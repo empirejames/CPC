@@ -13,5 +13,7 @@
     <string name="washCar">精緻洗車</string>
     <string name="washCarperson">精緻手工</string>
     <string name="washCarshelf">自助投幣式</string>
+    <string name="action_settings">設置</string>
+    <string name="action_filter">篩選</string>
 
 </resources>

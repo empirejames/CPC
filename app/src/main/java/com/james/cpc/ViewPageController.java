@@ -24,6 +24,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -75,6 +77,8 @@ public class ViewPageController extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         InitImageView();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.app_name);
+        toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
         context = ViewPageController.this;
         manager = new LocalActivityManager(this , true);
@@ -84,6 +88,24 @@ public class ViewPageController extends AppCompatActivity {
         checkPermission();
             //getStation();
             //CSVReadAir();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Log.e(TAG,"SETTING");
+            return true;
+        } else if (id == R.id.action_filter) {
+            Log.e(TAG,"FILTER");
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
     private void InitImageView() {
         cursor = (ImageView) findViewById(R.id.cursor);

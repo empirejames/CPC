@@ -56,8 +56,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:gravity="center"
                     android:layout_marginTop="10dp"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <com.ant.liao.GifView
@@ -66,6 +66,7 @@
                         android:layout_height="13dp"
                         android:layout_marginRight="5dp"
                         android:background="@drawable/ic_near_me_white_96dp" />
+
                     <TextView
                         android:id="@+id/curStation"
                         android:layout_width="wrap_content"
@@ -124,9 +125,9 @@
                         android:id="@+id/curPublishTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/curAQI"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:layout_below="@+id/curAQI"
                         android:gravity="center"
                         android:text="PublishTime"
                         android:textColor="#ffffff"
