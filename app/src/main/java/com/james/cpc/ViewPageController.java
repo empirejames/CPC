@@ -255,16 +255,21 @@ public class ViewPageController extends AppCompatActivity {
         if(country.contains("台")){
             country = country.replace("台","臺");
         }
-        Log.e(TAG,"country: " + country);
+        Log.e(TAG,"country: " + country + "  " + airSation.size());
         for (int i = 0; i < airSation.size(); i++) {
             if (!airSation.get(i).getCounty().contains(country)) {
+                Log.e(TAG,airSation.get(i).getCounty() + "");
 //                if(country.contains("中")){
 //                    Log.e(TAG,country.contains("台中")+ "..." + airSation.get(i).getCounty());
 //                    temp.add(airSation.get(i));
 //                }
             }else{
+                Log.e(TAG,airSation.get(i).getCounty() + " Y ");
                 temp.add(airSation.get(i));
             }
+        }
+        if(temp.size()<=2){
+            temp.add(airSation.get(1));
         }
         return temp;
     }
@@ -337,9 +342,9 @@ public class ViewPageController extends AppCompatActivity {
 //            Log.e(TAG, myDataset.get(2).getDistance() + myDataset.get(2).getDistanceM() + " " + myDataset.get(2).getStationName() + myDataset.get(2).getCountryName()
 //                    +" :: "+ myDataset.get(2).getWashCar());
             mGridData = changeAir(mGridData,myDataset.get(0).getCountryName());
-
+            Log.e(TAG, " Size " + mGridData.size() );
             for (int i = 0; i <= 2; i++) {
-                Log.e(TAG,"Air " + mGridData.get(i).getCounty() + " : " + mGridData.get(i).getSiteName());
+                //Log.e(TAG,"Air " + mGridData.get(i).getCounty() + " : " + mGridData.get(i).getSiteName());
                 setDataToMain(i + ""
                         , myDataset.get(i).getLocation()
                         , myDataset.get(i).getCountryName()
@@ -442,6 +447,7 @@ public class ViewPageController extends AppCompatActivity {
                     ));
                 }
             }
+            CSVRead();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -519,7 +525,7 @@ public class ViewPageController extends AppCompatActivity {
         @Override
         protected Integer doInBackground(String... strings) {
             getData(air_url);
-            CSVRead();
+
             return null;
         }
 

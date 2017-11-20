@@ -49,7 +49,7 @@
                         android:layout_height="wrap_content"
                         android:text="ZZZZZZZ"
                         android:textColor="#FFFFFF"
-                        android:textSize="15sp" />
+                        android:textSize="25sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -74,7 +74,7 @@
                         android:layout_height="wrap_content"
                         android:text="XXXXXXXXXX"
                         android:textColor="#ffffff"
-                        android:textSize="15sp" />
+                        android:textSize="25sp" />
                 </LinearLayout>
 
                 <TextView
@@ -85,7 +85,7 @@
                     android:gravity="center"
                     android:text="YYYYYYYYYY"
                     android:textColor="#ffffff"
-                    android:textSize="15sp" />
+                    android:textSize="25sp" />
 
                 <TextView
                     android:id="@+id/curStates"
@@ -94,7 +94,7 @@
                     android:gravity="center"
                     android:text="XXX"
                     android:textColor="#FFFFFF"
-                    android:textSize="85sp" />
+                    android:textSize="65sp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -133,6 +133,28 @@
                         android:text="PublishTime"
                         android:textColor="#ffffff"
                         android:textSize="15sp" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBarAQI"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:progressDrawable="@drawable/color_progressbar_blue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignLeft="@+id/progressBarPM"
+                        android:layout_alignStart="@+id/progressBarPM" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBarPM"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/curAQI"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_toEndOf="@+id/curAQI"
+                        android:layout_toRightOf="@+id/curAQI"
+                        android:progressDrawable="@drawable/color_progressbar_blue" />
 
                 </RelativeLayout>
 

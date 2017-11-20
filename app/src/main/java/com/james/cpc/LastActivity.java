@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.james.cpc.dataBase.TinyDB;
@@ -34,6 +35,7 @@ public class LastActivity extends Activity implements SwipeRefreshLayout.OnRefre
             ,curWashcar,curyoyocard,curecard,curhappycash,curactivitytime;
     private ImageView img_right, img_left;
     TinyDB tinydb;
+    ProgressBar psBarAQI, psBarPM;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +110,10 @@ public class LastActivity extends Activity implements SwipeRefreshLayout.OnRefre
     public void setupView(String location, String a, String b, String c, String d, String e, String f, String g, String h
             , String i, String j, String k, String l, String m, String n, String o, String p, String q, String r, String s
             ,String t,String u,String v, String w, String x) {
+        String []pmData = e.split(":");
+        String []AQIData = f.split(":");
+        String AQINumber = AQIData[1].trim();
+        String PMNumber = pmData[1].trim();
         countryName = (TextView) findViewById(R.id.countryName);
         curStation = (TextView) findViewById(R.id.curStation);
         stationName = (TextView)findViewById(R.id.stationName);
@@ -115,6 +121,30 @@ public class LastActivity extends Activity implements SwipeRefreshLayout.OnRefre
         curStates = (TextView) findViewById(R.id.curStates);
         curPM = (TextView) findViewById(R.id.curPM);
         curAQI = (TextView) findViewById(R.id.curAQI);
+        psBarAQI = (ProgressBar)findViewById(R.id.progressBarAQI);
+        psBarAQI.setMax(400);
+        psBarPM = (ProgressBar)findViewById(R.id.progressBarPM);
+        psBarPM.setMax(100);
+        if(AQINumber.equals("")|| PMNumber.equals("")){
+            AQINumber = "0";
+            PMNumber = "0";
+        }
+        if(Integer.parseInt(AQINumber)<50){
+            psBarAQI.setProgressDrawable(getResources().getDrawable(R.drawable.color_progressbar_green));
+        }else if(Integer.parseInt(AQINumber)>50 && Integer.parseInt(AQINumber)<150){
+            psBarAQI.setProgressDrawable(getResources().getDrawable(R.drawable.color_progressbar_blue));
+        }else if(Integer.parseInt(AQINumber)>150 ){
+            psBarAQI.setProgressDrawable(getResources().getDrawable(R.drawable.color_progressbar_red));
+        }
+        if(Integer.parseInt(PMNumber)>60){
+            psBarPM.setProgressDrawable(getResources().getDrawable(R.drawable.color_progressbar_red));
+        }else if(Integer.parseInt(PMNumber)<60 &Integer.parseInt(PMNumber)>35){
+            psBarPM.setProgressDrawable(getResources().getDrawable(R.drawable.color_progressbar_blue));
+        }else if(Integer.parseInt(PMNumber)<35){
+            psBarPM.setProgressDrawable(getResources().getDrawable(R.drawable.color_progressbar_green));
+        }
+        psBarAQI.setProgress(Integer.parseInt(AQINumber));
+        psBarPM.setProgress(Integer.parseInt(PMNumber));
         curPublishTime = (TextView) findViewById(R.id.curPublishTime);
         oil_supply_92 = (TextView) findViewById(R.id.oil_supply_92);
         oil_supply_95 = (TextView) findViewById(R.id.oil_supply_95);
@@ -188,8 +218,7 @@ public class LastActivity extends Activity implements SwipeRefreshLayout.OnRefre
         activityTime.setVisibility(View.VISIBLE);
         activityTime.setText(s);
 
-
-        countryName.setText(a);
+        countryName.setText("導航至" + a);
         stationName.setText(b);
         curStation.setText(location);
         curtel.setText(c);
