@@ -70,6 +70,7 @@ public class MiddleActivity extends Activity implements SwipeRefreshLayout.OnRef
         i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(i);
         laySwipe.setRefreshing(false);
+        finish();
     }
     public void getData() {
         Log.e(TAG,"getData 1 ....");

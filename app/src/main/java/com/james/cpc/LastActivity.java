@@ -70,6 +70,7 @@ public class LastActivity extends Activity implements SwipeRefreshLayout.OnRefre
         i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(i);
         laySwipe.setRefreshing(false);
+        finish();
     }
 
     public void getData() {

@@ -248,7 +248,26 @@ public class ViewPageController extends AppCompatActivity {
         distance = Math.round(distance * 10000) / 10000;
         return distance;
     }
+    public ArrayList<AirLoacationItem> changeAir(ArrayList<AirLoacationItem> airSation , String country) {
+        ArrayList<AirLoacationItem> temp = new ArrayList<AirLoacationItem>();
+        String tempStation;
 
+        if(country.contains("台")){
+            country = country.replace("台","臺");
+        }
+        Log.e(TAG,"country: " + country);
+        for (int i = 0; i < airSation.size(); i++) {
+            if (!airSation.get(i).getCounty().contains(country)) {
+//                if(country.contains("中")){
+//                    Log.e(TAG,country.contains("台中")+ "..." + airSation.get(i).getCounty());
+//                    temp.add(airSation.get(i));
+//                }
+            }else{
+                temp.add(airSation.get(i));
+            }
+        }
+        return temp;
+    }
     public ArrayList<gasStationItem> hasWashCar(ArrayList<gasStationItem> gasSation) {
         ArrayList<gasStationItem> temp = new ArrayList<gasStationItem>();
 
@@ -309,14 +328,18 @@ public class ViewPageController extends AppCompatActivity {
             if (isGasSelf) {
                 myDataset = hasGasSelf(myDataset);
             }
+
+
 //            Log.e(TAG, myDataset.get(0).getDistance() + myDataset.get(0).getDistanceM() + " " + myDataset.get(0).getStationName() + myDataset.get(0).getCountryName()
 //                    +" :: "+ myDataset.get(0).getActiveTime());
 //            Log.e(TAG, myDataset.get(1).getDistance() + myDataset.get(1).getDistanceM() + " " + myDataset.get(1).getStationName() + myDataset.get(1).getCountryName()
 //                    +" :: "+ myDataset.get(1).getActiveTime());
 //            Log.e(TAG, myDataset.get(2).getDistance() + myDataset.get(2).getDistanceM() + " " + myDataset.get(2).getStationName() + myDataset.get(2).getCountryName()
 //                    +" :: "+ myDataset.get(2).getWashCar());
+            mGridData = changeAir(mGridData,myDataset.get(0).getCountryName());
 
             for (int i = 0; i <= 2; i++) {
+                Log.e(TAG,"Air " + mGridData.get(i).getCounty() + " : " + mGridData.get(i).getSiteName());
                 setDataToMain(i + ""
                         , myDataset.get(i).getLocation()
                         , myDataset.get(i).getCountryName()

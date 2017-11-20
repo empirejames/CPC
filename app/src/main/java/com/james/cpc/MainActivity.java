@@ -65,6 +65,7 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(i);
         laySwipe.setRefreshing(false);
+        finish();
     }
 
     @Override
