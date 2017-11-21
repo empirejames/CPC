@@ -38,8 +38,8 @@
 
                     <com.ant.liao.GifView
                         android:id="@+id/loc_ref_Icon"
-                        android:layout_width="13dp"
-                        android:layout_height="13dp"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:layout_marginRight="5dp"
                         android:background="@drawable/pin_dot" />
 
@@ -57,14 +57,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <com.ant.liao.GifView
                         android:id="@+id/naviter"
-                        android:layout_width="13dp"
-                        android:layout_height="13dp"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:layout_marginRight="5dp"
                         android:background="@drawable/ic_near_me_white_96dp" />
 
@@ -74,14 +74,14 @@
                         android:layout_height="wrap_content"
                         android:text="XXXXXXXXXX"
                         android:textColor="#ffffff"
-                        android:textSize="25sp" />
+                        android:textSize="18sp" />
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/curtel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:text="YYYYYYYYYY"
                     android:textColor="#ffffff"

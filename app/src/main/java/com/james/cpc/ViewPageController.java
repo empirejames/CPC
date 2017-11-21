@@ -69,6 +69,7 @@ public class ViewPageController extends AppCompatActivity {
     public ViewPager pager = null;
     private String[] line;
     private String air_url = "http://opendata2.epa.gov.tw/AQI.json";
+    private String tour_url = "http://gis.taiwan.net.tw/XMLReleaseALL_public/scenic_spot_C_f.json";
     private String getCity, getSelfStation, getStationName, getDistance;
     private ArrayList<AirLoacationItem> mGridData;
     private LocationManager lms;
@@ -77,6 +78,7 @@ public class ViewPageController extends AppCompatActivity {
     Double longitude, latitude;
     private String distanceFin;
     ArrayList<gasStationItem> myDataset = new ArrayList<gasStationItem>();
+    ArrayList<TourismItem> myTourDataset = new ArrayList<TourismItem>();
     Button btnDiglog;
     RatingBar ratingbarStart;
     Boolean isWashCar ;
@@ -258,7 +260,7 @@ public class ViewPageController extends AppCompatActivity {
         Log.e(TAG,"country: " + country + "  " + airSation.size());
         for (int i = 0; i < airSation.size(); i++) {
             if (!airSation.get(i).getCounty().contains(country)) {
-                Log.e(TAG,airSation.get(i).getCounty() + "");
+                //Log.e(TAG,airSation.get(i).getCounty() + "");
 //                if(country.contains("中")){
 //                    Log.e(TAG,country.contains("台中")+ "..." + airSation.get(i).getCounty());
 //                    temp.add(airSation.get(i));
@@ -269,7 +271,9 @@ public class ViewPageController extends AppCompatActivity {
             }
         }
         if(temp.size()<=2){
-            temp.add(airSation.get(1));
+            for(int i =0; i<2; i++){
+                temp.add(airSation.get(1));
+            }
         }
         return temp;
     }
@@ -454,6 +458,16 @@ public class ViewPageController extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    public void getTourData(String url) {
+        try {
+            String json = Jsoup.connect(url).ignoreContentType(true).execute().body();
+            //JSONArray array = new JSONArray(json);
+            Log.e(TAG,"json: " + json);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void showDialog() {
         AlertDialog.Builder optionDialog = new AlertDialog.Builder(this);
@@ -525,7 +539,7 @@ public class ViewPageController extends AppCompatActivity {
         @Override
         protected Integer doInBackground(String... strings) {
             getData(air_url);
-
+            getTourData(tour_url);
             return null;
         }
 

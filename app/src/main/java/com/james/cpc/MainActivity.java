@@ -233,10 +233,10 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         activityTime.setText(s);
 
 
-        countryName.setText("導航至" + a);
+        countryName.setText("導航至中油" +b);
         stationName.setText(b);
-        curStation.setText(location);
-        curtel.setText(c);
+        curStation.setText(a+location);
+        curtel.setText("距離約 " +c);
         curStates.setText(d);
         curPM.setText(e);
         curAQI.setText(f);
