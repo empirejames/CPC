@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,7 +16,17 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.james.cpc.dataBase.TinyDB;
+
+import java.util.ArrayList;
 
 /**
  * Created by 101716 on 2017/11/15.
@@ -59,6 +70,45 @@ public class LastActivity extends Activity implements SwipeRefreshLayout.OnRefre
                 goToMap(countryNameS+location);
             }
         });
+        setLineChartData();
+    }
+    public void setLineChartData(){
+        LineChart lineChart = (LineChart) findViewById(R.id.chart_line);
+        lineChart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e(TAG,"On Click Detail...");
+            }
+        });
+        String TAG = MainActivity.class.getSimpleName();
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setEnabled(false);
+        xAxis.setDrawAxisLine(true);
+        xAxis.setDrawGridLines(false);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        YAxis leftAxis = lineChart.getAxis(YAxis.AxisDependency.LEFT);
+        leftAxis.setStartAtZero(false);
+        leftAxis.setAxisMinValue(0);
+        leftAxis.setAxisMaxValue(30);
+        ArrayList<Entry> yAxData = new ArrayList<>();
+        Description des = lineChart.getDescription();
+        des.setEnabled(false);
+        int numDataPoints = 12;
+        for (int i = 0; i < numDataPoints; i++) {
+            int cosFunction = (int)(Math.random()* 12)+10;
+            Log.e(TAG,"cosFunction: " + cosFunction);
+            int xEntry = i;
+            yAxData.add(new Entry(xEntry, cosFunction));
+        }
+        ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
+
+        LineDataSet lineDataSet1 = new LineDataSet(yAxData,"油耗");
+        lineDataSet1.setDrawCircles(false);
+        lineDataSet1.setColors(Color.RED);
+        lineDataSets.add(lineDataSet1);
+        lineChart.setData(new LineData(lineDataSets));
+        lineChart.setVisibleXRangeMaximum(65f);
+        lineChart.invalidate();
     }
     public void goToMap(String getGpsLocation){
         String vDirectionUrl = "https://maps.google.com/maps?q=" + getGpsLocation;

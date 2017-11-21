@@ -548,7 +548,7 @@
 
             <LinearLayout
                 android:id="@+id/futureInfoLayout1"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
@@ -557,119 +557,12 @@
                 android:background="@drawable/rule_background"
                 android:orientation="horizontal">
 
-                <LinearLayout
-                    android:id="@+id/nd1Layout1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/nd1Week1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="45dp"
-                        android:gravity="center|bottom"
-                        android:text="*Tue"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/nd1TempC1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center|top"
-                        android:text="*22~27°C"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/nd1Desc1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center|top"
-                        android:text="*Clear"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/nd2Layout"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/nd2Week"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="45dp"
-                        android:gravity="center|bottom"
-                        android:text="*Wed"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/nd2TempC"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center|top"
-                        android:text="*18~20°C"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/nd2Desc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center|top"
-                        android:text="*Cloudy"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/nd3Layout"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/nd3Week"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="45dp"
-                        android:gravity="center|bottom"
-                        android:text="*Thu"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/nd3TempC"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center|top"
-                        android:text="*20~25°C"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/nd3Desc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center|top"
-                        android:text="*Sunny"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
-                </LinearLayout>
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/chart_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    tools:layout_editor_absoluteY="0dp"
+                    tools:layout_editor_absoluteX="8dp" />
             </LinearLayout>
 
             <LinearLayout
