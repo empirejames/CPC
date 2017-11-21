@@ -15,5 +15,8 @@
     <string name="washCarshelf">自助投幣式</string>
     <string name="action_settings">設置</string>
     <string name="action_filter">篩選</string>
+    <string name="action_conveninent">便利站</string>
+    <string name="action_cpc_conveninent">中油便利取</string>
+    中油便利取
 
 </resources>

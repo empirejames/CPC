@@ -25,6 +25,9 @@
         <activity android:name=".LastActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity android:name=".QRCodeGenActivity"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

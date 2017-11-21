@@ -131,6 +131,11 @@ public class ViewPageController extends AppCompatActivity {
             Log.e(TAG, "Show FILTER");
             showDialog();
             return true;
+        } else if(id ==R.id.action_jaipei){
+            Intent i = new Intent(ViewPageController.this, QRCodeGenActivity.class);
+            startActivity(i);
+
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

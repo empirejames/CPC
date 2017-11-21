@@ -2,8 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_filter"
+        android:id="@+id/action_jaipei"
         android:orderInCategory="100"
+        android:icon="@drawable/ic_local_shipping_white_48dp"
+        android:title="@string/action_conveninent"
+        app:showAsAction="ifRoom|collapseActionView" />
+    <item
+        android:id="@+id/action_filter"
+        android:orderInCategory="200"
         android:icon="@mipmap/ic_action_filter"
         android:title="@string/action_filter"
         app:showAsAction="ifRoom|collapseActionView" />
@@ -11,7 +17,7 @@
         android:visible="false"
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_more_horiz_white_48dp"
-        android:orderInCategory="200"
+        android:orderInCategory="300"
         android:title="@string/action_settings"
         app:showAsAction="ifRoom|collapseActionView" />
 </menu>
