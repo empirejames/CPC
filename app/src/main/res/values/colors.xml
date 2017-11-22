@@ -13,6 +13,8 @@
     <color name="colorGreen">#00EC00</color>
     <color name="colorPink">#D9B7C1</color>
     <color name="colorredLight">#F692AE</color>
+    <color name="colorOrangeYellow">#FAB63D</color>
     <color name="colorYelloLight">#FFE3A7</color>
     <color name="colorLineGray">#B8AEB6</color>
+    <color name="colorRed">#FF0000</color>
 </resources>

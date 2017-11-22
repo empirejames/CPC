@@ -87,10 +87,10 @@ public class ViewPageController extends AppCompatActivity {
     SwitchCompat swSelf;
     protected ProgressDialog dialogSMS;
     private String TAG = ViewPageController.class.getSimpleName();
-    private int offset = 0;// 动画图片偏移量
-    private int currIndex = 0;// 当前页卡编号
-    private int bmpW;// 动画图片宽度
-    private ImageView cursor;// 动画图片
+    private int offset = 0;
+    private int currIndex = 0;
+    private int bmpW;
+    private ImageView cursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +111,8 @@ public class ViewPageController extends AppCompatActivity {
         checkPermission();
         GasInfoParser gs = new GasInfoParser(getApplicationContext());
         gs.start();
+        GasPredictionParser gpredict = new GasPredictionParser(getApplicationContext());
+        gpredict.start();
         //getStation();
         //CSVReadAir();
     }
@@ -153,20 +155,20 @@ public class ViewPageController extends AppCompatActivity {
         SharedPreferences prefs = getApplication().getSharedPreferences("Button", Context.MODE_PRIVATE);
         isWashCar = prefs.getBoolean("a", false);
         isGasSelf = prefs.getBoolean("b", false);
-        Log.e(TAG,"isWashCar : " + isWashCar + " isGasSelf : " + isGasSelf);
+        //Log.e(TAG,"isWashCar : " + isWashCar + " isGasSelf : " + isGasSelf);
     }
 
     private void InitImageView() {
         cursor = (ImageView) findViewById(R.id.cursor);
         bmpW = BitmapFactory.decodeResource(getResources(), R.drawable.roller)
-                .getWidth();// 获取图片宽度
+                .getWidth();
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int screenW = dm.widthPixels;// 获取分辨率宽度
-        offset = (screenW / 3 - bmpW) / 2;// 计算偏移量
+        int screenW = dm.widthPixels;
+        offset = (screenW / 3 - bmpW) / 2;
         Matrix matrix = new Matrix();
         matrix.postTranslate(offset, 0);
-        cursor.setImageMatrix(matrix);// 设置动画初始位置
+        cursor.setImageMatrix(matrix);
     }
 
     public void checkPermission() {
@@ -360,7 +362,7 @@ public class ViewPageController extends AppCompatActivity {
                         , myDataset.get(i).getSelfStation() + " " + myDataset.get(i).getStationName()
                         , myDataset.get(i).getDistance() + "公" + myDataset.get(i).getDistanceM()
                         , mGridData.get(i).getStatus()
-                        , "PM2.5指數 : " + mGridData.get(i).getPM25_AVG()
+                        , "PM2.5指數 : " + mGridData.get(i).getPM25()
                         , "空氣AQI指數 : " + mGridData.get(i).getAQI()
                         , "更新時間 : " + mGridData.get(i).getPublishTime()
                         , myDataset.get(i).getGas92()
@@ -467,7 +469,7 @@ public class ViewPageController extends AppCompatActivity {
         try {
             String json = Jsoup.connect(url).ignoreContentType(true).execute().body();
             //JSONArray array = new JSONArray(json);
-            Log.e(TAG,"json: " + json);
+            //Log.e(TAG,"json: " + json);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -544,7 +546,7 @@ public class ViewPageController extends AppCompatActivity {
         @Override
         protected Integer doInBackground(String... strings) {
             getData(air_url);
-            getTourData(tour_url);
+            //getTourData(tour_url); //get tour close
             return null;
         }
 
@@ -591,10 +593,8 @@ public class ViewPageController extends AppCompatActivity {
     }
 
     public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
-
-        int one = offset * 2 + bmpW;// 页卡1 -> 页卡2 偏移量
-        int two = one * 2;// 页卡1 -> 页卡3 偏移量
-
+        int one = offset * 2 + bmpW;
+        int two = one * 2;
         @Override
         public void onPageSelected(int arg0) {
             Animation animation = null;
@@ -636,7 +636,7 @@ public class ViewPageController extends AppCompatActivity {
                     break;
             }
             currIndex = arg0;
-            animation.setFillAfter(true);// True:图片停在动画结束位置
+            animation.setFillAfter(true);
             animation.setDuration(300);
             cursor.startAnimation(animation);
         }

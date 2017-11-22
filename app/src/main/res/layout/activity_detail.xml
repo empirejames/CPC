@@ -184,10 +184,32 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
                         android:text="加油站資訊"
                         android:textColor="#FFFFFF"
                         android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/oilPrediction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorredLight"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18sp"
+                        android:text="oooooooo" />
+                    <com.ant.liao.GifView
+                        android:id="@+id/oilUp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone"
+                        android:background="@drawable/ic_arrow_drop_up_red_48dp" />
+                    <com.ant.liao.GifView
+                        android:id="@+id/oilDown"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone"
+                        android:background="@drawable/ic_arrow_drop_down_green_48dp" />
                 </LinearLayout>
 
                 <View

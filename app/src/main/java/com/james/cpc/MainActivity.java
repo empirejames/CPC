@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.ant.liao.GifView;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
@@ -24,6 +25,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.james.cpc.dataBase.TinyDB;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener {
@@ -31,14 +33,15 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
     TextView countryName, curStation, curtel, stationName;
     TextView curStates, curPM, curAQI, curPublishTime;
     TextView oil_supply_92, oil_supply_95, oil_supply_98, oil_supply_disol, oil_supply_Alloc, ecard, yoyocard, happycash, members, creditself, washCar, activityTime;
-    TextView oil_supply_92_price, oil_supply_95_price, oil_supply_98_price, oil_supply_disol_price, oil_supply_Alloc_price;
+    TextView oil_supply_92_price, oil_supply_95_price, oil_supply_98_price, oil_supply_disol_price, oil_supply_Alloc_price, oilPrediction;
     LinearLayout bgElement;
     String countryNameS, curStationS, curte1S, curStatesS, curPMS, curAQIS, curPublishTimeS;
     String gas92, gas95, gas98, disol, alocal;
-    String location, curgas92, curgas95, curgas98, curgasAlcool, curdisol, curmember, curcreditshelf, curWashcar, curyoyocard, curecard, curhappycash, curactivitytime;
+    String predictionUD, predictionValue, location, curgas92, curgas95, curgas98, curgasAlcool, curdisol, curmember, curcreditshelf, curWashcar, curyoyocard, curecard, curhappycash, curactivitytime;
     private SwipeRefreshLayout laySwipe;
     TinyDB tinydb;
     ProgressBar psBarAQI, psBarPM;
+    GifView gfup, gfdown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +69,13 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         setLineChartData();
 
     }
-    public void setLineChartData(){
+
+    public void setLineChartData() {
         LineChart lineChart = (LineChart) findViewById(R.id.chart_line);
         lineChart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e(TAG,"On Click Detail...");
+                Log.e(TAG, "On Click Detail...");
             }
         });
         String TAG = MainActivity.class.getSimpleName();
@@ -89,14 +93,14 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         des.setEnabled(false);
         int numDataPoints = 12;
         for (int i = 0; i < numDataPoints; i++) {
-            int cosFunction = (int)(Math.random()* 12)+10;
-            Log.e(TAG,"cosFunction: " + cosFunction);
+            int cosFunction = (int) (Math.random() * 12) + 10;
+            //Log.e(TAG,"cosFunction: " + cosFunction);
             int xEntry = i;
             yAxData.add(new Entry(xEntry, cosFunction));
         }
         ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
 
-        LineDataSet lineDataSet1 = new LineDataSet(yAxData,"油耗");
+        LineDataSet lineDataSet1 = new LineDataSet(yAxData, "油耗");
         lineDataSet1.setDrawCircles(false);
         lineDataSet1.setColors(Color.RED);
         lineDataSets.add(lineDataSet1);
@@ -162,20 +166,25 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         gas98 = tinydb.getString("98");
         disol = tinydb.getString("disol");
         alocal = tinydb.getString("alloc");
+        predictionUD = tinydb.getString("upOrDown");
+        predictionValue = tinydb.getString("persentage");
+        double price = Double.parseDouble(predictionValue)*0.01 * 20;
+        DecimalFormat df = new DecimalFormat("##.00");
+        price = Double.parseDouble(df.format(price));
         setupView(location, countryNameS, curStationS, curte1S, curStatesS, curPMS, curAQIS, curPublishTimeS, curgas92
                 , curgas95, curgas98, curgasAlcool, curdisol, curmember, curcreditshelf, curWashcar, curyoyocard, curecard
-                , curhappycash, curactivitytime,gas92,gas95,gas98,alocal,disol);
+                , curhappycash, curactivitytime, gas92, gas95, gas98, alocal, disol, predictionUD, price);
     }
 
     public void setupView(String location, String a, String b, String c, String d, String e, String f, String g, String h
             , String i, String j, String k, String l, String m, String n, String o, String p, String q, String r, String s
-            ,String t,String u,String v, String w, String x) {
-        String []pmData = e.split(":");
-        String []AQIData = f.split(":");
+            , String t, String u, String v, String w, String x, String y, double z) {
+        String[] pmData = e.split(":");
+        String[] AQIData = f.split(":");
         String AQINumber = AQIData[1].trim();
         String PMNumber = pmData[1].trim();
-       // Log.e(TAG,pmData[1].trim());
-       // Log.e(TAG,AQIData[1].trim());
+        // Log.e(TAG,pmData[1].trim());
+        // Log.e(TAG,AQIData[1].trim());
         stationName = (TextView) findViewById(R.id.stationName);
         countryName = (TextView) findViewById(R.id.countryName);
         curStation = (TextView) findViewById(R.id.curStation);
@@ -183,27 +192,27 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         curStates = (TextView) findViewById(R.id.curStates);
         curPM = (TextView) findViewById(R.id.curPM);
         curAQI = (TextView) findViewById(R.id.curAQI);
-        psBarAQI = (ProgressBar)findViewById(R.id.progressBarAQI);
+        psBarAQI = (ProgressBar) findViewById(R.id.progressBarAQI);
         psBarAQI.setMax(400);
-        psBarPM = (ProgressBar)findViewById(R.id.progressBarPM);
+        psBarPM = (ProgressBar) findViewById(R.id.progressBarPM);
         psBarPM.setMax(100);
-        Log.e(TAG,"AQI data : " + AQIData[1].trim());
-        if(AQINumber.equals("")|| PMNumber.equals("")){
+        //Log.e(TAG,"AQI data : " + AQIData[1].trim());
+        if (AQINumber.equals("") || PMNumber.equals("")) {
             AQINumber = "0";
             PMNumber = "0";
         }
-        if(Integer.parseInt(AQINumber)<50){
+        if (Integer.parseInt(AQINumber) < 50) {
             psBarAQI.setProgressDrawable(getResources().getDrawable(R.drawable.color_progressbar_green));
-        }else if(Integer.parseInt(AQINumber)>50 && Integer.parseInt(AQINumber)<150){
+        } else if (Integer.parseInt(AQINumber) > 50 && Integer.parseInt(AQINumber) < 150) {
             psBarAQI.setProgressDrawable(getResources().getDrawable(R.drawable.color_progressbar_blue));
-        }else if(Integer.parseInt(AQINumber)>150 ){
+        } else if (Integer.parseInt(AQINumber) > 150) {
             psBarAQI.setProgressDrawable(getResources().getDrawable(R.drawable.color_progressbar_red));
         }
-        if(Integer.parseInt(PMNumber)>60){
+        if (Integer.parseInt(PMNumber) > 60) {
             psBarPM.setProgressDrawable(getResources().getDrawable(R.drawable.color_progressbar_red));
-        }else if(Integer.parseInt(PMNumber)<60 &Integer.parseInt(PMNumber)>35){
+        } else if (Integer.parseInt(PMNumber) < 60 & Integer.parseInt(PMNumber) > 35) {
             psBarPM.setProgressDrawable(getResources().getDrawable(R.drawable.color_progressbar_blue));
-        }else if(Integer.parseInt(PMNumber)<35){
+        } else if (Integer.parseInt(PMNumber) < 35) {
             psBarPM.setProgressDrawable(getResources().getDrawable(R.drawable.color_progressbar_green));
         }
         psBarAQI.setProgress(Integer.parseInt(AQINumber));
@@ -220,6 +229,17 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         oil_supply_98_price = (TextView) findViewById(R.id.oil_supply_98_price);
         oil_supply_disol_price = (TextView) findViewById(R.id.oil_supply_disol_price);
         oil_supply_Alloc_price = (TextView) findViewById(R.id.oil_supply_Alloc_price);
+        oilPrediction = (TextView) findViewById(R.id.oilPrediction);
+        oilPrediction.setText("油價預測 : " + y + " " + z +" 元");
+        gfup = (GifView)findViewById(R.id.oilUp);
+        gfdown = (GifView)findViewById(R.id.oilDown);
+        if(y.equals("漲")){
+            gfup.setVisibility(View.VISIBLE);
+            oilPrediction.setTextColor(getResources().getColor(R.color.colorOrangeYellow));
+        }else{
+            gfdown.setVisibility(View.VISIBLE);
+            oilPrediction.setTextColor(getResources().getColor(R.color.colorOrangeYellow));
+        }
         members = (TextView) findViewById(R.id.members);
         creditself = (TextView) findViewById(R.id.creditself);
         ecard = (TextView) findViewById(R.id.ecard);
@@ -227,7 +247,7 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         happycash = (TextView) findViewById(R.id.happycash);
         washCar = (TextView) findViewById(R.id.washCar);
         activityTime = (TextView) findViewById(R.id.activityTime);
-        Log.e(TAG, h + " i " + i + " j " + j + " k " + k + " l " + l + " m " + m + " n " + n + " o " + o + " p " + p + " q " + q + " r " + r + " s " + s);
+        //Log.e(TAG, h + " i " + i + " j " + j + " k " + k + " l " + l + " m " + m + " n " + n + " o " + o + " p " + p + " q " + q + " r " + r + " s " + s);
         if (h.equals("1")) {
             oil_supply_92.setVisibility(View.VISIBLE);
             oil_supply_92_price.setVisibility(View.VISIBLE);
@@ -283,10 +303,10 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         activityTime.setText(s);
 
 
-        countryName.setText("導航至中油" +b);
+        countryName.setText("導航至中油" + b);
         stationName.setText(b);
-        curStation.setText(a+location);
-        curtel.setText("距離約 " +c);
+        curStation.setText(a + location);
+        curtel.setText("距離約 " + c);
         curStates.setText(d);
         curPM.setText(e);
         curAQI.setText(f);
