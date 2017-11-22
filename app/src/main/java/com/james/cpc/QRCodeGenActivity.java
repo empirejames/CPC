@@ -4,6 +4,7 @@ package com.james.cpc;
  * Created by 101716 on 2017/11/21.
  */
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
@@ -28,7 +29,9 @@ public class QRCodeGenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode);
-        String QRCodeContent = "中油直營店 新莊店 A層倉庫 F2架 朱先生 電話，0988678910";
+        Bundle bundle = getIntent().getExtras();
+        String packageContent = bundle.getString("QRdata");
+        String QRCodeContent = packageContent;
         int QRCodeWidth = 100;
         int QRCodeHeight = 100;
         try {

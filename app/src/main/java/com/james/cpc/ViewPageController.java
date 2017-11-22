@@ -132,7 +132,7 @@ public class ViewPageController extends AppCompatActivity {
             showDialog();
             return true;
         } else if(id ==R.id.action_jaipei){
-            Intent i = new Intent(ViewPageController.this, QRCodeGenActivity.class);
+            Intent i = new Intent(ViewPageController.this, GetPackage.class);
             startActivity(i);
 
             return true;

@@ -28,6 +28,9 @@
         <activity android:name=".QRCodeGenActivity"
             android:theme="@style/AppTheme">
         </activity>
+        <activity android:name=".GetPackage"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>
