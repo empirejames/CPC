@@ -184,6 +184,8 @@ public class MiddleActivity extends Activity implements SwipeRefreshLayout.OnRef
         if(AQINumber.equals("")|| PMNumber.equals("")){
             AQINumber = "0";
             PMNumber = "0";
+        }else if(PMNumber.equals("ND")){
+            PMNumber = "0";
         }
         if(Integer.parseInt(AQINumber)<50){
             psBarAQI.setProgressDrawable(getResources().getDrawable(R.drawable.color_progressbar_green));

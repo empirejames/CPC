@@ -200,6 +200,8 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         if (AQINumber.equals("") || PMNumber.equals("")) {
             AQINumber = "0";
             PMNumber = "0";
+        }else if(PMNumber.equals("ND")){
+            PMNumber = "0";
         }
         if (Integer.parseInt(AQINumber) < 50) {
             psBarAQI.setProgressDrawable(getResources().getDrawable(R.drawable.color_progressbar_green));
@@ -207,12 +209,16 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
             psBarAQI.setProgressDrawable(getResources().getDrawable(R.drawable.color_progressbar_blue));
         } else if (Integer.parseInt(AQINumber) > 150) {
             psBarAQI.setProgressDrawable(getResources().getDrawable(R.drawable.color_progressbar_red));
+        }else{
+            psBarAQI.setProgressDrawable(getResources().getDrawable(R.drawable.color_progressbar_green));
         }
         if (Integer.parseInt(PMNumber) > 60) {
             psBarPM.setProgressDrawable(getResources().getDrawable(R.drawable.color_progressbar_red));
         } else if (Integer.parseInt(PMNumber) < 60 & Integer.parseInt(PMNumber) > 35) {
             psBarPM.setProgressDrawable(getResources().getDrawable(R.drawable.color_progressbar_blue));
         } else if (Integer.parseInt(PMNumber) < 35) {
+            psBarPM.setProgressDrawable(getResources().getDrawable(R.drawable.color_progressbar_green));
+        }else{
             psBarPM.setProgressDrawable(getResources().getDrawable(R.drawable.color_progressbar_green));
         }
         psBarAQI.setProgress(Integer.parseInt(AQINumber));
