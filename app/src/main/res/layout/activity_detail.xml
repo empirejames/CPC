@@ -99,8 +99,8 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="#ffffff"
                         android:textSize="25sp"
-                        android:layout_marginLeft="74dp"
-                        android:layout_marginStart="74dp"
+                        android:layout_marginLeft="65dp"
+                        android:layout_marginStart="65dp"
                         android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true" />
@@ -126,7 +126,7 @@
                         android:layout_alignLeft="@+id/ratingbarText"
                         android:layout_alignParentTop="true"
                         android:layout_alignStart="@+id/ratingbarText"
-                        android:layout_marginLeft="65dp"
+                        android:layout_marginLeft="15dp"
                         android:layout_marginStart="65dp"
                         android:isIndicator="true"
                         android:numStars="5"
@@ -134,7 +134,9 @@
                         android:progressTint="@android:color/holo_orange_light"
                         android:rating="4"
                         android:scaleX="0.7"
-                        android:scaleY="0.7" />
+                        android:scaleY="0.7"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
                 </RelativeLayout>
 
                 <TextView
