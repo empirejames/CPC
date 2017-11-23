@@ -87,6 +87,56 @@
                     android:textColor="#ffffff"
                     android:textSize="25sp" />
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/ratingbarText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="人氣指數"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#ffffff"
+                        android:textSize="25sp"
+                        android:layout_marginLeft="74dp"
+                        android:layout_marginStart="74dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
+
+                    <TextView
+                        android:id="@+id/invoiceFail"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="無資料"
+                        android:textColor="#ffffff"
+                        android:textSize="25sp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="55dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/ratingbarText"
+                        android:layout_toEndOf="@+id/ratingbarText" />
+
+                    <RatingBar
+                        android:id="@+id/ratingBarSelect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/ratingbarText"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignStart="@+id/ratingbarText"
+                        android:layout_marginLeft="65dp"
+                        android:layout_marginStart="65dp"
+                        android:isIndicator="true"
+                        android:numStars="5"
+                        android:progressBackgroundTint="@android:color/darker_gray"
+                        android:progressTint="@android:color/holo_orange_light"
+                        android:rating="4"
+                        android:scaleX="0.7"
+                        android:scaleY="0.7" />
+                </RelativeLayout>
+
                 <TextView
                     android:id="@+id/curStates"
                     android:layout_width="fill_parent"

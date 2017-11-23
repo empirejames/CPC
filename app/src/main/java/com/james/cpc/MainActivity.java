@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.ant.liao.GifView;
@@ -30,18 +31,19 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener {
     private String TAG = MainActivity.class.getSimpleName();
-    TextView countryName, curStation, curtel, stationName;
+    TextView countryName, curStation, curtel, stationName, invoiceFail;
     TextView curStates, curPM, curAQI, curPublishTime;
     TextView oil_supply_92, oil_supply_95, oil_supply_98, oil_supply_disol, oil_supply_Alloc, ecard, yoyocard, happycash, members, creditself, washCar, activityTime;
     TextView oil_supply_92_price, oil_supply_95_price, oil_supply_98_price, oil_supply_disol_price, oil_supply_Alloc_price, oilPrediction;
     LinearLayout bgElement;
     String countryNameS, curStationS, curte1S, curStatesS, curPMS, curAQIS, curPublishTimeS;
     String gas92, gas95, gas98, disol, alocal;
-    String predictionUD, predictionValue, location, curgas92, curgas95, curgas98, curgasAlcool, curdisol, curmember, curcreditshelf, curWashcar, curyoyocard, curecard, curhappycash, curactivitytime;
+    String predictionUD, predictionValue,invoice, location, curgas92, curgas95, curgas98, curgasAlcool, curdisol, curmember, curcreditshelf, curWashcar, curyoyocard, curecard, curhappycash, curactivitytime;
     private SwipeRefreshLayout laySwipe;
     TinyDB tinydb;
     ProgressBar psBarAQI, psBarPM;
     GifView gfup, gfdown;
+    RatingBar ratingbarStart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,8 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         bgElement = (LinearLayout) findViewById(R.id.DefaultLinearLayout);
         laySwipe = (SwipeRefreshLayout) findViewById(R.id.laySwipe);
         laySwipe.setOnRefreshListener(this);
+        ratingbarStart = (RatingBar) findViewById(R.id.ratingBarSelect);
+        invoiceFail = (TextView) findViewById(R.id.invoiceFail);
         tinydb = new TinyDB(this);
         getData();
         LinearLayout dot_map = (LinearLayout) findViewById(R.id.locationLayout);
@@ -141,6 +145,18 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
 
     public void getData() {
         SharedPreferences prefs = getApplication().getSharedPreferences("DATA0", Context.MODE_PRIVATE);
+        invoice = prefs.getString("curInvoice0", null);
+        String str;
+        if(invoice==null){
+            str = "0";
+            ratingbarStart.setVisibility(View.GONE);
+            invoiceFail.setVisibility(View.VISIBLE);
+        }else{
+            double star = 3000 /Double.parseDouble(invoice) ;
+            DecimalFormat df1 = new DecimalFormat("##");
+            str = df1.format(star);
+            ratingbarStart.setRating(Integer.parseInt(str));
+        }
         location = prefs.getString("curlocation0", null);
         countryNameS = prefs.getString("countryName0", null);
         curStationS = prefs.getString("curStation0", null);

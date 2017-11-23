@@ -8,17 +8,18 @@ import android.content.Context;
 
 public class gasStationItem {
     String TAG = gasStationItem.class.getSimpleName();
-    private String selfStation, stationName, countryName, location, gas92, gas95, gas98
+    private String stationCode, selfStation, stationName, countryName, location, gas92, gas95, gas98
             , alcohol, superDiesel, membership, makeSelf, Dieselself, invoice, yoyocard, eCard
             , happyCash, longitude, latitude, activeTime, washCar, etagTopup,maintain, distance, distanceM;
     Context context;
     private int _id;
 
-    public gasStationItem(String selfStation, String stationName, String countryName, String location
+    public gasStationItem(String stationCode, String selfStation, String stationName, String countryName, String location
             , String gas92, String gas95, String gas98, String alcohol
             , String superDiesel, String membership,String makeSelf,String Dieselself
             , String yoyocard, String eCard, String happyCash, String longitude,String latitude
             , String activeTime, String washCar, String etagTopup, String maintain,String distance,String distanceM) {
+        this.stationCode = stationCode; //自營 直營
         this.selfStation = selfStation; //自營 直營
         this.stationName = stationName; //站名
         this.countryName = countryName; //鄉鎮名
@@ -42,6 +43,9 @@ public class gasStationItem {
         this.etagTopup = etagTopup; //eTag儲值
         this.distance = distance; //distance
         this.distanceM = distanceM;
+    }
+    public String getStationCode() {
+        return stationCode;
     }
     public String getDistanceM() {
         return distanceM;

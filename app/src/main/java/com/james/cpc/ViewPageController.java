@@ -56,6 +56,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -68,6 +70,7 @@ public class ViewPageController extends AppCompatActivity {
     LocalActivityManager manager = null;
     public ViewPager pager = null;
     private String[] line;
+    private String[] inVoiceline;
     private String air_url = "http://opendata2.epa.gov.tw/AQI.json";
     private String tour_url = "http://gis.taiwan.net.tw/XMLReleaseALL_public/scenic_spot_C_f.json";
     private String getCity, getSelfStation, getStationName, getDistance;
@@ -78,6 +81,7 @@ public class ViewPageController extends AppCompatActivity {
     Double longitude, latitude;
     private String distanceFin;
     ArrayList<gasStationItem> myDataset = new ArrayList<gasStationItem>();
+    ArrayList<InvoiceItem> myInvoiceDataSet = new ArrayList<InvoiceItem>();
     ArrayList<TourismItem> myTourDataset = new ArrayList<TourismItem>();
     Button btnDiglog;
     RatingBar ratingbarStart;
@@ -194,6 +198,7 @@ public class ViewPageController extends AppCompatActivity {
                         android.Manifest.permission.ACCESS_COARSE_LOCATION,
                 }, REQUEST_CODE_ASK_ALL);
                 locationServiceInitial();
+                recreate();
                 //finish();
             } else {
                 Location location = lms.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -305,6 +310,25 @@ public class ViewPageController extends AppCompatActivity {
         }
         return temp;
     }
+    public void CSVInvoiceRead() {
+        CSVReader reader = null;
+        ArrayList<String> statinInfo = new ArrayList<String>();
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        String duplicateArray[];
+
+        try {
+            reader = new CSVReader(new BufferedReader(new InputStreamReader(getAssets().open("invoice.csv"), "UTF-8")));
+            while ((inVoiceline = reader.readNext()) != null) {
+                if (inVoiceline[1].contains("1061031")) {
+
+                    myInvoiceDataSet.add(new InvoiceItem(inVoiceline[0], inVoiceline[2]));
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Exception : " + e.toString());
+        }
+        Log.e(TAG,"CSV invoice finish . ");
+    }
 
     public void CSVRead() {
         Log.e(TAG, "CSV Reading ....");
@@ -322,8 +346,9 @@ public class ViewPageController extends AppCompatActivity {
                         distanceFin = "610." + num1 + " 公里";
                     }
                     String[] distanceKil = distanceFin.split("公");
+
                     myDataset.add(new gasStationItem(
-                            line[1], line[2], line[3], line[5]
+                            line[0],line[1], line[2], line[3], line[5]
                             , line[10], line[11], line[12], line[13]
                             , line[15], line[16], line[17], line[19]
                             , line[20], line[21], line[22], line[23], line[24]
@@ -353,10 +378,23 @@ public class ViewPageController extends AppCompatActivity {
 //            Log.e(TAG, myDataset.get(2).getDistance() + myDataset.get(2).getDistanceM() + " " + myDataset.get(2).getStationName() + myDataset.get(2).getCountryName()
 //                    +" :: "+ myDataset.get(2).getWashCar());
             mGridData = changeAir(mGridData,myDataset.get(0).getCountryName());
+            String [] sCode = new String [3];
             Log.e(TAG, " Size " + mGridData.size() );
             for (int i = 0; i <= 2; i++) {
                 //Log.e(TAG,"Air " + mGridData.get(i).getCounty() + " : " + mGridData.get(i).getSiteName());
-                setDataToMain(i + ""
+                Log.e(TAG,"Country name : " + myDataset.get(i).getStationCode());
+                for(int j=0;j<myInvoiceDataSet.size();j++){
+                    if(myDataset.get(i).getStationCode().equals(myInvoiceDataSet.get(j).getStationCode())){
+                        sCode[i] = myInvoiceDataSet.get(j).getInvoice() + " ";
+                        Log.e(TAG,"StationCode : " + myInvoiceDataSet.get(j).getStationCode() +" V.S " + myInvoiceDataSet.get(j).getInvoice());
+                        //Log.e(TAG,"Station code : " + myDataset.get(i).getStationCode() +"  " +myInvoiceDataSet.get(j).getInvoice());
+                    }
+                }
+                Log.e(TAG,"sCode[0] : " + sCode[0]+ " sCode[1] : " +sCode[1]+ " sCode[2] : " +sCode[2]);
+
+                setDataToMain(
+                        sCode[i]
+                        ,i + ""
                         , myDataset.get(i).getLocation()
                         , myDataset.get(i).getCountryName()
                         , myDataset.get(i).getSelfStation() + " " + myDataset.get(i).getStationName()
@@ -395,12 +433,13 @@ public class ViewPageController extends AppCompatActivity {
         }
     }
 
-    public void setDataToMain(String pageNm, String location, String a, String b, String c, String d, String e, String f, String g, String h
+    public void setDataToMain(String invoice, String pageNm, String location, String a, String b, String c, String d, String e, String f, String g, String h
             , String i, String j, String k, String l, String m, String n, String o, String p, String q, String r, String s) {
 
         SharedPreferences prefs = getApplication().getSharedPreferences("DATA" + pageNm, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.clear();
+        editor.putString("curInvoice" + pageNm, invoice);
         editor.putString("curlocation" + pageNm, location);
         editor.putString("countryName" + pageNm, a);
         editor.putString("curStation" + pageNm, b);
@@ -458,6 +497,7 @@ public class ViewPageController extends AppCompatActivity {
                     ));
                 }
             }
+            CSVInvoiceRead();
             CSVRead();
         } catch (IOException e) {
             e.printStackTrace();
