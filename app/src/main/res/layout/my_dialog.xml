@@ -42,6 +42,7 @@
 
         <TextView
             android:id="@+id/ratingbarText"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="人氣指數"
@@ -53,6 +54,7 @@
             android:layout_marginBottom="15dp" />
         <RatingBar
             android:id="@+id/ratingBarSelect"
+            android:visibility="gone"
             android:rating="4"
             android:numStars="5"
             android:scaleX="0.7"
