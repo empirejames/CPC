@@ -105,7 +105,9 @@ public class ViewPageController extends AppCompatActivity {
         InitImageView();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
+        toolbar.setLogo(R.mipmap.icon_cpc);
         toolbar.setTitleTextColor(Color.WHITE);
+
         setSupportActionBar(toolbar);
         context = ViewPageController.this;
         manager = new LocalActivityManager(this, true);
