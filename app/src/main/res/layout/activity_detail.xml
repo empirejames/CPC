@@ -220,7 +220,8 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/rule_background1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -244,24 +245,26 @@
                         android:id="@+id/oilPrediction"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorredLight"
                         android:layout_marginLeft="10dp"
-                        android:textSize="18sp"
-                        android:text="oooooooo" />
+                        android:text="oooooooo"
+                        android:textColor="@color/colorredLight"
+                        android:textSize="18sp" />
+
                     <com.ant.liao.GifView
                         android:id="@+id/oilUp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:visibility="gone"
-                        android:background="@drawable/ic_arrow_drop_up_red_48dp" />
+                        android:background="@drawable/ic_arrow_drop_up_red_48dp"
+                        android:visibility="gone" />
+
                     <com.ant.liao.GifView
                         android:id="@+id/oilDown"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:visibility="gone"
-                        android:background="@drawable/ic_arrow_drop_down_green_48dp" />
+                        android:background="@drawable/ic_arrow_drop_down_green_48dp"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <View
@@ -629,14 +632,15 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="2"
                 android:background="@drawable/rule_background"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="visible">
 
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/chart_line"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    tools:layout_editor_absoluteY="0dp"
-                    tools:layout_editor_absoluteX="8dp" />
+                    tools:layout_editor_absoluteX="8dp"
+                    tools:layout_editor_absoluteY="0dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -648,120 +652,222 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/rule_background2"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/nd1Layout2"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/nd1Week2"
-                        android:layout_width="match_parent"
+                        android:id="@+id/membership"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="45dp"
-                        android:gravity="center|bottom"
-                        android:text="*Tue"
+                        android:layout_marginLeft="10dp"
+                        android:text="會員中心"
                         android:textColor="#FFFFFF"
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/nd1TempC2"
-                        android:layout_width="match_parent"
+                        android:id="@+id/membershipPoint"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center|top"
-                        android:text="*22~27°C"
-                        android:textColor="#FFFFFF"
+                        android:layout_marginLeft="10dp"
+                        android:text="目前 157860 點"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="18sp" />
 
-                    <TextView
-                        android:id="@+id/nd1Desc2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center|top"
-                        android:text="*Clear"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
                 </LinearLayout>
 
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="3dp"
+                    android:layout_weight="1"
+                    android:background="#50ffffff" />
+
                 <LinearLayout
-                    android:id="@+id/nd2Layout1"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/nd2Week1"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="45dp"
-                        android:gravity="center|bottom"
-                        android:text="*Wed"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/nd2TempC1"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center|top"
-                        android:text="*18~20°C"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/nd2Desc1"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center|top"
-                        android:text="*Cloudy"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/nd3Layout3"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/nd3Week3"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="45dp"
-                        android:gravity="center|bottom"
-                        android:text="*Thu"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/nd3TempC3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center|top"
-                        android:text="*20~25°C"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
+                        <LinearLayout
+                            android:id="@+id/memberLine1"
+                            android:layout_width="300dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/nd3Desc3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center|top"
-                        android:text="*Sunny"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
+                            <TextView
+                                android:id="@+id/memberItem1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:gravity="left|bottom"
+                                android:text="1. 國際牌吹風機"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:id="@+id/memberItem2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:gravity="left|bottom"
+                                android:text="2. 空氣清淨機"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:id="@+id/memberItem3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:gravity="left|bottom"
+                                android:text="3. 循環扇"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:id="@+id/memberItem4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:gravity="left|bottom"
+                                android:text="4. 不鏽鋼快煮壺"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:id="@+id/memberItem5"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:gravity="left|bottom"
+                                android:text="5. 油券500元"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/memberItem6"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/memberPoint"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="right|bottom"
+                                    android:text="150000 點"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="18sp"
+                                    android:visibility="visible" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/memberPoint1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_weight="1"
+                                    android:gravity="right|bottom"
+                                    android:text="130000 點"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="18sp"
+                                    android:visibility="visible" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/memberPoint2"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_weight="1"
+                                    android:gravity="right|bottom"
+                                    android:text="100000 點"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="18sp"
+                                    android:visibility="visible" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/memberPoint3"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_weight="1"
+                                    android:gravity="right|bottom"
+                                    android:text="9500 點"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="18sp"
+                                    android:visibility="visible" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/memberPoin4"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_weight="1"
+                                    android:gravity="right|bottom"
+                                    android:text="8000 點"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="18sp"
+                                    android:visibility="visible" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
