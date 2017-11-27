@@ -50,14 +50,21 @@ public class GasPredictionParser extends ContextWrapper {
 
     }
     public ArrayList<String> getGasOilPrice(){
-        String[] temp;
+        String[] temp = new String[3];
         String date = "";
         try {
             Document doc = Jsoup.connect(url).get();
             //Log.e(TAG, doc.title());
             Element table = doc.select("table[class=topmenu2]").first();
             Elements rows = table.select("font[size=4]");
-            temp = rows.get(0).text().split(" ");
+
+            if(rows.size()==0){
+                temp[0] = "無";
+                temp[1] = "0%";
+            }else{
+                temp = rows.get(0).text().split(" ");
+            }
+
             writeDb(temp[0],temp[1].substring(0,temp[1].length()-1));
             //Log.e(TAG,"temp : " + temp[0] + temp[1].substring(0,temp[1].length()-1));
 
