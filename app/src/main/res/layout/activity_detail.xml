@@ -129,14 +129,12 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginStart="65dp"
                         android:isIndicator="true"
-                        android:numStars="5"
+                        android:numStars="6"
                         android:progressBackgroundTint="@android:color/darker_gray"
                         android:progressTint="@android:color/holo_orange_light"
                         android:rating="4"
                         android:scaleX="0.7"
-                        android:scaleY="0.7"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                        android:scaleY="0.7" />
                 </RelativeLayout>
 
                 <LinearLayout

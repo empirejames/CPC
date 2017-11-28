@@ -33,7 +33,7 @@
     <RelativeLayout
         android:id="@+id/relative_layout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="200dp"
         android:layout_below="@+id/relative_layoutTitle"
         android:orientation="vertical"
         android:paddingLeft="10dp"
@@ -93,7 +93,6 @@
             android:layout_alignBottom="@+id/switchCount"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
-
         <TextView
             android:id="@+id/switchAvgDay"
             android:layout_width="wrap_content"
@@ -118,6 +117,32 @@
             android:layout_alignBottom="@+id/switchAvgDay"
             android:layout_alignLeft="@+id/switchWashBtn"
             android:layout_alignStart="@+id/switchWashBtn" />
+
+        <TextView
+            android:id="@+id/switchEpay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="電子支付"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_below="@+id/switchAvgDay"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textSize="20dp"
+            android:layout_marginTop="20dp" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/switchEpayBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:showText="false"
+            app:switchMinWidth="50dp"
+            android:layout_alignBottom="@+id/switchEpay"
+            android:layout_alignLeft="@+id/switchSelfBtn"
+            android:layout_alignStart="@+id/switchSelfBtn" />
+
     </RelativeLayout>
 
     <Button

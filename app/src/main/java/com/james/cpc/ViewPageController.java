@@ -87,8 +87,10 @@ public class ViewPageController extends AppCompatActivity {
     RatingBar ratingbarStart;
     Boolean isWashCar ;
     Boolean isGasSelf ;
+    Boolean isEpay ;
     SwitchCompat swWash;
     SwitchCompat swSelf;
+    SwitchCompat swEpay;
     protected ProgressDialog dialogSMS;
     private String TAG = ViewPageController.class.getSimpleName();
     private int offset = 0;
@@ -149,11 +151,12 @@ public class ViewPageController extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void writeDb(boolean a, boolean b) {
+    public void writeDb(boolean a, boolean b, boolean c) {
         SharedPreferences prefs = getApplication().getSharedPreferences("Button", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean("a", a);
         editor.putBoolean("b", b);
+        editor.putBoolean("c", c);
         editor.commit();
     }
 
@@ -161,6 +164,7 @@ public class ViewPageController extends AppCompatActivity {
         SharedPreferences prefs = getApplication().getSharedPreferences("Button", Context.MODE_PRIVATE);
         isWashCar = prefs.getBoolean("a", false);
         isGasSelf = prefs.getBoolean("b", false);
+        isEpay = prefs.getBoolean("c", false);
         //Log.e(TAG,"isWashCar : " + isWashCar + " isGasSelf : " + isGasSelf);
     }
 
@@ -312,6 +316,16 @@ public class ViewPageController extends AppCompatActivity {
         }
         return temp;
     }
+    public ArrayList<gasStationItem> hasePay(ArrayList<gasStationItem> gasSation) {
+        ArrayList<gasStationItem> temp = new ArrayList<gasStationItem>();
+        for (int i = 0; i < gasSation.size(); i++) {
+            if (gasSation.get(i).getYoyocard().equals("0")) {
+            }else{
+                temp.add(gasSation.get(i));
+            }
+        }
+        return temp;
+    }
     public void CSVInvoiceRead() {
         CSVReader reader = null;
         ArrayList<String> statinInfo = new ArrayList<String>();
@@ -370,6 +384,9 @@ public class ViewPageController extends AppCompatActivity {
             }
             if (isGasSelf) {
                 myDataset = hasGasSelf(myDataset);
+            }
+            if (isEpay) {
+                myDataset = hasePay(myDataset);
             }
 
 
@@ -545,11 +562,15 @@ public class ViewPageController extends AppCompatActivity {
         });
         swWash = (SwitchCompat) myView.findViewById(R.id.switchWashBtn);
         swSelf = (SwitchCompat) myView.findViewById(R.id.switchSelfBtn);
+        swEpay = (SwitchCompat) myView.findViewById(R.id.switchEpayBtn);
         if(isWashCar){
             swWash.setChecked(true);
         }
         if(isGasSelf){
             swSelf.setChecked(true);
+        }
+        if(isEpay){
+            swEpay.setChecked(true);
         }
         swWash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -571,11 +592,21 @@ public class ViewPageController extends AppCompatActivity {
                 }
             }
         });
+        swEpay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    isEpay = true;
+                } else {
+                    isEpay = false;
+                }
+            }
+        });
         btnDiglog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e(TAG, "Send result " + isWashCar + " : " + isGasSelf);
-                writeDb(isWashCar, isGasSelf);
+                writeDb(isWashCar, isGasSelf, isEpay);
                 recreate();
                 alert.dismiss();
             }
