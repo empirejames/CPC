@@ -17,10 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
-import android.support.annotation.BoolRes;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
@@ -33,15 +30,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.james.cpc.Items.AirLoacationItem;
+import com.james.cpc.Items.InvoiceItem;
+import com.james.cpc.Items.TourismItem;
+import com.james.cpc.Items.gasStationItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,7 +64,7 @@ import au.com.bytecode.opencsv.CSVReader;
  * Created by 101716 on 2017/11/15.
  */
 
-public class ViewPageController extends AppCompatActivity {
+public class ViewPageController extends AppCompatActivity implements android.location.LocationListener {
     Context context = null;
     LocalActivityManager manager = null;
     public ViewPager pager = null;
@@ -85,9 +84,9 @@ public class ViewPageController extends AppCompatActivity {
     ArrayList<TourismItem> myTourDataset = new ArrayList<TourismItem>();
     Button btnDiglog;
     RatingBar ratingbarStart;
-    Boolean isWashCar ;
-    Boolean isGasSelf ;
-    Boolean isEpay ;
+    Boolean isWashCar;
+    Boolean isGasSelf;
+    Boolean isEpay;
     SwitchCompat swWash;
     SwitchCompat swSelf;
     SwitchCompat swEpay;
@@ -97,20 +96,26 @@ public class ViewPageController extends AppCompatActivity {
     private int currIndex = 0;
     private int bmpW;
     private ImageView cursor;
+    boolean hasDefaultGps = false;
+    String longitude1, latitude1;
+    double longitude2, latitude2;
+    boolean isRecreate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent i = getIntent();
+        Log.e(TAG, "ViewPageControll1 onCreate");
         isWashCar = false;
         isGasSelf = false;
+        readRecreate();
         InitImageView();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.app_name);
-        toolbar.setLogo(R.mipmap.icon_cpc);
-        toolbar.setTitleTextColor(Color.WHITE);
-
-        setSupportActionBar(toolbar);
+        initToolBar();
+        lms = (LocationManager) (this.getSystemService(Context.LOCATION_SERVICE));
+        if (!i.getBooleanExtra("isExit", false)) {
+                lms.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
+        }
         context = ViewPageController.this;
         manager = new LocalActivityManager(this, true);
         manager.dispatchCreate(savedInstanceState);
@@ -123,6 +128,37 @@ public class ViewPageController extends AppCompatActivity {
         gpredict.start();
         //getStation();
         //CSVReadAir();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        //lms.removeUpdates(this);
+        Log.e(TAG, "ViewPageControll1 onStop");
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e(TAG, "ViewPageControll1 onResume");
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //lms.removeUpdates(this);
+        Log.e(TAG, "ViewPageControll1 onStart");
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        //lms.removeUpdates(this);
+        Log.e(TAG, "ViewPageControll1 onPause");
+
     }
 
     @Override
@@ -141,7 +177,7 @@ public class ViewPageController extends AppCompatActivity {
             Log.e(TAG, "Show FILTER");
             showDialog();
             return true;
-        } else if(id ==R.id.action_jaipei){
+        } else if (id == R.id.action_jaipei) {
             Intent i = new Intent(ViewPageController.this, GetPackage.class);
             startActivity(i);
 
@@ -149,6 +185,14 @@ public class ViewPageController extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void initToolBar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.app_name);
+        toolbar.setLogo(R.mipmap.icon_cpc);
+        toolbar.setTitleTextColor(Color.WHITE);
+        setSupportActionBar(toolbar);
     }
 
     public void writeDb(boolean a, boolean b, boolean c) {
@@ -160,12 +204,42 @@ public class ViewPageController extends AppCompatActivity {
         editor.commit();
     }
 
+    public String[] readDistance() {
+        String temp[] = new String[3];
+        SharedPreferences prefs = getApplication().getSharedPreferences("distance", Context.MODE_PRIVATE);
+        Log.e(TAG, "latitude1 " + latitude1 + " VVV " + latitude.toString());
+        if (!hasDefaultGps) {
+            Log.e(TAG, "latitude1 is null");
+            temp[0] = longitude.toString();
+            temp[1] = latitude.toString();
+            temp[2] = "0.00";
+        } else {
+            temp[0] = prefs.getString("a", "");
+            temp[1] = prefs.getString("b", "");
+            temp[2] = prefs.getString("c", "");
+        }
+        return temp;
+    }
+
+    public void writeDistance(String a, String b, String c) {
+        SharedPreferences prefs = getApplication().getSharedPreferences("distance", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("a", a);
+        editor.putString("b", b);
+        editor.putString("c", c);
+        editor.commit();
+    }
+
     public void readDB() {
         SharedPreferences prefs = getApplication().getSharedPreferences("Button", Context.MODE_PRIVATE);
         isWashCar = prefs.getBoolean("a", false);
         isGasSelf = prefs.getBoolean("b", false);
         isEpay = prefs.getBoolean("c", false);
         //Log.e(TAG,"isWashCar : " + isWashCar + " isGasSelf : " + isGasSelf);
+    }
+    public void readRecreate(){
+        SharedPreferences prefs = getApplication().getSharedPreferences("recreate", Context.MODE_PRIVATE);
+        isRecreate = prefs.getBoolean("a", false);
     }
 
     private void InitImageView() {
@@ -182,7 +256,7 @@ public class ViewPageController extends AppCompatActivity {
     }
 
     public void checkPermission() {
-        lms = (LocationManager) (this.getSystemService(Context.LOCATION_SERVICE));
+
         if (lms.isProviderEnabled(LocationManager.GPS_PROVIDER) || lms.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             //如果GPS或網路定位開啟，呼叫locationServiceInitial()更新位置
             locationServiceInitial();
@@ -268,14 +342,15 @@ public class ViewPageController extends AppCompatActivity {
         distance = Math.round(distance * 10000) / 10000;
         return distance;
     }
-    public ArrayList<AirLoacationItem> changeAir(ArrayList<AirLoacationItem> airSation , String country) {
+
+    public ArrayList<AirLoacationItem> changeAir(ArrayList<AirLoacationItem> airSation, String country) {
         ArrayList<AirLoacationItem> temp = new ArrayList<AirLoacationItem>();
         String tempStation;
 
-        if(country.contains("台")){
-            country = country.replace("台","臺");
+        if (country.contains("台")) {
+            country = country.replace("台", "臺");
         }
-        Log.e(TAG,"country: " + country + "  " + airSation.size());
+        Log.e(TAG, "country: " + country + "  " + airSation.size());
         for (int i = 0; i < airSation.size(); i++) {
             if (!airSation.get(i).getCounty().contains(country)) {
                 //Log.e(TAG,airSation.get(i).getCounty() + "");
@@ -283,49 +358,53 @@ public class ViewPageController extends AppCompatActivity {
 //                    Log.e(TAG,country.contains("台中")+ "..." + airSation.get(i).getCounty());
 //                    temp.add(airSation.get(i));
 //                }
-            }else{
-                Log.e(TAG,airSation.get(i).getCounty() + " Y ");
+            } else {
+                Log.e(TAG, airSation.get(i).getCounty() + " Y ");
                 temp.add(airSation.get(i));
             }
         }
-        if(temp.size()<=2){
-            for(int i =0; i<2; i++){
+        if (temp.size() <= 2) {
+            for (int i = 0; i < 2; i++) {
                 temp.add(airSation.get(1));
             }
         }
         return temp;
     }
+
     public ArrayList<gasStationItem> hasWashCar(ArrayList<gasStationItem> gasSation) {
         ArrayList<gasStationItem> temp = new ArrayList<gasStationItem>();
 
         for (int i = 0; i < gasSation.size(); i++) {
-            if (gasSation.get(i).getWashCar().length()<2) {
-            }else{
+            if (gasSation.get(i).getWashCar().length() < 2) {
+            } else {
                 temp.add(gasSation.get(i));
             }
         }
         return temp;
     }
+
     public ArrayList<gasStationItem> hasGasSelf(ArrayList<gasStationItem> gasSation) {
         ArrayList<gasStationItem> temp = new ArrayList<gasStationItem>();
         for (int i = 0; i < gasSation.size(); i++) {
             if (gasSation.get(i).getMakeSelf().equals("0")) {
-            }else{
+            } else {
                 temp.add(gasSation.get(i));
             }
         }
         return temp;
     }
+
     public ArrayList<gasStationItem> hasePay(ArrayList<gasStationItem> gasSation) {
         ArrayList<gasStationItem> temp = new ArrayList<gasStationItem>();
         for (int i = 0; i < gasSation.size(); i++) {
             if (gasSation.get(i).getYoyocard().equals("0")) {
-            }else{
+            } else {
                 temp.add(gasSation.get(i));
             }
         }
         return temp;
     }
+
     public void CSVInvoiceRead() {
         CSVReader reader = null;
         ArrayList<String> statinInfo = new ArrayList<String>();
@@ -343,7 +422,7 @@ public class ViewPageController extends AppCompatActivity {
         } catch (Exception e) {
             Log.e(TAG, "Exception : " + e.toString());
         }
-        Log.e(TAG,"CSV invoice finish . ");
+        Log.e(TAG, "CSV invoice finish . ");
     }
 
     public void CSVRead() {
@@ -364,7 +443,7 @@ public class ViewPageController extends AppCompatActivity {
                     String[] distanceKil = distanceFin.split("公");
 
                     myDataset.add(new gasStationItem(
-                            line[0],line[1], line[2], line[3], line[5]
+                            line[0], line[1], line[2], line[3], line[5]
                             , line[10], line[11], line[12], line[13]
                             , line[15], line[16], line[17], line[19]
                             , line[20], line[21], line[22], line[23], line[24]
@@ -396,24 +475,24 @@ public class ViewPageController extends AppCompatActivity {
 //                    +" :: "+ myDataset.get(1).getActiveTime());
 //            Log.e(TAG, myDataset.get(2).getDistance() + myDataset.get(2).getDistanceM() + " " + myDataset.get(2).getStationName() + myDataset.get(2).getCountryName()
 //                    +" :: "+ myDataset.get(2).getWashCar());
-            mGridData = changeAir(mGridData,myDataset.get(0).getCountryName());
-            String [] sCode = new String [3];
-            Log.e(TAG, " Size " + mGridData.size() );
+            mGridData = changeAir(mGridData, myDataset.get(0).getCountryName());
+            String[] sCode = new String[3];
+            Log.e(TAG, " Size " + mGridData.size());
             for (int i = 0; i <= 2; i++) {
                 //Log.e(TAG,"Air " + mGridData.get(i).getCounty() + " : " + mGridData.get(i).getSiteName());
-                Log.e(TAG,"Country name : " + myDataset.get(i).getStationCode());
-                for(int j=0;j<myInvoiceDataSet.size();j++){
-                    if(myDataset.get(i).getStationCode().equals(myInvoiceDataSet.get(j).getStationCode())){
+                Log.e(TAG, "Country name : " + myDataset.get(i).getStationCode());
+                for (int j = 0; j < myInvoiceDataSet.size(); j++) {
+                    if (myDataset.get(i).getStationCode().equals(myInvoiceDataSet.get(j).getStationCode())) {
                         sCode[i] = myInvoiceDataSet.get(j).getInvoice() + " ";
-                        Log.e(TAG,"StationCode : " + myInvoiceDataSet.get(j).getStationCode() +" V.S " + myInvoiceDataSet.get(j).getInvoice());
+                        Log.e(TAG, "StationCode : " + myInvoiceDataSet.get(j).getStationCode() + " V.S " + myInvoiceDataSet.get(j).getInvoice());
                         //Log.e(TAG,"Station code : " + myDataset.get(i).getStationCode() +"  " +myInvoiceDataSet.get(j).getInvoice());
                     }
                 }
-                Log.e(TAG,"sCode[0] : " + sCode[0]+ " sCode[1] : " +sCode[1]+ " sCode[2] : " +sCode[2]);
+                Log.e(TAG, "sCode[0] : " + sCode[0] + " sCode[1] : " + sCode[1] + " sCode[2] : " + sCode[2]);
 
                 setDataToMain(
                         sCode[i]
-                        ,i + ""
+                        , i + ""
                         , myDataset.get(i).getLocation()
                         , myDataset.get(i).getCountryName()
                         , myDataset.get(i).getSelfStation() + " " + myDataset.get(i).getStationName()
@@ -436,8 +515,6 @@ public class ViewPageController extends AppCompatActivity {
                         , myDataset.get(i).getActiveTime()
                 );
             }
-
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -524,6 +601,7 @@ public class ViewPageController extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     public void getTourData(String url) {
         try {
             String json = Jsoup.connect(url).ignoreContentType(true).execute().body();
@@ -554,22 +632,16 @@ public class ViewPageController extends AppCompatActivity {
         //avgNumber.setAdapter(avgNumAdapter);
         //epsNumber.setAdapter(epsNumberAdapter);
 
-        ratingbarStart.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                //percentTaixi = rating / 5;
-            }
-        });
         swWash = (SwitchCompat) myView.findViewById(R.id.switchWashBtn);
         swSelf = (SwitchCompat) myView.findViewById(R.id.switchSelfBtn);
         swEpay = (SwitchCompat) myView.findViewById(R.id.switchEpayBtn);
-        if(isWashCar){
+        if (isWashCar) {
             swWash.setChecked(true);
         }
-        if(isGasSelf){
+        if (isGasSelf) {
             swSelf.setChecked(true);
         }
-        if(isEpay){
+        if (isEpay) {
             swEpay.setChecked(true);
         }
         swWash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -612,6 +684,56 @@ public class ViewPageController extends AppCompatActivity {
             }
         });
         alert.show();
+    }
+
+    public String countDis(String a, String b){
+        String temp = "";
+        double ss;
+        ss = Double.parseDouble(a) + Double.parseDouble(b);
+        temp = ss+"";
+        return temp;
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        String temp[] = new String[2];
+        double temp_longitude1, temp_latitude2, temp_distance;
+        longitude2 = location.getLongitude();
+        latitude2 = location.getLatitude();
+        temp = readDistance();
+        temp_longitude1 = Double.parseDouble(temp[0]);
+        temp_latitude2 = Double.parseDouble(temp[1]);
+        temp_distance = Double.parseDouble(temp[2]);
+        String[] distance = DistanceText(Distance(temp_longitude1, temp_latitude2, longitude2, latitude2)).split(" ");
+        Log.e(TAG, distance[0] + " " + distance[1]);
+        if (Double.parseDouble(distance[0]) > 50 && distance[1].equals("公尺")) {
+
+            Log.e(TAG, countDis(temp_distance+"",distance[0] ));
+
+            writeDistance(longitude2 + "", latitude2 + "", distance[0] + distance[1]);
+            Log.e(TAG, "大於 50公尺/秒 : " + DistanceText(Distance(longitude, latitude, longitude2, latitude2)));
+            hasDefaultGps = true;
+        } else if (distance[1].equals("公里")) {
+            writeDistance(longitude2 + "", latitude2 + "", distance[0] + distance[1]);
+            Log.e(TAG, "50公里/秒 : " + DistanceText(Distance(longitude, latitude, longitude2, latitude2)));
+        } else {
+
+        }
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
     }
 
     public class AsyncHttpTask extends AsyncTask<String, Void, Integer> {
@@ -668,6 +790,7 @@ public class ViewPageController extends AppCompatActivity {
     public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
         int one = offset * 2 + bmpW;
         int two = one * 2;
+
         @Override
         public void onPageSelected(int arg0) {
             Animation animation = null;

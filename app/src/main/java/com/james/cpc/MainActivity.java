@@ -124,6 +124,7 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
     public void onRefresh() {
         Intent i = new Intent(MainActivity.this, ViewPageController.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        i.putExtra("isExit", (Boolean) true);
         startActivity(i);
         laySwipe.setRefreshing(false);
         finish();

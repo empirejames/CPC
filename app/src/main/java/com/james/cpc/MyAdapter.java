@@ -9,6 +9,8 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
+import com.james.cpc.Items.ListItem;
+
 import java.util.ArrayList;
 
 /**
