@@ -24,14 +24,20 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile files('../lib/GifView.jar')
+    compile files('../lib/ksoap2_2.4.jar')
+    compile project(':MPChartLib302')
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'net.sf.opencsv:opencsv:2.3'
     compile 'com.mcxiaoke.volley:library:1.0.+'
     compile 'org.jsoup:jsoup:1.11.1'
     compile 'com.journeyapps:zxing-android-embedded:3.+'
-    compile files('../lib/GifView.jar')
-    compile files('../lib/ksoap2_2.4.jar')
+    compile 'com.google.firebase:firebase-core:10.0.1'
+    compile 'com.google.firebase:firebase-messaging:10.0.1'
     testCompile 'junit:junit:4.12'
-    compile project(':MPChartLib302')
 }
+
+
+
+apply plugin: 'com.google.gms.google-services'

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "69011519736",
+    "firebase_url": "https://cpc-oil.firebaseio.com",
+    "project_id": "cpc-oil",
+    "storage_bucket": "cpc-oil.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:69011519736:android:d648fe063f22c06f",
+        "android_client_info": {
+          "package_name": "com.james.cpc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "69011519736-1ib9h72qn32eo44ed45juo7i1q4vntmo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.james.cpc",
+            "certificate_hash": "9f6c903245c1c5e5f953596193e4661bbc545c36"
+          }
+        },
+        {
+          "client_id": "69011519736-s4j47euafsuo3nfo1dk55lfso9r1obln.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJ7wxEhOVSTEd_7YlO0iqQ1uxhPZck-t4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "69011519736-s4j47euafsuo3nfo1dk55lfso9r1obln.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

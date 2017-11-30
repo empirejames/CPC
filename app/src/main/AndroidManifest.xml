@@ -3,6 +3,7 @@
     package="com.james.cpc">
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/icon_cpc"
@@ -31,6 +32,11 @@
         <activity android:name=".GetPackage"
             android:theme="@style/AppTheme">
         </activity>
+        <service
+            android:name=".MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
-
 </manifest>
