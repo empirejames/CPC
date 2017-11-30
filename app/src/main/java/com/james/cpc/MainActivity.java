@@ -10,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
@@ -44,6 +45,7 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
     ProgressBar psBarAQI, psBarPM;
     GifView gfup, gfdown;
     RatingBar ratingbarStart;
+    ImageView img_airStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -239,7 +241,7 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         }
         psBarAQI.setProgress(Integer.parseInt(AQINumber));
         psBarPM.setProgress(Integer.parseInt(PMNumber));
-
+        img_airStatus = (ImageView) findViewById(R.id.img_airStatus);
         curPublishTime = (TextView) findViewById(R.id.curPublishTime);
         oil_supply_92 = (TextView) findViewById(R.id.oil_supply_92);
         oil_supply_95 = (TextView) findViewById(R.id.oil_supply_95);
@@ -269,6 +271,7 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         happycash = (TextView) findViewById(R.id.happycash);
         washCar = (TextView) findViewById(R.id.washCar);
         activityTime = (TextView) findViewById(R.id.activityTime);
+
         //Log.e(TAG, h + " i " + i + " j " + j + " k " + k + " l " + l + " m " + m + " n " + n + " o " + o + " p " + p + " q " + q + " r " + r + " s " + s);
         if (h.equals("1")) {
             oil_supply_92.setVisibility(View.VISIBLE);
@@ -329,18 +332,30 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         stationName.setText(b);
         curStation.setText(a + location);
         curtel.setText("距離約 " + c);
-        curStates.setText(d);
         curPM.setText(e);
         curAQI.setText(f);
         curPublishTime.setText(g);
 
-
         if (d.equals("良好")) {
+            curStates.setText("良好");
             bgElement.setBackgroundResource(R.drawable.bgd_great);
+            img_airStatus.setImageResource(R.drawable.air_ok);
         } else if (d.equals("普通")) {
+            curStates.setText("普通");
             bgElement.setBackgroundResource(R.drawable.bgd);
-        } else {
+            img_airStatus.setImageResource(R.drawable.air_sensitive);
+        }else if(d.equals("設備維護")){
+            curStates.setText("設備維護");
             bgElement.setBackgroundResource(R.drawable.bgd_danger);
+            img_airStatus.setImageResource(R.drawable.air_error);
+        } else if(d.equals("對敏感族群不健康")){
+            curStates.setText("不健康");
+            bgElement.setBackgroundResource(R.drawable.bgd_danger);
+            img_airStatus.setImageResource(R.drawable.air_unhealthy);
+        }else{
+            curStates.setText("危險");
+            bgElement.setBackgroundResource(R.drawable.bgd_danger);
+            img_airStatus.setImageResource(R.drawable.air_unhealthy);
         }
     }
 }

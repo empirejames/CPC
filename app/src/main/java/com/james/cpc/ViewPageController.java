@@ -87,7 +87,7 @@ public class ViewPageController extends AppCompatActivity {
     RatingBar ratingbarStart;
     Boolean isWashCar ;
     Boolean isGasSelf ;
-    Boolean isEpay ;
+    Boolean isEpay;
     SwitchCompat swWash;
     SwitchCompat swSelf;
     SwitchCompat swEpay;
@@ -104,6 +104,7 @@ public class ViewPageController extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         isWashCar = false;
         isGasSelf = false;
+        isEpay = false;
         InitImageView();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
@@ -378,9 +379,7 @@ public class ViewPageController extends AppCompatActivity {
             }
             DistanceSort(myDataset);
             if (isWashCar) {
-                //Log.e(TAG, "IS wash card");
                 myDataset = hasWashCar(myDataset);
-                //Log.e(TAG, "IS wash card : " + myDataset.get(0).getStationName());
             }
             if (isGasSelf) {
                 myDataset = hasGasSelf(myDataset);
