@@ -18,4 +18,5 @@
     <color name="colorLineGray">#B8AEB6</color>
     <color name="colorRed">#FF0000</color>
     <color name="blackblue">#234B8B</color>
+    <color name="hsTextColor">#606060</color>
 </resources>

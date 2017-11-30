@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.james.cpc.GetPackage"
+    tools:context="com.james.cpc.InfoTotalActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/listView_info"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="@drawable/bgd"

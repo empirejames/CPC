@@ -27,8 +27,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent, PendingIntent.FLAG_ONE_SHOT);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.air_clear)
-                .setContentTitle("推播資訊")
+                .setSmallIcon(R.mipmap.icon_cpc)
+                .setContentTitle("貼心提醒")
                 .setContentText(remoteMessage.getNotification().getBody().toString())
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setSound(defaultSoundUri)

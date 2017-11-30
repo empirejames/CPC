@@ -211,7 +211,7 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         curPM = (TextView) findViewById(R.id.curPM);
         curAQI = (TextView) findViewById(R.id.curAQI);
         psBarAQI = (ProgressBar) findViewById(R.id.progressBarAQI);
-        psBarAQI.setMax(400);
+        psBarAQI.setMax(200);
         psBarPM = (ProgressBar) findViewById(R.id.progressBarPM);
         psBarPM.setMax(100);
         //Log.e(TAG,"AQI data : " + AQIData[1].trim());

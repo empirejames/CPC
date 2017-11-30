@@ -13,4 +13,7 @@
     </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="hs_text_view_style" parent="@android:attr/textAppearance">
+        <item name="android:textColor">@color/hsTextColor</item>
+    </style>
 </resources>

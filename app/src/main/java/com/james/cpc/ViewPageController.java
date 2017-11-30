@@ -145,10 +145,12 @@ public class ViewPageController extends AppCompatActivity {
         } else if(id ==R.id.action_jaipei){
             Intent i = new Intent(ViewPageController.this, GetPackage.class);
             startActivity(i);
-
+            return true;
+        }else if(id ==R.id.action_info){
+            Intent i = new Intent(ViewPageController.this, InfoTotalActivity.class);
+            startActivity(i);
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
