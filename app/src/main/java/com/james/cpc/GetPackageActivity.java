@@ -8,7 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.james.cpc.item.ListItem;
-import com.james.cpc.adapter.MyAdapter;
+import com.james.cpc.adapter.PackageAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class GetPackageActivity extends AppCompatActivity {
     final List<String> allDetails = new ArrayList<String>();
     final List<String> allPackageInfos = new ArrayList<String>();
     ArrayList<ListItem> myListData = new ArrayList<ListItem>();
-    private MyAdapter myAdapter;
+    private PackageAdapter myAdapter;
     private ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class GetPackageActivity extends AppCompatActivity {
         for (int i = 0; i < allTitles.size(); i++) {
             myListData.add(new ListItem(eventArray[i],detailArray[i],packageArray[i]));
         }
-        myAdapter = new MyAdapter(getApplicationContext(), myListData);
+        myAdapter = new PackageAdapter(getApplicationContext(), myListData);
         listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(myAdapter);
         listView.setOnItemClickListener(onClickListView);

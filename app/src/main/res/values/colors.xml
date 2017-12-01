@@ -19,4 +19,11 @@
     <color name="colorRed">#FF0000</color>
     <color name="blackblue">#234B8B</color>
     <color name="hsTextColor">#606060</color>
+    <color name="color92">#8E5572</color>
+    <color name="color95">#094074</color>
+    <color name="color98">#046865</color>
+    <color name="colordesal">#CB4C03</color>
+    <color name="coloralocal">#F1C40F</color>
+    <color name="colormacalon">#7EE8FA</color>
+    <color name="colorblock">#4B4B4C</color>
 </resources>

@@ -13,9 +13,9 @@ import java.util.List;
  * Created by 101716 on 2017/11/15.
  */
 
-public class MyPagerAdapter extends PagerAdapter {
+public class ViewListAdapter extends PagerAdapter {
     List<View> list =  new ArrayList<View>();
-    public MyPagerAdapter(ArrayList<View> list) {
+    public ViewListAdapter(ArrayList<View> list) {
         this.list = list;
     }
 

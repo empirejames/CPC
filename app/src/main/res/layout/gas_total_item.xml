@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignBottom="@+id/oil_background">
+
+            <TextView
+                android:id="@+id/txt_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:text="12/01"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_runkm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/txt_avgoil"
+            android:layout_alignRight="@+id/txt_avgoil"
+            android:layout_below="@+id/txt_avgoil"
+            android:gravity="right"
+            android:textColor="@color/colorWhite"
+            android:textSize="18dp"
+            android:text="472km" />
+
+        <TextView
+            android:id="@+id/txt_addoil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_avgoil"
+            android:layout_marginEnd="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_toLeftOf="@+id/txt_runkm"
+            android:layout_toStartOf="@+id/txt_runkm"
+            android:gravity="right"
+            android:textColor="@color/colorWhite"
+            android:textSize="18dp"
+            android:text="41.48L" />
+
+        <TextView
+            android:id="@+id/txt_avgoil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:gravity="right"
+            android:textSize="20dp"
+            android:text="11.38 km/L"
+            android:textColor="@color/colormacalon"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/txt_total_run"
+            android:layout_toStartOf="@+id/txt_total_run" />
+
+        <TextView
+            android:id="@+id/txt_total_run"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/rule_background_km"
+            android:text="128896 公里"
+            android:textSize="20dp"
+            android:textColor="@color/colorWhite"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <RelativeLayout
+            android:id="@+id/oil_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="7dp"
+            android:layout_toEndOf="@+id/linearLayout2"
+            android:layout_toRightOf="@+id/linearLayout2"
+            android:background="@color/color92"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
+
+                <com.ant.liao.GifView
+                    android:id="@+id/img_oil"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/oil" />
+
+                <TextView
+                    android:id="@+id/txt_oil"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="92"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

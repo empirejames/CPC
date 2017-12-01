@@ -1,5 +1,6 @@
 package com.james.cpc;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -8,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.james.cpc.item.InfoItem;
-import com.james.cpc.adapter.InfoAdapter;
+import com.james.cpc.adapter.NoticeListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class InfoTotalActivity extends AppCompatActivity {
     final List<String> allDetails = new ArrayList<String>();
     final List<String> allPackageInfos = new ArrayList<String>();
     ArrayList<InfoItem> myListData = new ArrayList<InfoItem>();
-    private InfoAdapter myAdapter;
+    private NoticeListAdapter myAdapter;
     private ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,11 +67,9 @@ public class InfoTotalActivity extends AppCompatActivity {
         packageArray = allPackageInfos.toArray(packageArray);
 
         for (int i = 0; i < allTitles.size(); i++) {
-            Log.e(TAG,picsource[i] + " .. . .. ");
             myListData.add(new InfoItem(picsource[i],eventArray[i],detailArray[i],packageArray[i]));
-
         }
-        myAdapter = new InfoAdapter(getApplicationContext(), myListData);
+        myAdapter = new NoticeListAdapter(getApplicationContext(), myListData);
         listView = (ListView) findViewById(R.id.listView_info);
         listView.setAdapter(myAdapter);
         listView.setOnItemClickListener(onClickListView);
@@ -79,7 +78,12 @@ public class InfoTotalActivity extends AppCompatActivity {
     private AdapterView.OnItemClickListener onClickListView = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            if(position ==0){
+            Intent intent = new Intent();
+            intent.setClass(InfoTotalActivity.this, GasInfoActivity.class);
+            startActivity(intent);
 
+            }
             //Toast.makeText(getBaseContext(), "click # " + (position + 1) + "\n", Toast.LENGTH_SHORT).show();
 //            Intent intent = new Intent();
 //            intent.putExtra("QRdata",myListData.get(position).getDetail());

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -41,7 +42,7 @@ import com.james.cpc.item.AirLoacationItem;
 import com.james.cpc.item.InvoiceItem;
 import com.james.cpc.item.TourismItem;
 import com.james.cpc.item.gasStationItem;
-import com.james.cpc.adapter.MyPagerAdapter;
+import com.james.cpc.adapter.ViewListAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -659,7 +660,7 @@ public class ViewPageController extends AppCompatActivity {
         list.add(getView("MiddleActivity", intent2));
         Intent intent3 = new Intent(context, LastActivity.class);
         list.add(getView("LastActivity", intent3));
-        pager.setAdapter(new MyPagerAdapter(list));
+        pager.setAdapter(new ViewListAdapter(list));
         pager.setCurrentItem(0);
         pager.setOnPageChangeListener(new MyOnPageChangeListener());
     }
@@ -723,6 +724,15 @@ public class ViewPageController extends AppCompatActivity {
 
         @Override
         public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+        }
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+
+        } else {
 
         }
     }
