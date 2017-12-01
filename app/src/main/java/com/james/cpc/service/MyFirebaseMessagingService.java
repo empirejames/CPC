@@ -1,4 +1,4 @@
-package com.james.cpc;
+package com.james.cpc.service;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -12,6 +12,9 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.james.cpc.InfoTotalActivity;
+import com.james.cpc.MainActivity;
+import com.james.cpc.R;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = MyFirebaseMessagingService.class.getSimpleName();
@@ -22,7 +25,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         sendNotification(remoteMessage);
     }
     private void sendNotification(RemoteMessage remoteMessage) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, InfoTotalActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent, PendingIntent.FLAG_ONE_SHOT);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

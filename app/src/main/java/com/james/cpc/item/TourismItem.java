@@ -1,4 +1,4 @@
-package com.james.cpc;
+package com.james.cpc.item;
 
 /**
  * Created by 101716 on 2017/11/20.

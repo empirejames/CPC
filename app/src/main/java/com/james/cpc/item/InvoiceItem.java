@@ -1,4 +1,4 @@
-package com.james.cpc;
+package com.james.cpc.item;
 
 import android.content.Context;
 

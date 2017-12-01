@@ -17,10 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
-import android.support.annotation.BoolRes;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
@@ -33,15 +30,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.james.cpc.item.AirLoacationItem;
+import com.james.cpc.item.InvoiceItem;
+import com.james.cpc.item.TourismItem;
+import com.james.cpc.item.gasStationItem;
+import com.james.cpc.adapter.MyPagerAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -143,7 +143,7 @@ public class ViewPageController extends AppCompatActivity {
             showDialog();
             return true;
         } else if(id ==R.id.action_jaipei){
-            Intent i = new Intent(ViewPageController.this, GetPackage.class);
+            Intent i = new Intent(ViewPageController.this, GetPackageActivity.class);
             startActivity(i);
             return true;
         }else if(id ==R.id.action_info){
@@ -634,8 +634,10 @@ public class ViewPageController extends AppCompatActivity {
 
     public void startDialog() {
         dialogSMS = ProgressDialog.show(this, null, null, false, true);
+        dialogSMS.setCanceledOnTouchOutside(false);
         dialogSMS.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialogSMS.setContentView(R.layout.progressbar);
+
         new Thread(new Runnable() {
             @Override
             public void run() {

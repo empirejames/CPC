@@ -333,8 +333,8 @@ public class LastActivity extends Activity implements SwipeRefreshLayout.OnRefre
             img_airStatus.setImageResource(R.drawable.air_unhealthy);
         }else{
             curStates.setText("危險");
-            bgElement.setBackgroundResource(R.drawable.bgd_danger);
-            img_airStatus.setImageResource(R.drawable.air_unhealthy);
+            bgElement.setBackgroundResource(R.drawable.bgd_died);
+            img_airStatus.setImageResource(R.drawable.air_died);
         }
     }
     @Override

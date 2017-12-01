@@ -1,15 +1,16 @@
-package com.james.cpc;
+package com.james.cpc.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.james.cpc.item.ListItem;
+import com.james.cpc.R;
 
 import java.util.ArrayList;
 
@@ -17,16 +18,16 @@ import java.util.ArrayList;
  * Created by 101716 on 2017/6/27.
  */
 
-public class InfoAdapter extends BaseAdapter implements Filterable {
-    private ArrayList<InfoItem> mListItems;
+public class MyAdapter extends BaseAdapter implements Filterable {
+    private ArrayList<ListItem> mListItems;
     private LayoutInflater inflater;
     Context context;
-    String TAG = InfoAdapter.class.getSimpleName();
-    public InfoAdapter(Context context) {
+    String TAG = MyAdapter.class.getSimpleName();
+    public MyAdapter(Context context) {
         this.context = context;
     }
 
-    public InfoAdapter(Context context, ArrayList<InfoItem> itemList) {
+    public MyAdapter(Context context, ArrayList<ListItem> itemList) {
         this.context = context;
         mListItems = itemList;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -49,14 +50,13 @@ public class InfoAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public View getView(int position, final View convertView, ViewGroup parent) {
-        final View row = inflater.inflate(R.layout.info_item, parent, false);
-        final InfoItem item = mListItems.get(position);
-        final ImageView img = (ImageView) row.findViewById(R.id.img_status);
-        final TextView title = (TextView) row.findViewById(R.id.tv_title);
-        final TextView text = (TextView) row.findViewById(R.id.tv_text);
+        final View row = inflater.inflate(R.layout.list_item, parent, false);
+        final ListItem item = mListItems.get(position);
 
-        img.setImageResource(item.getImg());
+        final TextView title = (TextView) row.findViewById(R.id.tv_title);
         title.setText(item.getTitle());
+
+        TextView text = (TextView) row.findViewById(R.id.tv_text);
         text.setText(item.getText());
         return row;
     }

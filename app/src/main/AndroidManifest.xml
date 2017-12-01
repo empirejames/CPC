@@ -32,11 +32,11 @@
         <activity android:name=".QRCodeGenActivity"
             android:theme="@style/AppTheme">
         </activity>
-        <activity android:name=".GetPackage"
+        <activity android:name=".GetPackageActivity"
             android:theme="@style/AppTheme">
         </activity>
         <service
-            android:name=".MyFirebaseMessagingService">
+            android:name=".service.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>

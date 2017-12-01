@@ -16,4 +16,7 @@
     <style name="hs_text_view_style" parent="@android:attr/textAppearance">
         <item name="android:textColor">@color/hsTextColor</item>
     </style>
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/colorOrangeYellow</item>
+    </style>
 </resources>

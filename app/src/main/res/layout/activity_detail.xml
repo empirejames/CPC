@@ -130,6 +130,7 @@
                         android:layout_marginStart="65dp"
                         android:isIndicator="true"
                         android:numStars="6"
+                        android:progressBackgroundTint="@color/colorWhite"
                         android:progressTint="@color/colorOrangeYellow"
                         android:rating="4"
                         android:scaleX="0.7"

@@ -1,4 +1,4 @@
-package com.james.cpc;
+package com.james.cpc.adapter;
 
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;

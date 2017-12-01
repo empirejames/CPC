@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import com.james.cpc.item.ListItem;
+import com.james.cpc.adapter.MyAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.List;
  * Created by 101716 on 2017/11/22.
  */
 
-public class GetPackage extends AppCompatActivity {
+public class GetPackageActivity extends AppCompatActivity {
     private String[] eventArray, detailArray, packageArray;
     final List<String> allTitles = new ArrayList<String>();
     final List<String> allDetails = new ArrayList<String>();
@@ -63,7 +65,7 @@ public class GetPackage extends AppCompatActivity {
             //Toast.makeText(getBaseContext(), "click # " + (position + 1) + "\n", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
             intent.putExtra("QRdata",myListData.get(position).getDetail());
-            intent.setClass(GetPackage.this, QRCodeGenActivity.class);
+            intent.setClass(GetPackageActivity.this, QRCodeGenActivity.class);
             startActivity(intent);
 
         }

@@ -1,12 +1,14 @@
 package com.james.cpc;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.james.cpc.item.InfoItem;
+import com.james.cpc.adapter.InfoAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +51,7 @@ public class InfoTotalActivity extends AppCompatActivity {
         allDetails.add("目前尚有157860點可兌換");
         allPackageInfos.add("B2倉庫 A2架上 林先生 電話，0978578123");
 
-        allpics.add(R.mipmap.icon_cpc);
+        allpics.add(R.drawable.cpc);
         allTitles.add("中油好康提醒");
         allDetails.add("近期油耗不佳，建議可添加中油油精，優惠價50元");
         allPackageInfos.add("B2倉庫 A2架上 林先生 電話，0978578123");
