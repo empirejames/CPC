@@ -38,6 +38,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import com.james.cpc.dataBase.TinyDB;
 import com.james.cpc.item.AirLoacationItem;
 import com.james.cpc.item.InvoiceItem;
 import com.james.cpc.item.TourismItem;
@@ -98,7 +99,7 @@ public class ViewPageController extends AppCompatActivity {
     private int currIndex = 0;
     private int bmpW;
     private ImageView cursor;
-
+    TinyDB tinydb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +115,7 @@ public class ViewPageController extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         context = ViewPageController.this;
+        tinydb = new TinyDB(context);
         manager = new LocalActivityManager(this, true);
         manager.dispatchCreate(savedInstanceState);
         mGridData = new ArrayList<>();
@@ -453,12 +455,15 @@ public class ViewPageController extends AppCompatActivity {
             }
         }
     }
-
+    public void writeCountryDb(String a) {
+        tinydb.putString("country", a);
+    }
     public void setDataToMain(String invoice, String pageNm, String location, String a, String b, String c, String d, String e, String f, String g, String h
             , String i, String j, String k, String l, String m, String n, String o, String p, String q, String r, String s) {
 
         SharedPreferences prefs = getApplication().getSharedPreferences("DATA" + pageNm, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
+        writeCountryDb(a);
         editor.clear();
         editor.putString("curInvoice" + pageNm, invoice);
         editor.putString("curlocation" + pageNm, location);

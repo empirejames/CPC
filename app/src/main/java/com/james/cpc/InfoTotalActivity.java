@@ -29,6 +29,7 @@ public class InfoTotalActivity extends AppCompatActivity {
     ArrayList<InfoItem> myListData = new ArrayList<InfoItem>();
     private NoticeListAdapter myAdapter;
     private ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +37,7 @@ public class InfoTotalActivity extends AppCompatActivity {
         addData();
     }
 
-    public void addData(){
+    public void addData() {
         allpics.add(R.drawable.gun);
         allTitles.add("油耗提醒");
         allDetails.add("已開 450 公里請於最近的加油站補給");
@@ -48,14 +49,20 @@ public class InfoTotalActivity extends AppCompatActivity {
         allPackageInfos.add("B2倉庫 A2架上 林先生 電話，0978578123");
 
         allpics.add(R.drawable.member);
-        allTitles.add("會員提醒");
-        allDetails.add("目前尚有157860點可兌換");
+        allTitles.add("特約商店提醒");
+        allDetails.add("目前有寶島特約商店促銷８折起");
         allPackageInfos.add("B2倉庫 A2架上 林先生 電話，0978578123");
 
         allpics.add(R.drawable.cpc);
         allTitles.add("中油好康提醒");
         allDetails.add("近期油耗不佳，建議可添加中油油精，優惠價50元");
         allPackageInfos.add("B2倉庫 A2架上 林先生 電話，0978578123");
+
+        allpics.add(R.drawable.carfix);
+        allTitles.add("保養提醒");
+        allDetails.add("里程數已達160000公里建議至最近的快保中心");
+        allPackageInfos.add("B2倉庫 A2架上 林先生 電話，0978578123");
+
         picsource = new Integer[allpics.size()];
         eventArray = new String[allTitles.size()];
         detailArray = new String[allDetails.size()];
@@ -67,7 +74,7 @@ public class InfoTotalActivity extends AppCompatActivity {
         packageArray = allPackageInfos.toArray(packageArray);
 
         for (int i = 0; i < allTitles.size(); i++) {
-            myListData.add(new InfoItem(picsource[i],eventArray[i],detailArray[i],packageArray[i]));
+            myListData.add(new InfoItem(picsource[i], eventArray[i], detailArray[i], packageArray[i]));
         }
         myAdapter = new NoticeListAdapter(getApplicationContext(), myListData);
         listView = (ListView) findViewById(R.id.listView_info);
@@ -75,14 +82,22 @@ public class InfoTotalActivity extends AppCompatActivity {
         listView.setOnItemClickListener(onClickListView);
 
     }
+
     private AdapterView.OnItemClickListener onClickListView = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if(position ==0){
-            Intent intent = new Intent();
-            intent.setClass(InfoTotalActivity.this, GasInfoActivity.class);
-            startActivity(intent);
-
+            if (position == 0) {
+                Intent intent = new Intent();
+                intent.setClass(InfoTotalActivity.this, GasInfoActivity.class);
+                startActivity(intent);
+            } else if(position == 2){
+                Intent intent = new Intent();
+                intent.setClass(InfoTotalActivity.this, SpecialShopActivity.class);
+                startActivity(intent);
+            }else if(position == 4){
+                Intent intent = new Intent();
+                intent.setClass(InfoTotalActivity.this, FastInsuranceActivity.class);
+                startActivity(intent);
             }
             //Toast.makeText(getBaseContext(), "click # " + (position + 1) + "\n", Toast.LENGTH_SHORT).show();
 //            Intent intent = new Intent();

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="10dp">
+
+    <LinearLayout
+        android:id="@+id/infoSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true">
+
+        <RelativeLayout
+            android:id="@+id/relative_layout_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/infoSection"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:textColor="@color/colorWhite"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/tv_storeName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rule_background_txttitle"
+                android:text="寶島眼鏡"
+                android:textColor="@color/colorGreenY"
+                android:textSize="25dp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relative_layout_tel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/infoSection"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorWhite"
+            android:visibility="visible">
+
+            <com.ant.liao.GifView
+                android:id="@+id/telphone"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/ic_local_phone_black_24dp" />
+            <TextView
+                android:id="@+id/tv_StoreTel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8686868686"
+                android:textColor="#C9C0F7"
+                android:textSize="22dp"
+                android:layout_alignBottom="@+id/telphone"
+                android:layout_toRightOf="@+id/telphone"
+                android:layout_toEndOf="@+id/telphone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relative_layout_local"
+            android:layout_width="match_parent"
+            android:visibility="visible"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/infoSection"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:paddingRight="10dp"
+            >
+            <com.ant.liao.GifView
+                android:id="@+id/naviter"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/ic_near_me_white_96dp" />
+            <TextView
+                android:id="@+id/tv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="地址:XXXX"
+                android:textColor="#F0D4BF"
+                android:textSize="20dp"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/naviter"
+                android:layout_toEndOf="@+id/naviter" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relative_layoutdetail"
+            android:layout_width="match_parent"
+            android:visibility="visible"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/infoSection"
+            android:textColor="@color/colorWhite"
+            android:orientation="vertical"
+            android:paddingLeft="10dp">
+
+            <TextView
+                android:id="@+id/tv_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextColor"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="優惠內容 : XXXXXXXXX"
+                android:textSize="20dp" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</RelativeLayout>

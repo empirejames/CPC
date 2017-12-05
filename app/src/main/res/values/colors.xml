@@ -26,4 +26,6 @@
     <color name="coloralocal">#F1C40F</color>
     <color name="colormacalon">#7EE8FA</color>
     <color name="colorblock">#4B4B4C</color>
+    <color name="colorGreenY">#83FED9</color>
+    <color name="colorTextColor">#E6EBE0</color>
 </resources>
