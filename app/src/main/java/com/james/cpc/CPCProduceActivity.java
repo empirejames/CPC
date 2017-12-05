@@ -3,13 +3,13 @@ package com.james.cpc;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.james.cpc.item.InfoItem;
+import com.james.cpc.adapter.CPCListAdapter;
 import com.james.cpc.adapter.NoticeListAdapter;
+import com.james.cpc.item.InfoItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +18,8 @@ import java.util.List;
  * Created by 101716 on 2017/11/22.
  */
 
-public class InfoTotalActivity extends AppCompatActivity {
-    private String TAG = InfoTotalActivity.class.getSimpleName();
+public class CPCProduceActivity extends AppCompatActivity {
+    private String TAG = CPCProduceActivity.class.getSimpleName();
     private String[] eventArray, detailArray, packageArray;
     private Integer[] picsource;
     final List<Integer> allpics = new ArrayList<Integer>();
@@ -27,7 +27,7 @@ public class InfoTotalActivity extends AppCompatActivity {
     final List<String> allDetails = new ArrayList<String>();
     final List<String> allPackageInfos = new ArrayList<String>();
     ArrayList<InfoItem> myListData = new ArrayList<InfoItem>();
-    private NoticeListAdapter myAdapter;
+    private CPCListAdapter myAdapter;
     private ListView listView;
 
     @Override
@@ -38,30 +38,24 @@ public class InfoTotalActivity extends AppCompatActivity {
     }
 
     public void addData() {
-        allpics.add(R.drawable.gun);
-        allTitles.add("油耗提醒");
-        allDetails.add("已開 450 公里請於最近的加油站補給");
-        allPackageInfos.add("A層倉庫 F2架 朱先生 電話，0988678910");
+        allpics.add(R.drawable.gascpc);
+        allTitles.add("國光牌 APEX 汽油清淨劑(2入裝)");
+        allDetails.add("會員價 : $385");
+        allPackageInfos.add("○恢復馬力 \n" +
+                "○多效合一 \n" +
+                "○高除淨力 \n" +
+                "○高品質、多效、環保");
 
-        allpics.add(R.drawable.pollution);
-        allTitles.add("空氣汙染提醒");
-        allDetails.add("請減少戶外活動時間，並配戴或購買口罩");
-        allPackageInfos.add("B2倉庫 A2架上 林先生 電話，0978578123");
-
-        allpics.add(R.drawable.member);
-        allTitles.add("特約商店提醒");
-        allDetails.add("目前有寶島特約商店促銷８折起");
-        allPackageInfos.add("B2倉庫 A2架上 林先生 電話，0978578123");
-
-        allpics.add(R.drawable.cpc);
-        allTitles.add("中油好康提醒");
-        allDetails.add("近期油耗不佳，建議可添加中油油精，優惠價50元");
-        allPackageInfos.add("B2倉庫 A2架上 林先生 電話，0978578123");
-
-        allpics.add(R.drawable.carfix);
-        allTitles.add("保養提醒");
-        allDetails.add("里程數已達160000公里建議至最近的快保中心");
-        allPackageInfos.add("B2倉庫 A2架上 林先生 電話，0978578123");
+        allpics.add(R.drawable.gasdesao);
+        allTitles.add("國光牌 特優級SJ/CD 車用機油 15W40 -4公升");
+        allDetails.add("會員價 : $500");
+        allPackageInfos.add("◆符合美國石油學會API SJ/CD性能規範 \n" +
+                "◆本油品黏度為SAE 15W/40 \n" +
+                "◆春夏秋冬四季均可使用 \n" +
+                "◆以精煉之石蠟基油料，摻配高效能的抗氧化 \n" +
+                "◆清淨分散、抗磨耗、防銹、防腐蝕、消泡等添加劑而成 \n" +
+                "◆其有優異的抗氧化性、清淨分散及抗磨耗性能 \n" +
+                "◆提供車輛引擎運轉所需的各項保護性能");
 
         picsource = new Integer[allpics.size()];
         eventArray = new String[allTitles.size()];
@@ -76,7 +70,7 @@ public class InfoTotalActivity extends AppCompatActivity {
         for (int i = 0; i < allTitles.size(); i++) {
             myListData.add(new InfoItem(picsource[i], eventArray[i], detailArray[i], packageArray[i]));
         }
-        myAdapter = new NoticeListAdapter(getApplicationContext(), myListData);
+        myAdapter = new CPCListAdapter(getApplicationContext(), myListData);
         listView = (ListView) findViewById(R.id.listView_info);
         listView.setAdapter(myAdapter);
         listView.setOnItemClickListener(onClickListView);
@@ -86,24 +80,6 @@ public class InfoTotalActivity extends AppCompatActivity {
     private AdapterView.OnItemClickListener onClickListView = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if (position == 0) {
-                Intent intent = new Intent();
-                intent.setClass(InfoTotalActivity.this, GasInfoActivity.class);
-                startActivity(intent);
-            } else if(position == 2){
-                Intent intent = new Intent();
-                intent.setClass(InfoTotalActivity.this, SpecialShopActivity.class);
-                startActivity(intent);
-            }else if(position == 3){
-                Intent intent = new Intent();
-                intent.setClass(InfoTotalActivity.this, CPCProduceActivity.class);
-                startActivity(intent);
-            }
-            else if(position == 4){
-                Intent intent = new Intent();
-                intent.setClass(InfoTotalActivity.this, FastInsuranceActivity.class);
-                startActivity(intent);
-            }
             //Toast.makeText(getBaseContext(), "click # " + (position + 1) + "\n", Toast.LENGTH_SHORT).show();
 //            Intent intent = new Intent();
 //            intent.putExtra("QRdata",myListData.get(position).getDetail());

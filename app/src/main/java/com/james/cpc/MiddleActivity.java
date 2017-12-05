@@ -100,7 +100,9 @@ public class MiddleActivity extends Activity implements SwipeRefreshLayout.OnRef
         lineChart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e(TAG,"On Click Detail...");
+                Intent intent = new Intent();
+                intent.setClass(MiddleActivity.this, GasInfoActivity.class);
+                startActivity(intent);
             }
         });
         String TAG = MainActivity.class.getSimpleName();
