@@ -90,6 +90,10 @@ public class InfoTotalActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(InfoTotalActivity.this, GasInfoActivity.class);
                 startActivity(intent);
+            } else if(position == 1){
+                Intent intent = new Intent();
+                intent.setClass(InfoTotalActivity.this, AirInfoActivity.class);
+                startActivity(intent);
             } else if(position == 2){
                 Intent intent = new Intent();
                 intent.setClass(InfoTotalActivity.this, SpecialShopActivity.class);

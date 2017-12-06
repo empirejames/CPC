@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ant.liao.GifView;
@@ -79,6 +80,15 @@ public class LastActivity extends Activity implements SwipeRefreshLayout.OnRefre
             }
         });
         setLineChartData();
+        RelativeLayout air_relative =(RelativeLayout)findViewById(R.id.airRelative);
+        air_relative.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(LastActivity.this, AirInfoActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     public void setLineChartData(){
         LineChart lineChart = (LineChart) findViewById(R.id.chart_line);

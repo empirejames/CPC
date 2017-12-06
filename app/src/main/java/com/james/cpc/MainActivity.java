@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ant.liao.GifView;
@@ -70,6 +71,15 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
             @Override
             public void onClick(View view) {
                 goToMap(countryNameS + location);
+            }
+        });
+        RelativeLayout air_relative =(RelativeLayout)findViewById(R.id.airRelative);
+        air_relative.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, AirInfoActivity.class);
+                startActivity(intent);
             }
         });
         setLineChartData();

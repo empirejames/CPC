@@ -403,6 +403,12 @@ public class ViewPageController extends AppCompatActivity {
             mGridData = changeAir(mGridData,myDataset.get(0).getCountryName());
             String [] sCode = new String [3];
             Log.e(TAG, " Size " + mGridData.size() );
+            writeAirDb(mGridData.get(0).getAQI(),mGridData.get(0).getCO(),mGridData.get(0).getCO_8hr(),mGridData.get(0).getCounty(),
+                    mGridData.get(0).getNO(),mGridData.get(0).getNO2(),mGridData.get(0).getNOx(),mGridData.get(0).getO3(),
+                    mGridData.get(0).getO3_8hr(),mGridData.get(0).getPM10(),mGridData.get(0).getPM10_AVG(),mGridData.get(0).getPM25(),mGridData.get(0).getPM25_AVG(),
+                    mGridData.get(0).getPublishTime(),mGridData.get(0).getSiteName(),mGridData.get(0).getSO2(),mGridData.get(0).getStatus(),mGridData.get(0).getWindDirec(),
+                    mGridData.get(0).getWindSpeed());
+
             for (int i = 0; i <= 2; i++) {
                 //Log.e(TAG,"Air " + mGridData.get(i).getCounty() + " : " + mGridData.get(i).getSiteName());
                 Log.e(TAG,"Country name : " + myDataset.get(i).getStationCode());
@@ -455,9 +461,34 @@ public class ViewPageController extends AppCompatActivity {
             }
         }
     }
+
+
     public void writeCountryDb(String a) {
         tinydb.putString("country", a);
     }
+    public void writeAirDb(String a,String b,String c,String d,String e,String f,String g,String h,String i,String j
+    ,String k,String l,String m,String n,String o,String p,String q,String r,String s) {
+        tinydb.putString("AQI", a);
+        tinydb.putString("CO", b);
+        tinydb.putString("CO_8hr", c);
+        tinydb.putString("County", d);
+        tinydb.putString("NO", e);
+        tinydb.putString("NO2", f);
+        tinydb.putString("NOx", g);
+        tinydb.putString("O3", h);
+        tinydb.putString("O3_8hr", i);
+        tinydb.putString("PM10", j);
+        tinydb.putString("PM10_AVG", k);
+        tinydb.putString("PM25", l);
+        tinydb.putString("PM25_AVG", m);
+        tinydb.putString("PublishTime", n);
+        tinydb.putString("SiteName", o);
+        tinydb.putString("SO2", p);
+        tinydb.putString("Status", q);
+        tinydb.putString("WindDirec", r);
+        tinydb.putString("WindSpeed", s);
+    }
+
     public void setDataToMain(String invoice, String pageNm, String location, String a, String b, String c, String d, String e, String f, String g, String h
             , String i, String j, String k, String l, String m, String n, String o, String p, String q, String r, String s) {
 
