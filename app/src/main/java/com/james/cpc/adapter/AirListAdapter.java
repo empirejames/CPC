@@ -72,11 +72,15 @@ public class AirListAdapter extends BaseAdapter implements Filterable {
         progressBarPM25.setMax(100);
         progressBarPM25.setProgress(Integer.parseInt(item.getPM25()));
         final ProgressBar progressBarSO2 = (ProgressBar) row.findViewById(R.id.progressBarSO2);
-        progressBarSO2.setMax(50);
-        progressBarSO2.setProgress(Integer.parseInt(item.getNOx()));
+        progressBarSO2.setMax(500);
+        float NOx = Float.parseFloat(item.getNOx())*100;
+        String NOx_st = NOx+"";
+        progressBarSO2.setProgress(Integer.parseInt(NOx_st.substring(0,2)));
         final ProgressBar progressBarNO2 = (ProgressBar) row.findViewById(R.id.progressBarNO2);
-        progressBarNO2.setMax(100);
-        progressBarNO2.setProgress(Integer.parseInt(item.getNO2()));
+        progressBarNO2.setMax(1000);
+        float NO = Float.parseFloat(item.getNO2())*100;
+        String NO_st = NO+"";
+        progressBarNO2.setProgress(Integer.parseInt(NO_st.substring(0,2)));
         final ProgressBar progressBarPM10 = (ProgressBar) row.findViewById(R.id.progressBarPM10);
         progressBarPM10.setMax(200);
         progressBarPM10.setProgress(Integer.parseInt(item.getPM10()));
@@ -128,6 +132,7 @@ public class AirListAdapter extends BaseAdapter implements Filterable {
 //        txt_total_run.setText(item.getTotoalKm());
         return row;
     }
+
 
     @Override
     public Filter getFilter() {
