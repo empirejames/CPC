@@ -85,14 +85,14 @@ public class AirListAdapter extends BaseAdapter implements Filterable {
         progressBarPM10.setMax(200);
         progressBarPM10.setProgress(Integer.parseInt(item.getPM10()));
         final ProgressBar progressBarO3 = (ProgressBar) row.findViewById(R.id.progressBarO3);
-        progressBarO3.setMax(200);
-        progressBarO3.setProgress(Integer.parseInt(item.getO3()));
+        progressBarO3.setMax(2000);
+        float o3 = Float.parseFloat(item.getO3())*100;
+        String o3_st = o3+"";
+        progressBarO3.setProgress(Integer.parseInt(o3_st.substring(0,2)));
         final ProgressBar progressBarCO = (ProgressBar) row.findViewById(R.id.progressBarCO);
         progressBarCO.setMax(1000);
-
         float co = Float.parseFloat(item.getCO())*100;
         String co_st = co+"";
-        Log.e(TAG,"co_st " + co_st);
         progressBarCO.setProgress(Integer.parseInt(co_st.substring(0,2)));
 
         View view = (View)row.findViewById(R.id.oil_background);
@@ -113,8 +113,8 @@ public class AirListAdapter extends BaseAdapter implements Filterable {
         tv_o3.setText(item.getO3()+" ppb");
         tv_so2.setText(item.getNOx()+" ppb");
         tv_status.setText(item.getStatus());
-        tv_pm10.setText(item.getPM10()+" mg/m3");
-        tv_PM25.setText(item.getPM25()+" mg/m2");
+        tv_pm10.setText(item.getPM10()+" µg/m3");
+        tv_PM25.setText(item.getPM25()+" µg/m2");
 
 
 //        txt_date.setText(item.getDate());
